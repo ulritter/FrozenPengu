@@ -1,0 +1,639 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E21024A129B38B3A002DA2A2 /* Compressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21024A029B38B3A002DA2A2 /* Compressor.swift */; };
+		E21024A329B38B8D002DA2A2 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21024A229B38B8D002DA2A2 /* Bubble.swift */; };
+		E21024A529B38F24002DA2A2 /* ColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21024A429B38F24002DA2A2 /* ColorHelper.swift */; };
+		E21024A729B39FF3002DA2A2 /* levels.txt in Resources */ = {isa = PBXBuildFile; fileRef = E21024A629B39FF3002DA2A2 /* levels.txt */; };
+		E21024BD29B3AB8F002DA2A2 /* cancel.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024A829B3AB8F002DA2A2 /* cancel.wav */; };
+		E21024BE29B3AB8F002DA2A2 /* menu_selected.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024A929B3AB8F002DA2A2 /* menu_selected.wav */; };
+		E21024BF29B3AB8F002DA2A2 /* frozen-mainzik-1p.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024AA29B3AB8F002DA2A2 /* frozen-mainzik-1p.wav */; };
+		E21024C029B3AB8F002DA2A2 /* newroot_solo.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024AB29B3AB8F002DA2A2 /* newroot_solo.wav */; };
+		E21024C129B3AB8F002DA2A2 /* chatted.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024AC29B3AB8F002DA2A2 /* chatted.wav */; };
+		E21024C229B3AB8F002DA2A2 /* pause.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024AD29B3AB8F002DA2A2 /* pause.wav */; };
+		E21024C329B3AB8F002DA2A2 /* rebound.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024AE29B3AB8F002DA2A2 /* rebound.wav */; };
+		E21024C429B3AB8F002DA2A2 /* snore.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024AF29B3AB8F002DA2A2 /* snore.wav */; };
+		E21024C529B3AB8F002DA2A2 /* stick.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B029B3AB8F002DA2A2 /* stick.wav */; };
+		E21024C629B3AB8F002DA2A2 /* destroy_group.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B129B3AB8F002DA2A2 /* destroy_group.wav */; };
+		E21024C729B3AB8F002DA2A2 /* newroot.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B229B3AB8F002DA2A2 /* newroot.wav */; };
+		E21024C829B3AB8F002DA2A2 /* introzik.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B329B3AB8F002DA2A2 /* introzik.wav */; };
+		E21024C929B3AB8F002DA2A2 /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B429B3AB8F002DA2A2 /* lose.wav */; };
+		E21024CA29B3AB8F002DA2A2 /* applause.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B529B3AB8F002DA2A2 /* applause.wav */; };
+		E21024CB29B3AB8F002DA2A2 /* malus.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B629B3AB8F002DA2A2 /* malus.wav */; };
+		E21024CC29B3AB8F002DA2A2 /* noh.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B729B3AB8F002DA2A2 /* noh.wav */; };
+		E21024CD29B3AB8F002DA2A2 /* frozen-mainzik-2p.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B829B3AB8F002DA2A2 /* frozen-mainzik-2p.wav */; };
+		E21024CE29B3AB8F002DA2A2 /* typewriter.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024B929B3AB8F002DA2A2 /* typewriter.wav */; };
+		E21024CF29B3AB8F002DA2A2 /* hurry.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024BA29B3AB8F002DA2A2 /* hurry.wav */; };
+		E21024D029B3AB8F002DA2A2 /* launch.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024BB29B3AB8F002DA2A2 /* launch.wav */; };
+		E21024D129B3AB8F002DA2A2 /* menu_change.wav in Resources */ = {isa = PBXBuildFile; fileRef = E21024BC29B3AB8F002DA2A2 /* menu_change.wav */; };
+		E21024D329B3B253002DA2A2 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21024D229B3B253002DA2A2 /* SoundPlayer.swift */; };
+		E21024D729B63770002DA2A2 /* Launcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21024D629B63770002DA2A2 /* Launcher.swift */; };
+		E21024D929B68401002DA2A2 /* TrigonometryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21024D829B68401002DA2A2 /* TrigonometryHelper.swift */; };
+		E255837E29B87F2E00292729 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255837D29B87F2E00292729 /* Line.swift */; };
+		E255838029B8821A00292729 /* PhysicsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255837F29B8821A00292729 /* PhysicsHelper.swift */; };
+		E255838229BC672200292729 /* LevelManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838129BC672100292729 /* LevelManagerDelegate.swift */; };
+		E255838429BCDD3E00292729 /* ScoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838329BCDD3E00292729 /* ScoreScene.swift */; };
+		E255838629BDC94000292729 /* GridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838529BDC94000292729 /* GridCell.swift */; };
+		E255838A29BE2F9300292729 /* CollisionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838929BE2F9300292729 /* CollisionHelper.swift */; };
+		E261D21529B0D5BD00E6AC6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D21429B0D5BD00E6AC6E /* AppDelegate.swift */; };
+		E261D21B29B0D5BD00E6AC6E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D21A29B0D5BD00E6AC6E /* GameScene.swift */; };
+		E261D21D29B0D5BD00E6AC6E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D21C29B0D5BD00E6AC6E /* GameViewController.swift */; };
+		E261D22029B0D5BD00E6AC6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E261D21E29B0D5BD00E6AC6E /* Main.storyboard */; };
+		E261D22229B0D5BE00E6AC6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E261D22129B0D5BE00E6AC6E /* Assets.xcassets */; };
+		E261D22529B0D5BE00E6AC6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E261D22329B0D5BE00E6AC6E /* LaunchScreen.storyboard */; };
+		E261D23B29B0D9BE00E6AC6E /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23A29B0D9BE00E6AC6E /* GameConstants.swift */; };
+		E261D23D29B20EC300E6AC6E /* SKNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */; };
+		E261D23F29B24EE100E6AC6E /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */; };
+		E261D24129B25D0000E6AC6E /* Penguin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D24029B25D0000E6AC6E /* Penguin.swift */; };
+		E29CEC7F29B4C8B700AF7445 /* PrefsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC7E29B4C8B700AF7445 /* PrefsManager.swift */; };
+		E29CEC8129B5044900AF7445 /* SceneManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */; };
+		E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */; };
+		E29CEC8629B540AF00AF7445 /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = E29CEC8529B540AF00AF7445 /* button.wav */; };
+		E29CEC8829B5425B00AF7445 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8729B5425B00AF7445 /* MenuScene.swift */; };
+		E29CEC8C29B5C00300AF7445 /* unanimous.inverted-brk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E29CEC8929B5434000AF7445 /* unanimous.inverted-brk.ttf */; };
+		E29CEC8F29B5C4AD00AF7445 /* theBubbleLetters.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E29CEC8E29B5C4A300AF7445 /* theBubbleLetters.ttf */; };
+		E2E20B3E29BB307C009BAB5C /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E20B3D29BB307C009BAB5C /* Levels.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E21024A029B38B3A002DA2A2 /* Compressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compressor.swift; sourceTree = "<group>"; };
+		E21024A229B38B8D002DA2A2 /* Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
+		E21024A429B38F24002DA2A2 /* ColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelper.swift; sourceTree = "<group>"; };
+		E21024A629B39FF3002DA2A2 /* levels.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = levels.txt; sourceTree = "<group>"; };
+		E21024A829B3AB8F002DA2A2 /* cancel.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cancel.wav; sourceTree = "<group>"; };
+		E21024A929B3AB8F002DA2A2 /* menu_selected.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = menu_selected.wav; sourceTree = "<group>"; };
+		E21024AA29B3AB8F002DA2A2 /* frozen-mainzik-1p.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "frozen-mainzik-1p.wav"; sourceTree = "<group>"; };
+		E21024AB29B3AB8F002DA2A2 /* newroot_solo.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = newroot_solo.wav; sourceTree = "<group>"; };
+		E21024AC29B3AB8F002DA2A2 /* chatted.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chatted.wav; sourceTree = "<group>"; };
+		E21024AD29B3AB8F002DA2A2 /* pause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pause.wav; sourceTree = "<group>"; };
+		E21024AE29B3AB8F002DA2A2 /* rebound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = rebound.wav; sourceTree = "<group>"; };
+		E21024AF29B3AB8F002DA2A2 /* snore.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = snore.wav; sourceTree = "<group>"; };
+		E21024B029B3AB8F002DA2A2 /* stick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = stick.wav; sourceTree = "<group>"; };
+		E21024B129B3AB8F002DA2A2 /* destroy_group.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = destroy_group.wav; sourceTree = "<group>"; };
+		E21024B229B3AB8F002DA2A2 /* newroot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = newroot.wav; sourceTree = "<group>"; };
+		E21024B329B3AB8F002DA2A2 /* introzik.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = introzik.wav; sourceTree = "<group>"; };
+		E21024B429B3AB8F002DA2A2 /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lose.wav; sourceTree = "<group>"; };
+		E21024B529B3AB8F002DA2A2 /* applause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = applause.wav; sourceTree = "<group>"; };
+		E21024B629B3AB8F002DA2A2 /* malus.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = malus.wav; sourceTree = "<group>"; };
+		E21024B729B3AB8F002DA2A2 /* noh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = noh.wav; sourceTree = "<group>"; };
+		E21024B829B3AB8F002DA2A2 /* frozen-mainzik-2p.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "frozen-mainzik-2p.wav"; sourceTree = "<group>"; };
+		E21024B929B3AB8F002DA2A2 /* typewriter.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = typewriter.wav; sourceTree = "<group>"; };
+		E21024BA29B3AB8F002DA2A2 /* hurry.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hurry.wav; sourceTree = "<group>"; };
+		E21024BB29B3AB8F002DA2A2 /* launch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = launch.wav; sourceTree = "<group>"; };
+		E21024BC29B3AB8F002DA2A2 /* menu_change.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = menu_change.wav; sourceTree = "<group>"; };
+		E21024D229B3B253002DA2A2 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		E21024D629B63770002DA2A2 /* Launcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launcher.swift; sourceTree = "<group>"; };
+		E21024D829B68401002DA2A2 /* TrigonometryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrigonometryHelper.swift; sourceTree = "<group>"; };
+		E255837D29B87F2E00292729 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		E255837F29B8821A00292729 /* PhysicsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsHelper.swift; sourceTree = "<group>"; };
+		E255838129BC672100292729 /* LevelManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelManagerDelegate.swift; sourceTree = "<group>"; };
+		E255838329BCDD3E00292729 /* ScoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreScene.swift; sourceTree = "<group>"; };
+		E255838529BDC94000292729 /* GridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCell.swift; sourceTree = "<group>"; };
+		E255838929BE2F9300292729 /* CollisionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionHelper.swift; sourceTree = "<group>"; };
+		E261D21129B0D5BD00E6AC6E /* Frozen Bubble SpriteKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Frozen Bubble SpriteKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E261D21429B0D5BD00E6AC6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E261D21A29B0D5BD00E6AC6E /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		E261D21C29B0D5BD00E6AC6E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		E261D21F29B0D5BD00E6AC6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E261D22129B0D5BE00E6AC6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E261D22429B0D5BE00E6AC6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E261D23A29B0D9BE00E6AC6E /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
+		E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
+		E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		E261D24029B25D0000E6AC6E /* Penguin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penguin.swift; sourceTree = "<group>"; };
+		E29CEC7E29B4C8B700AF7445 /* PrefsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsManager.swift; sourceTree = "<group>"; };
+		E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagerDelegate.swift; sourceTree = "<group>"; };
+		E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitButton.swift; sourceTree = "<group>"; };
+		E29CEC8529B540AF00AF7445 /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button.wav; sourceTree = "<group>"; };
+		E29CEC8729B5425B00AF7445 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		E29CEC8929B5434000AF7445 /* unanimous.inverted-brk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "unanimous.inverted-brk.ttf"; sourceTree = "<group>"; };
+		E29CEC8D29B5C0BD00AF7445 /* Frozen-Bubble-SpriteKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Frozen-Bubble-SpriteKit-Info.plist"; sourceTree = SOURCE_ROOT; };
+		E29CEC8E29B5C4A300AF7445 /* theBubbleLetters.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = theBubbleLetters.ttf; sourceTree = "<group>"; };
+		E2E20B3D29BB307C009BAB5C /* Levels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E261D20E29B0D5BD00E6AC6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E261D20829B0D5BD00E6AC6E = {
+			isa = PBXGroup;
+			children = (
+				E261D21329B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */,
+				E261D21229B0D5BD00E6AC6E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E261D21229B0D5BD00E6AC6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E261D21129B0D5BD00E6AC6E /* Frozen Bubble SpriteKit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E261D21329B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */ = {
+			isa = PBXGroup;
+			children = (
+				E29CEC8D29B5C0BD00AF7445 /* Frozen-Bubble-SpriteKit-Info.plist */,
+				E261D22C29B0D5F200E6AC6E /* Controller */,
+				E261D23729B0D70A00E6AC6E /* Custom Classes */,
+				E261D23029B0D6A300E6AC6E /* Extensions */,
+				E261D22E29B0D65000E6AC6E /* HelperFiles */,
+				E261D23129B0D6AB00E6AC6E /* Protocols */,
+				E261D23329B0D6C300E6AC6E /* Resources */,
+				E261D22B29B0D5DD00E6AC6E /* Scenes */,
+				E261D22F29B0D67500E6AC6E /* Template */,
+				E261D22D29B0D60B00E6AC6E /* UI */,
+			);
+			path = "Frozen Bubble SpriteKit";
+			sourceTree = "<group>";
+		};
+		E261D22B29B0D5DD00E6AC6E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				E261D21A29B0D5BD00E6AC6E /* GameScene.swift */,
+				E29CEC8729B5425B00AF7445 /* MenuScene.swift */,
+				E255838329BCDD3E00292729 /* ScoreScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		E261D22C29B0D5F200E6AC6E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E261D21C29B0D5BD00E6AC6E /* GameViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E261D22D29B0D60B00E6AC6E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E261D21E29B0D5BD00E6AC6E /* Main.storyboard */,
+				E261D22329B0D5BE00E6AC6E /* LaunchScreen.storyboard */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		E261D22E29B0D65000E6AC6E /* HelperFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */,
+				E21024A429B38F24002DA2A2 /* ColorHelper.swift */,
+				E29CEC7E29B4C8B700AF7445 /* PrefsManager.swift */,
+				E21024D829B68401002DA2A2 /* TrigonometryHelper.swift */,
+				E255837F29B8821A00292729 /* PhysicsHelper.swift */,
+				E255838929BE2F9300292729 /* CollisionHelper.swift */,
+			);
+			path = HelperFiles;
+			sourceTree = "<group>";
+		};
+		E261D22F29B0D67500E6AC6E /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				E261D21429B0D5BD00E6AC6E /* AppDelegate.swift */,
+				E261D23A29B0D9BE00E6AC6E /* GameConstants.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
+		E261D23029B0D6A300E6AC6E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E261D23129B0D6AB00E6AC6E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */,
+				E255838129BC672100292729 /* LevelManagerDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E261D23329B0D6C300E6AC6E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E21024A629B39FF3002DA2A2 /* levels.txt */,
+				E261D22129B0D5BE00E6AC6E /* Assets.xcassets */,
+				E261D23529B0D6E200E6AC6E /* Fonts */,
+				E261D23429B0D6DB00E6AC6E /* Audio */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E261D23429B0D6DB00E6AC6E /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				E29CEC8529B540AF00AF7445 /* button.wav */,
+				E21024B529B3AB8F002DA2A2 /* applause.wav */,
+				E21024A829B3AB8F002DA2A2 /* cancel.wav */,
+				E21024AC29B3AB8F002DA2A2 /* chatted.wav */,
+				E21024B129B3AB8F002DA2A2 /* destroy_group.wav */,
+				E21024AA29B3AB8F002DA2A2 /* frozen-mainzik-1p.wav */,
+				E21024B829B3AB8F002DA2A2 /* frozen-mainzik-2p.wav */,
+				E21024BA29B3AB8F002DA2A2 /* hurry.wav */,
+				E21024B329B3AB8F002DA2A2 /* introzik.wav */,
+				E21024BB29B3AB8F002DA2A2 /* launch.wav */,
+				E21024B429B3AB8F002DA2A2 /* lose.wav */,
+				E21024B629B3AB8F002DA2A2 /* malus.wav */,
+				E21024BC29B3AB8F002DA2A2 /* menu_change.wav */,
+				E21024A929B3AB8F002DA2A2 /* menu_selected.wav */,
+				E21024AB29B3AB8F002DA2A2 /* newroot_solo.wav */,
+				E21024B229B3AB8F002DA2A2 /* newroot.wav */,
+				E21024B729B3AB8F002DA2A2 /* noh.wav */,
+				E21024AD29B3AB8F002DA2A2 /* pause.wav */,
+				E21024AE29B3AB8F002DA2A2 /* rebound.wav */,
+				E21024AF29B3AB8F002DA2A2 /* snore.wav */,
+				E21024B029B3AB8F002DA2A2 /* stick.wav */,
+				E21024B929B3AB8F002DA2A2 /* typewriter.wav */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		E261D23529B0D6E200E6AC6E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E29CEC8E29B5C4A300AF7445 /* theBubbleLetters.ttf */,
+				E29CEC8929B5434000AF7445 /* unanimous.inverted-brk.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E261D23729B0D70A00E6AC6E /* Custom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E261D24029B25D0000E6AC6E /* Penguin.swift */,
+				E21024A029B38B3A002DA2A2 /* Compressor.swift */,
+				E21024A229B38B8D002DA2A2 /* Bubble.swift */,
+				E21024D229B3B253002DA2A2 /* SoundPlayer.swift */,
+				E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */,
+				E21024D629B63770002DA2A2 /* Launcher.swift */,
+				E255837D29B87F2E00292729 /* Line.swift */,
+				E2E20B3D29BB307C009BAB5C /* Levels.swift */,
+				E255838529BDC94000292729 /* GridCell.swift */,
+			);
+			path = "Custom Classes";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E261D21029B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E261D22829B0D5BE00E6AC6E /* Build configuration list for PBXNativeTarget "Frozen Bubble SpriteKit" */;
+			buildPhases = (
+				E261D20D29B0D5BD00E6AC6E /* Sources */,
+				E261D20E29B0D5BD00E6AC6E /* Frameworks */,
+				E261D20F29B0D5BD00E6AC6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Frozen Bubble SpriteKit";
+			productName = "Frozen Bubble SpriteKit";
+			productReference = E261D21129B0D5BD00E6AC6E /* Frozen Bubble SpriteKit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E261D20929B0D5BD00E6AC6E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					E261D21029B0D5BD00E6AC6E = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = E261D20C29B0D5BD00E6AC6E /* Build configuration list for PBXProject "Frozen Bubble SpriteKit" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E261D20829B0D5BD00E6AC6E;
+			productRefGroup = E261D21229B0D5BD00E6AC6E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E261D21029B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E261D20F29B0D5BD00E6AC6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E261D22029B0D5BD00E6AC6E /* Main.storyboard in Resources */,
+				E21024CD29B3AB8F002DA2A2 /* frozen-mainzik-2p.wav in Resources */,
+				E21024C529B3AB8F002DA2A2 /* stick.wav in Resources */,
+				E21024C129B3AB8F002DA2A2 /* chatted.wav in Resources */,
+				E21024C629B3AB8F002DA2A2 /* destroy_group.wav in Resources */,
+				E21024C029B3AB8F002DA2A2 /* newroot_solo.wav in Resources */,
+				E21024C429B3AB8F002DA2A2 /* snore.wav in Resources */,
+				E21024C729B3AB8F002DA2A2 /* newroot.wav in Resources */,
+				E21024CE29B3AB8F002DA2A2 /* typewriter.wav in Resources */,
+				E21024BE29B3AB8F002DA2A2 /* menu_selected.wav in Resources */,
+				E21024C329B3AB8F002DA2A2 /* rebound.wav in Resources */,
+				E29CEC8F29B5C4AD00AF7445 /* theBubbleLetters.ttf in Resources */,
+				E21024C929B3AB8F002DA2A2 /* lose.wav in Resources */,
+				E21024CA29B3AB8F002DA2A2 /* applause.wav in Resources */,
+				E21024C829B3AB8F002DA2A2 /* introzik.wav in Resources */,
+				E261D22229B0D5BE00E6AC6E /* Assets.xcassets in Resources */,
+				E21024A729B39FF3002DA2A2 /* levels.txt in Resources */,
+				E261D22529B0D5BE00E6AC6E /* LaunchScreen.storyboard in Resources */,
+				E29CEC8629B540AF00AF7445 /* button.wav in Resources */,
+				E21024CF29B3AB8F002DA2A2 /* hurry.wav in Resources */,
+				E21024BF29B3AB8F002DA2A2 /* frozen-mainzik-1p.wav in Resources */,
+				E29CEC8C29B5C00300AF7445 /* unanimous.inverted-brk.ttf in Resources */,
+				E21024D129B3AB8F002DA2A2 /* menu_change.wav in Resources */,
+				E21024CC29B3AB8F002DA2A2 /* noh.wav in Resources */,
+				E21024CB29B3AB8F002DA2A2 /* malus.wav in Resources */,
+				E21024BD29B3AB8F002DA2A2 /* cancel.wav in Resources */,
+				E21024C229B3AB8F002DA2A2 /* pause.wav in Resources */,
+				E21024D029B3AB8F002DA2A2 /* launch.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E261D20D29B0D5BD00E6AC6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E261D24129B25D0000E6AC6E /* Penguin.swift in Sources */,
+				E255838029B8821A00292729 /* PhysicsHelper.swift in Sources */,
+				E21024A529B38F24002DA2A2 /* ColorHelper.swift in Sources */,
+				E21024D329B3B253002DA2A2 /* SoundPlayer.swift in Sources */,
+				E21024A329B38B8D002DA2A2 /* Bubble.swift in Sources */,
+				E261D21B29B0D5BD00E6AC6E /* GameScene.swift in Sources */,
+				E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */,
+				E261D23B29B0D9BE00E6AC6E /* GameConstants.swift in Sources */,
+				E261D23F29B24EE100E6AC6E /* AnimationHelper.swift in Sources */,
+				E261D23D29B20EC300E6AC6E /* SKNode+Extensions.swift in Sources */,
+				E29CEC7F29B4C8B700AF7445 /* PrefsManager.swift in Sources */,
+				E255838629BDC94000292729 /* GridCell.swift in Sources */,
+				E21024A129B38B3A002DA2A2 /* Compressor.swift in Sources */,
+				E21024D729B63770002DA2A2 /* Launcher.swift in Sources */,
+				E261D21D29B0D5BD00E6AC6E /* GameViewController.swift in Sources */,
+				E29CEC8829B5425B00AF7445 /* MenuScene.swift in Sources */,
+				E255838429BCDD3E00292729 /* ScoreScene.swift in Sources */,
+				E255838229BC672200292729 /* LevelManagerDelegate.swift in Sources */,
+				E261D21529B0D5BD00E6AC6E /* AppDelegate.swift in Sources */,
+				E255837E29B87F2E00292729 /* Line.swift in Sources */,
+				E255838A29BE2F9300292729 /* CollisionHelper.swift in Sources */,
+				E29CEC8129B5044900AF7445 /* SceneManagerDelegate.swift in Sources */,
+				E2E20B3E29BB307C009BAB5C /* Levels.swift in Sources */,
+				E21024D929B68401002DA2A2 /* TrigonometryHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E261D21E29B0D5BD00E6AC6E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E261D21F29B0D5BD00E6AC6E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E261D22329B0D5BE00E6AC6E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E261D22429B0D5BE00E6AC6E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E261D22629B0D5BE00E6AC6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E261D22729B0D5BE00E6AC6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E261D22929B0D5BE00E6AC6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z6CZQD64CA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Frozen-Bubble-SpriteKit-Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.uritter.Frozen-Bubble-SpriteKit";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E261D22A29B0D5BE00E6AC6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z6CZQD64CA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Frozen-Bubble-SpriteKit-Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.uritter.Frozen-Bubble-SpriteKit";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E261D20C29B0D5BD00E6AC6E /* Build configuration list for PBXProject "Frozen Bubble SpriteKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E261D22629B0D5BE00E6AC6E /* Debug */,
+				E261D22729B0D5BE00E6AC6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E261D22829B0D5BE00E6AC6E /* Build configuration list for PBXNativeTarget "Frozen Bubble SpriteKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E261D22929B0D5BE00E6AC6E /* Debug */,
+				E261D22A29B0D5BE00E6AC6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E261D20929B0D5BD00E6AC6E /* Project object */;
+}
