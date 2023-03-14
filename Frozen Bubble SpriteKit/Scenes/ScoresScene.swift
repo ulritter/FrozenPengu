@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class ScoreScene: SKScene {
+class ScoresScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
     
@@ -16,7 +16,7 @@ class ScoreScene: SKScene {
     }
     
     func layoutView () {
-        let backgroundImage = SKSpriteNode(imageNamed: C.S.homeBackgroundName)
+        let backgroundImage = SKSpriteNode(imageNamed: C.S.scoresBackgroundName)
 //        backgroundImage.size = size
         backgroundImage.scale(to: self.frame.size, width: true, multiplier: 1.0)
         backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -69,6 +69,14 @@ class ScoreScene: SKScene {
     
     func gotoGameScene(_: Int) {
         sceneManagerDelegate?.presentGameScene()
+    }
+    
+    func gotoScoresScene(_: Int) {
+        sceneManagerDelegate?.presentScoresScene()
+    }
+    
+    func gotoPrefsScene(_: Int) {
+        sceneManagerDelegate?.presentPrefsScene()
     }
 
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PrefsManager: UserDefaults {
+class PrefsHelper: UserDefaults {
     
     static func isSoundOn ()  -> Bool {
         if let data = UserDefaults.standard.string(forKey: C.S.soundKey) {
@@ -40,18 +40,46 @@ class PrefsManager: UserDefaults {
     }
     
     static func getSinglePlayerLevel ()  -> Int {
-        if UserDefaults().valueExists(forKey: C.S.singleLevelKey) {
-            return UserDefaults.standard.integer(forKey: C.S.singleLevelKey)
+        if UserDefaults().valueExists(forKey: C.S.actualLevelPrefsKey) {
+            return UserDefaults.standard.integer(forKey: C.S.actualLevelPrefsKey)
         } else {
-            UserDefaults.standard.set(Int(1), forKey: C.S.singleLevelKey)
+            UserDefaults.standard.set(Int(1), forKey: C.S.actualLevelPrefsKey)
             UserDefaults.standard.synchronize()
             return 1
         }
     }
     
     static func setSinglePlayerLevel (to value: Int) {
-        UserDefaults.standard.set(String(value), forKey: C.S.singleLevelKey)
+        UserDefaults.standard.set(String(value), forKey: C.S.actualLevelPrefsKey)
         UserDefaults.standard.synchronize()
+    }
+    
+    static func getScores(for level: Int) -> [ScoreEntry]{
+        let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
+        if let data = UserDefaults.standard.object(forKey: levelScoresKey) {
+            return data as! [ScoreEntry]
+        } else {
+            return []
+        }
+    }
+    
+    static func setScores(for level: Int, with scores: [ScoreEntry]){
+        let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
+        UserDefaults.standard.set(scores, forKey: levelScoresKey)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func removeAllScores() {
+        var level = 1
+        while true {
+            let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
+            if UserDefaults.standard.valueExists(forKey: levelScoresKey) {
+                UserDefaults.standard.removeObject(forKey: levelScoresKey)
+                level += 1
+            } else {
+                break
+            }
+        }
     }
 }
 

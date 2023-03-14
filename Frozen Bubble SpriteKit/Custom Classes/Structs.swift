@@ -8,12 +8,20 @@
 import SpriteKit
 
 struct GridCell {
-    
     var position: CGPoint?
     var bubble: Bubble?
-    
     init() {
         self.position = nil
         self.bubble = nil
     }
+}
+
+struct ScoreEntry  {
+    var numberOfShots: Int = 0
+    var numberOfSeconds: CGFloat = 0.0
+}
+
+struct ScoreSet {
+    var scorePosition: Int = 0
+    var scores: [ScoreEntry] = []
 }

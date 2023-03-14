@@ -33,8 +33,13 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: SceneManagerDelegate {
-    func presentSettingsScene() {
     
+    func presentPrefsScene() {
+        let scene = PrefsScene(size: view.bounds.size)
+        scene.backgroundColor = UIColor.black
+        scene.scaleMode = .aspectFit
+        scene.sceneManagerDelegate = self
+        present(scene: scene)
     }
     
     func presentGameScene() {
@@ -45,8 +50,12 @@ extension GameViewController: SceneManagerDelegate {
         present(scene: scene)
     }
     
-    func presentScoreScene() {
-
+    func presentScoresScene() {
+        let scene = ScoresScene(size: view.bounds.size)
+        scene.backgroundColor = UIColor.black
+        scene.scaleMode = .aspectFit
+        scene.sceneManagerDelegate = self
+        present(scene: scene)
     }
     
     func presentMenuScene() {

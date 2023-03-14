@@ -36,7 +36,7 @@ class Compressor: SKSpriteNode {
     }
     
     func down() {
-        if PrefsManager.isSoundOn() {
+        if PrefsHelper.isSoundOn() {
 //            run(soundPlayer.newRootSoloSound)
         }
         

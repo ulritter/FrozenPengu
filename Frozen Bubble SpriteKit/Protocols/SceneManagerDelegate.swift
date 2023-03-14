@@ -10,9 +10,9 @@ import Foundation
 
 protocol SceneManagerDelegate {
     
-    func presentSettingsScene()
+    func presentPrefsScene()
     func presentGameScene()
-    func presentScoreScene()
+    func presentScoresScene()
     func presentMenuScene()
     
 }

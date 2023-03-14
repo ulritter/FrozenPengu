@@ -5,6 +5,9 @@
 //  Created by Uwe Ritter on 02.03.23.
 //
 
+//TODO: Compressor down timer
+//TODO: Blink & hurry timer & display
+
 import SpriteKit
 
 class GameScene: SKScene {
@@ -92,11 +95,11 @@ class GameScene: SKScene {
     init(size: CGSize,levelManagerDelegate: LevelManagerDelegate) {
         super.init(size: size)
         self.levelManagerDelegate = levelManagerDelegate
-        let levelKey = PrefsManager.getSinglePlayerLevel()
+        let levelKey = PrefsHelper.getSinglePlayerLevel()
         self.level = self.levelManagerDelegate.loadLevel(level: levelKey)
         self.levelKey = levelKey
         print("Level Array Size: \(self.level.count)")
-        PrefsManager.setBubbleType(to: C.S.bubbleColorblindPrefix)
+        PrefsHelper.setBubbleType(to: C.S.bubbleColorblindPrefix)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -152,9 +155,9 @@ class GameScene: SKScene {
     }
     
     func getPrefs () {
-        isSoundOn = PrefsManager.isSoundOn()
-        bubbleType = PrefsManager.getBubbleType()
-        stroredLevelIndex = PrefsManager.getSinglePlayerLevel()
+        isSoundOn = PrefsHelper.isSoundOn()
+        bubbleType = PrefsHelper.getBubbleType()
+        stroredLevelIndex = PrefsHelper.getSinglePlayerLevel()
     }
     
     func addPlayfield() {
@@ -340,7 +343,7 @@ class GameScene: SKScene {
     func gotoScore(_: Int) {
 //        sceneManagerDelegate?.presentScoreScene()
         levelKey += 1
-        PrefsManager.setSinglePlayerLevel(to: levelKey)
+        PrefsHelper.setSinglePlayerLevel(to: levelKey)
         sceneManagerDelegate?.presentGameScene()
     }
     
@@ -608,17 +611,7 @@ class GameScene: SKScene {
 
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
-//        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-//        switch contactMask {
-//        case C.P.bubbleCategory | C.P.leftBorderCategory:
-//            break
-//        case C.P.bubbleCategory | C.P.rightBorderCategory:
-//            break
-//        case C.P.bubbleCategory | C.P.topCategory:
-//            break
-//        default:
-//            break
-//        }
+
     }
     
     func didEnd(_ contact: SKPhysicsContact) {

@@ -1,13 +1,14 @@
 //
-//  MenuScene.swift
+//  PrefsScene.swift
 //  Frozen Bubble SpriteKit
 //
-//  Created by Uwe Ritter on 05.03.23.
+//  Created by Uwe Ritter on 13.03.23.
 //
+
 
 import SpriteKit
 
-class MenuScene: SKScene {
+class PrefsScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
     
@@ -16,7 +17,7 @@ class MenuScene: SKScene {
     }
     
     func layoutView () {
-        let backgroundImage = SKSpriteNode(imageNamed: C.S.homeBackgroundName)
+        let backgroundImage = SKSpriteNode(imageNamed: C.S.prefsBackgroundName)
 //        backgroundImage.size = size
         backgroundImage.scale(to: self.frame.size, width: true, multiplier: 1.0)
         backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -51,7 +52,7 @@ class MenuScene: SKScene {
         puzzleLabel.zPosition = C.Z.hudZ
         puzzleButton.addChild(puzzleLabel)
         
-        let settingsButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoPrefsScene, index: 0)
+        let settingsButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoScoresScene, index: 0)
         settingsButton.scale(to: frame.size, width: false, multiplier: 0.1)
         settingsButton.position = CGPoint(x: frame.midX, y: frame.midY-frame.size.height*0.15)
         settingsButton.zPosition = C.Z.hudZ
@@ -64,8 +65,6 @@ class MenuScene: SKScene {
         settingsLabel.fontColor = C.S.frozenMenuButtonFontColor
         settingsLabel.zPosition = C.Z.hudZ
         settingsButton.addChild(settingsLabel)
-        
-        PrefsHelper.setSinglePlayerLevel(to: 1)
         
     }
     

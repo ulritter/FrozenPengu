@@ -37,7 +37,7 @@ class Bubble: SKSpriteNode {
         super.init(texture: nil, color: UIColor.clear, size: size)
         soundPlayer = SoundPlayer()
         bubbleColor = colorKey
-        textureKey = PrefsManager.getBubbleType()
+        textureKey = PrefsHelper.getBubbleType()
         
         setBubble(.main)
         setBubble(.frozen)

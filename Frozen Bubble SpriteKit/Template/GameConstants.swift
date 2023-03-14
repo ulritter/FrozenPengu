@@ -28,11 +28,14 @@ struct C {
         static let reserveBubbleName = "reserveBubble"
         static let flyingBubbleName = "flyingBubble"
         
-        static let singleLevelKey = "singleLevel"
+        static let actualLevelPrefsKey = "singleLevel"
+        static let actualLevelScoreKeyPrefix = "level-"
         
         static let playBackgroundName = "PlayBackground"
         static let menuBackgroundName = "MenuBackground"
         static let homeBackgroundName = "HomeScreenBackground"
+        static let prefsBackgroundName = "PrefsBackground"
+        static let scoresBackgroundName = "ScoresBackground"
         static let gameFontName = "the bubble letters"
         static let leftBorderName = "leftBorder"
         static let rightBorderName = "rightBorder"
@@ -97,6 +100,7 @@ struct C {
         static let bubbleYModifier:CGFloat = 0.87
         
         static let emptyMarker = Int.max
+        static let maxScoreEntries = 15
     }
     
     struct P {
