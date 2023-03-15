@@ -66,14 +66,22 @@ extension GameViewController: SceneManagerDelegate {
         present(scene: scene)
     }
     
+    func presentCreditsScene() {
+        let scene = CreditsScene(size: view.bounds.size)
+        scene.backgroundColor = UIColor.black
+        scene.scaleMode = .aspectFit
+        scene.sceneManagerDelegate = self
+        present(scene: scene)
+    }
+    
     func present(scene: SKScene) {
         if let view = self.view as! SKView? {
             
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
 
-            view.showsFPS = true
-            view.showsNodeCount = true
+            view.showsFPS = false
+            view.showsNodeCount = false
             view.showsPhysics = false
         }
     }

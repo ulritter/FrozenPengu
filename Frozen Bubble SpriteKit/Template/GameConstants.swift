@@ -14,6 +14,7 @@ struct C {
         static let gameName = "frozeN BuBBLe"
         
         static let soundKey = "sound"
+        static let musicKey = "music"
         static let onKey = "on"
         static let offKey = "off"
         
@@ -77,6 +78,29 @@ struct C {
         static let cheerAction = "Cheer"
         static let cryAction = "Cry"
         
+        static let settingsText = "Settings"
+        static let creditsText = "Credits"
+        static let soundOnText = "Sound is On"
+        static let soundOffText = "Sound is Off"
+        static let musicOnText = "Music is On"
+        static let musicOffText = "Music is Off"
+        static let resetHighScoresText = "Clear Highscores"
+        static let showCreditsText = "Credits"
+        static let backToMenuText = "Back to Menu"
+        static let backToGameText = "Back to Game"
+        
+        static let creditsContent = [
+            "Coded for IOS from scratch",
+            " with SpriteKit by ",
+            "** Uwe Ritter IT Beratung **",
+            " ",
+            "Thanks to original game",
+            "contributors/devlopers:",
+            "Guillaume Cottenceau - design",
+            "Alexis Younes - graphics",
+            "Matthias Le Bidan - music",
+        ]
+        
     }
     struct Z {
         //Z positions
@@ -114,6 +138,7 @@ struct C {
         static let bottomCategory: UInt32 = 0x1 << 3
         static let bubbleCategory: UInt32 = 0x1 << 4
         static let frameCategory: UInt32 = 0x1 << 5
+        static let shootBubbleCategory: UInt32 = 0x1 << 6
     }
 }
 

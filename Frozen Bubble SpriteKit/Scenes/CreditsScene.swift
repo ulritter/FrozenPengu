@@ -8,78 +8,68 @@
 
 
 import SpriteKit
-
 class CreditsScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
     
+    var backgroundImage: SKSpriteNode!
+    var titleLabel: SKLabelNode!
+    
     override func didMove(to view: SKView) {
+        self.anchorPoint = CGPoint.zero
         layoutView()
+
     }
     
     func layoutView () {
-        let backgroundImage = SKSpriteNode(imageNamed: C.S.prefsBackgroundName)
-//        backgroundImage.size = size
-        backgroundImage.scale(to: self.frame.size, width: true, multiplier: 1.0)
-        backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
+       
+        backgroundImage = SKSpriteNode(imageNamed: C.S.prefsBackgroundName)
+        backgroundImage.anchorPoint = CGPoint.zero
+        
+        let xSize = frame.size.width
+        let ySize = (xSize / backgroundImage.size.width) * backgroundImage.size.height
+        backgroundImage.size = CGSize(width: xSize, height: ySize)
+        
+        let backgroundImageBottom = (self.frame.size.height-backgroundImage.frame.size.height)/2
+        backgroundImage.position = CGPoint(x: 0.0, y: backgroundImageBottom)
         backgroundImage.zPosition = C.Z.farBGZ
         addChild(backgroundImage)
         
-        let arcadeButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
-        arcadeButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        arcadeButton.position = CGPoint(x: frame.midX, y: frame.midY+frame.size.height*0.15)
-        arcadeButton.zPosition = C.Z.hudZ
-        addChild(arcadeButton)
+        let titleY = backgroundImageBottom + backgroundImage.frame.height*890/1024
+        let textY = backgroundImageBottom + backgroundImage.frame.height*790/1024
+
+        titleLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+        titleLabel.text = C.S.creditsText
+        titleLabel.position=CGPoint(x: frame.midX, y: titleY)
+        titleLabel.zPosition = C.Z.hudZ
+        addChild(titleLabel)
         
-        let arcadeLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        arcadeLabel.text = C.S.arcadeLabelText
-        arcadeLabel.scale(to: frame.size, width: true, multiplier: 2.5)
-        arcadeLabel.position = CGPoint(x: frame.minX, y: frame.minY-arcadeLabel.frame.size.height/2.0)
-        arcadeLabel.fontColor = C.S.frozenMenuButtonFontColor
-        arcadeLabel.zPosition = C.Z.hudZ
-        arcadeButton.addChild(arcadeLabel)
-        
-        let puzzleButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
-        puzzleButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        puzzleButton.position = CGPoint(x: frame.midX, y: frame.midY)
-        puzzleButton.zPosition = C.Z.hudZ
-        addChild(puzzleButton)
-        
-        let puzzleLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        puzzleLabel.text = C.S.puzzleLabelText
-        puzzleLabel.scale(to: frame.size, width: true, multiplier: 2.5)
-        puzzleLabel.position = CGPoint(x: frame.minX, y: frame.minY-puzzleLabel.frame.size.height/2.0)
-        puzzleLabel.fontColor = C.S.frozenMenuButtonFontColor
-        puzzleLabel.zPosition = C.Z.hudZ
-        puzzleButton.addChild(puzzleLabel)
-        
-        let settingsButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoScoresScene, index: 0)
-        settingsButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        settingsButton.position = CGPoint(x: frame.midX, y: frame.midY-frame.size.height*0.15)
-        settingsButton.zPosition = C.Z.hudZ
-        addChild(settingsButton)
-        
-        let settingsLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        settingsLabel.text = C.S.settingsLabelText
-        settingsLabel.scale(to: frame.size, width: true, multiplier: 3)
-        settingsLabel.position = CGPoint(x: frame.minX, y: frame.minY-settingsLabel.frame.size.height/2.0)
-        settingsLabel.fontColor = C.S.frozenMenuButtonFontColor
-        settingsLabel.zPosition = C.Z.hudZ
-        settingsButton.addChild(settingsLabel)
-        
+        for (index, creditsTextLine) in C.S.creditsContent.enumerated() {
+            print("\(creditsTextLine)")
+            var creditsLabel: SKLabelNode!
+            creditsLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+            creditsLabel.text = creditsTextLine
+            creditsLabel.fontSize = 24.0
+            creditsLabel.scale(to: frame.size, width: true, multiplier: 0.8)
+            creditsLabel.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.075, creditsLabel.frame.minY)
+            creditsLabel.fontColor = UIColor.white
+            creditsLabel.zPosition=C.Z.hudZ
+
+            let yPos = textY-CGFloat(index)*backgroundImage.frame.height*0.08
+
+            creditsLabel.position = CGPoint(x: frame.midX, y: yPos)
+            addChild(creditsLabel)
+        }
+
     }
-    
-    func gotoGameScene(_: Int) {
-        sceneManagerDelegate?.presentGameScene()
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        gotoPrefsScene(0)
     }
-    
-    func gotoScoresScene(_: Int) {
-        sceneManagerDelegate?.presentScoresScene()
-    }
-    
     func gotoPrefsScene(_: Int) {
         sceneManagerDelegate?.presentPrefsScene()
     }
+    
+
 
 }
 

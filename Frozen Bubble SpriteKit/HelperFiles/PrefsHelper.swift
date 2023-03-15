@@ -24,6 +24,21 @@ class PrefsHelper: UserDefaults {
         UserDefaults.standard.synchronize()
     }
     
+    static func isMusicOn ()  -> Bool {
+        if let data = UserDefaults.standard.string(forKey: C.S.musicKey) {
+            return data == C.S.onKey
+        } else {
+            UserDefaults.standard.set(C.S.onKey, forKey: C.S.musicKey)
+            UserDefaults.standard.synchronize()
+            return true
+        }
+    }
+    
+    static func setMusic (to value: String) {
+        UserDefaults.standard.set(value, forKey: C.S.musicKey)
+        UserDefaults.standard.synchronize()
+    }
+    
     static func getBubbleType ()  -> String {
         if let data = UserDefaults.standard.string(forKey: C.S.bubbleTypeKey) {
             return data

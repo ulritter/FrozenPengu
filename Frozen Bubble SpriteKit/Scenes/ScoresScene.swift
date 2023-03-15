@@ -31,7 +31,6 @@ class ScoresScene: SKScene {
         backgroundImage.zPosition = C.Z.farBGZ
         addChild(backgroundImage)
         
-        let yScaler =  self.size.height / backgroundImage.size.height
         let yTop = backgroundImageBottom + backgroundImage.frame.height*930/1024
         
         let scoreInfo = PrefsHelper.getLastLevelScoreInfo().components(separatedBy: "-")

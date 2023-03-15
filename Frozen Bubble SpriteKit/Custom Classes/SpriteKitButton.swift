@@ -40,6 +40,19 @@ class SpriteKitButton: SKSpriteNode {
         addChild(defaultButton)
     }
     
+    init(defaultButtonImage: String, buttonSize: CGSize, action: @escaping (Int) -> (), index: Int) {
+        self.defaultButton = SKSpriteNode(color: UIColor.clear, size: buttonSize)
+        self.action = action
+        self.index = index
+        self.minAlpha = 0.75
+        self.maxAlpha = 1.0
+        super.init(texture: nil, color: UIColor.clear, size: buttonSize)
+        self.texture = SKTexture(imageNamed: defaultButtonImage)
+        defaultButton.anchorPoint = CGPointMake(0.5, 0.0)
+        isUserInteractionEnabled = true
+        addChild(defaultButton)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

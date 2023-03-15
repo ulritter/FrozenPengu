@@ -41,6 +41,7 @@ class CollisionHelper {
         // check whether the drop has left orphan cells
         // which need to be dropped as well
         if didDrop {
+
             checkAndMarkOrphanCells(grid: grid)
             // drop the remaining cells
             for (index,cell) in grid.enumerated() {

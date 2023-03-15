@@ -37,7 +37,7 @@ class GameScene: SKScene {
             }
         }
     }
-
+    var soundPlayer = SoundPlayer()
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
     var dtCumulated: TimeInterval = 0
@@ -209,7 +209,7 @@ class GameScene: SKScene {
         let levelLabel = SKLabelNode(fontNamed: C.S.gameFontName)
         levelLabel.text = String(levelKey)
         levelLabel.fontSize = 200.0
-        levelLabel.scale(to: frame.size, width: true, multiplier: 0.03)
+        levelLabel.scale(to: frame.size, width: true, multiplier: 0.05)
         levelLabel.position = CGPoint(x: levelLabelX, y: levelLabelY)
         levelLabel.fontColor = C.S.levelLabelFontColor
         
@@ -303,7 +303,9 @@ class GameScene: SKScene {
         reserveBubble.name = C.S.reserveBubbleName
         addChild(reserveBubble)
         lastReserveBubbleColorKey = b1Color
-        
+        if isSoundOn {
+            run(soundPlayer.whipSound)
+        }
     }
     
     func addBackButton() {
@@ -416,6 +418,7 @@ class GameScene: SKScene {
                 index += 1
             }
         }
+        culateRemainingBubbleColors()
     }
     
     func shootBubble(to touchPos: CGPoint) {
@@ -425,9 +428,13 @@ class GameScene: SKScene {
         shotBubble.position = CGPoint(x: launcherX, y: launcherY)
         shotBubble.zPosition = C.Z.bubbleZ
         PhysicsHelper.addPhysicsBody(to: shotBubble, with: C.S.bubbleName)
+        shotBubble.physicsBody!.categoryBitMask = C.P.shootBubbleCategory
         shotBubble.name = C.S.flyingBubbleName
         addChild(shotBubble)
         shotBubble.shoot(from: CGPointMake(launcherX, launcherY), to: touchPos)
+        if isSoundOn {
+            run(soundPlayer.launchSound)
+        }
     }
     
     func rotateLauncher(pos: CGPoint) {
@@ -485,8 +492,7 @@ class GameScene: SKScene {
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let soundplayer = SoundPlayer()
-        
+                
         if let touch = touches.first {
             
             let touchPos = touch.location(in: self)
@@ -558,15 +564,30 @@ class GameScene: SKScene {
                                         theGrid[gridIndex].bubble = dockingBubble
                                         dockingBubble.position = theGrid[gridIndex].position!
                                         addChild(dockingBubble)
+                                        if isSoundOn {
+                                            run(soundPlayer.stickSound)
+                                        }
+                                        
                                         c.removeFromParent()
-                                        if CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex) == 0 {
-                                            print("won")
+                                        let preNumberOfBubbles = countBubbles()
+                                        let postNumberOfBubbles = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
+                                        if (postNumberOfBubbles <= preNumberOfBubbles) && isSoundOn {
+                                            run(soundPlayer.destroyGroupdSound)
+                                        }
+                                        if postNumberOfBubbles == 0 {
+                                            if isSoundOn {
+                                                run(soundPlayer.applauseSound)
+                                            }
+
                                             gameState = .won
                                             self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                         }
                                     } else {
                                         //we are past "theGrid" size and haven't found an empty grid position
                                         fieldFreeze()
+                                        if isSoundOn {
+                                            run(soundPlayer.nohSound)
+                                        }
                                         gameState = .lost
                                         self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                     }
@@ -580,7 +601,18 @@ class GameScene: SKScene {
         }
     }
     
-    
+    func countBubbles() -> Int {
+        var count = 0
+        for gridCell in theGrid {
+            if gridCell.bubble != nil {
+                let c = gridCell.bubble! as Bubble
+                if c.name == C.S.gridBubbleName {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
     
     //    func textureTest() {
     //        var ind = 0
@@ -608,7 +640,21 @@ class GameScene: SKScene {
 
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
-
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+                switch contactMask {
+                case C.P.shootBubbleCategory | C.P.leftBorderCategory:
+                    if isSoundOn {
+                        run(soundPlayer.reboundSound)
+                    }
+                case C.P.shootBubbleCategory | C.P.rightBorderCategory:
+                    if isSoundOn {
+                        run(soundPlayer.reboundSound)
+                    }
+                case C.P.shootBubbleCategory | C.P.topCategory:
+                    break
+                default:
+                    break
+                }
     }
     
     func didEnd(_ contact: SKPhysicsContact) {

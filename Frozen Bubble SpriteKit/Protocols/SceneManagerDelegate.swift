@@ -14,5 +14,6 @@ protocol SceneManagerDelegate {
     func presentGameScene()
     func presentScoresScene()
     func presentMenuScene()
+    func presentCreditsScene()
     
 }
