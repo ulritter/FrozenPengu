@@ -11,7 +11,7 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    
+     
     enum GameState {
         case ready, ongoing, paused, won, lost, hurry
     }
@@ -26,7 +26,7 @@ class GameScene: SKScene {
             case .paused:
                 break
             case .won:
-                print("Time: \(Date.timeIntervalSinceReferenceDate-startTime), number of shots: \(numberOfShots)")
+                ScoreHelper.updateScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
                 penguin.animate(for: C.S.cheerAction)
                 addGameEndPanel(win: true)
             case .lost:
@@ -98,7 +98,6 @@ class GameScene: SKScene {
         let levelKey = PrefsHelper.getSinglePlayerLevel()
         self.level = self.levelManagerDelegate.loadLevel(level: levelKey)
         self.levelKey = levelKey
-        print("Level Array Size: \(self.level.count)")
         PrefsHelper.setBubbleType(to: C.S.bubbleColorblindPrefix)
     }
     
@@ -341,10 +340,9 @@ class GameScene: SKScene {
     }
     
     func gotoScore(_: Int) {
-//        sceneManagerDelegate?.presentScoreScene()
         levelKey += 1
         PrefsHelper.setSinglePlayerLevel(to: levelKey)
-        sceneManagerDelegate?.presentGameScene()
+        sceneManagerDelegate?.presentScoresScene()
     }
     
     func buildGrid() {
@@ -418,7 +416,6 @@ class GameScene: SKScene {
                 index += 1
             }
         }
-        print ("minY: \(minY) at index \(minIndex)")
     }
     
     func shootBubble(to touchPos: CGPoint) {

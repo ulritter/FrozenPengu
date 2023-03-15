@@ -12,72 +12,84 @@ class ScoresScene: SKScene {
     var sceneManagerDelegate: SceneManagerDelegate?
     
     override func didMove(to view: SKView) {
+        self.anchorPoint = CGPoint.zero
         layoutView()
+
     }
     
     func layoutView () {
+       
         let backgroundImage = SKSpriteNode(imageNamed: C.S.scoresBackgroundName)
-//        backgroundImage.size = size
-        backgroundImage.scale(to: self.frame.size, width: true, multiplier: 1.0)
-        backgroundImage.position = CGPoint(x: frame.midX, y: frame.midY)
+        backgroundImage.anchorPoint = CGPoint.zero
+        
+        let xSize = frame.size.width
+        let ySize = (xSize / backgroundImage.size.width) * backgroundImage.size.height
+        backgroundImage.size = CGSize(width: xSize, height: ySize)
+        
+        let backgroundImageBottom = (self.frame.size.height-backgroundImage.frame.size.height)/2
+        backgroundImage.position = CGPoint(x: 0.0, y: backgroundImageBottom)
         backgroundImage.zPosition = C.Z.farBGZ
         addChild(backgroundImage)
         
-        let arcadeButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
-        arcadeButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        arcadeButton.position = CGPoint(x: frame.midX, y: frame.midY+frame.size.height*0.15)
-        arcadeButton.zPosition = C.Z.hudZ
-        addChild(arcadeButton)
+        let yScaler =  self.size.height / backgroundImage.size.height
+        let yTop = backgroundImageBottom + backgroundImage.frame.height*930/1024
         
-        let arcadeLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        arcadeLabel.text = C.S.arcadeLabelText
-        arcadeLabel.scale(to: frame.size, width: true, multiplier: 2.5)
-        arcadeLabel.position = CGPoint(x: frame.minX, y: frame.minY-arcadeLabel.frame.size.height/2.0)
-        arcadeLabel.fontColor = C.S.frozenMenuButtonFontColor
-        arcadeLabel.zPosition = C.Z.hudZ
-        arcadeButton.addChild(arcadeLabel)
-        
-        let puzzleButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
-        puzzleButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        puzzleButton.position = CGPoint(x: frame.midX, y: frame.midY)
-        puzzleButton.zPosition = C.Z.hudZ
-        addChild(puzzleButton)
-        
-        let puzzleLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        puzzleLabel.text = C.S.puzzleLabelText
-        puzzleLabel.scale(to: frame.size, width: true, multiplier: 2.5)
-        puzzleLabel.position = CGPoint(x: frame.minX, y: frame.minY-puzzleLabel.frame.size.height/2.0)
-        puzzleLabel.fontColor = C.S.frozenMenuButtonFontColor
-        puzzleLabel.zPosition = C.Z.hudZ
-        puzzleButton.addChild(puzzleLabel)
-        
-        let settingsButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
-        settingsButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        settingsButton.position = CGPoint(x: frame.midX, y: frame.midY-frame.size.height*0.15)
-        settingsButton.zPosition = C.Z.hudZ
-        addChild(settingsButton)
-        
-        let settingsLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        settingsLabel.text = C.S.settingsLabelText
-        settingsLabel.scale(to: frame.size, width: true, multiplier: 3)
-        settingsLabel.position = CGPoint(x: frame.minX, y: frame.minY-settingsLabel.frame.size.height/2.0)
-        settingsLabel.fontColor = C.S.frozenMenuButtonFontColor
-        settingsLabel.zPosition = C.Z.hudZ
-        settingsButton.addChild(settingsLabel)
-        
+        let scoreInfo = PrefsHelper.getLastLevelScoreInfo().components(separatedBy: "-")
+        let lastLevel = Int(scoreInfo[0])!
+        let lastPosition = Int(scoreInfo[1]) ?? -1
+        let scores = PrefsHelper.getScores(for: lastLevel)
+
+        for index in 0...scores.count {
+            
+            var scoreLine: SKSpriteNode!
+            var scoreLabel: SKLabelNode!
+            var scoreMarker: SKSpriteNode!
+            let score = index < scores.count ? scores[index] : ScoreEntry(numberOfShots: 0,numberOfSeconds: 0)
+            scoreLine = SKSpriteNode(texture: nil, color: UIColor.clear, size: CGSize(width: backgroundImage.size.width*0.8, height: backgroundImage.size.height/20))
+            
+            scoreLine.scale(to: frame.size, width: false, multiplier: 0.23)
+            scoreLine.zPosition = C.Z.hudZ
+            scoreLine.anchorPoint=CGPoint.zero
+            
+            scoreLabel=SKLabelNode(fontNamed: C.S.gameFontName)
+            scoreMarker = SKSpriteNode(imageNamed: C.S.miniPenguinName)
+            scoreLine.addChild(scoreMarker)
+            scoreLine.addChild(scoreLabel)
+            
+            let markerAlpha = index == lastPosition ? 1.0 : 0.0
+            scoreMarker.scale(to: frame.size, width: true, multiplier: 0.009)
+            scoreMarker.anchorPoint=CGPoint.zero
+            scoreMarker.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.011, scoreLine.frame.minY)
+            scoreMarker.alpha=markerAlpha
+            let shotsText = score.numberOfShots == 1 ? "shot" : "shots"
+            scoreLabel.text = "\(index+1) - \(score.numberOfShots) \(shotsText) - \(score.numberOfSeconds) secs"
+            scoreLabel.fontSize = 200.0
+            scoreLabel.scale(to: frame.size, width: true, multiplier: 0.1)
+            scoreLabel.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.075, scoreLine.frame.minY)
+            scoreLabel.fontColor = UIColor.white
+            
+            let yPos = yTop-CGFloat(index+1)*scoreLine.frame.height*0.15
+            scoreLine.position = CGPoint(x: frame.minX, y: yPos)
+            
+            if index < scores.count {
+                addChild(scoreLine)
+            } else {
+                if lastPosition == -1 {
+                    scoreLabel.text = "*** Wasn't Highscore ***"
+                    addChild(scoreLine)
+                }
+            }
+        }
+
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        gotoGameScene(0)
+    }
     func gotoGameScene(_: Int) {
         sceneManagerDelegate?.presentGameScene()
     }
     
-    func gotoScoresScene(_: Int) {
-        sceneManagerDelegate?.presentScoresScene()
-    }
-    
-    func gotoPrefsScene(_: Int) {
-        sceneManagerDelegate?.presentPrefsScene()
-    }
+
 
 }
 

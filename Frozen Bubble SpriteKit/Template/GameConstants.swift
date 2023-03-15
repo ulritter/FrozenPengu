@@ -30,6 +30,7 @@ struct C {
         
         static let actualLevelPrefsKey = "singleLevel"
         static let actualLevelScoreKeyPrefix = "level-"
+        static let lastScoreInfoKey = "lastScore"
         
         static let playBackgroundName = "PlayBackground"
         static let menuBackgroundName = "MenuBackground"
@@ -42,8 +43,6 @@ struct C {
         static let topBorderName = "topBorder"
         static let bottomBorderName = "bottomBorder"
 
-        
-        
         static let penguinImageName = "Play_0"
         static let penguinName = "Penguin"
         static let compressorName = "compressor"
@@ -72,6 +71,7 @@ struct C {
         static let playPenguinAtlas = "PlayPenguinAtlas"
         static let cheerPenguinAtlas = "CheerPenguinAtlas"
         static let cryPenguinAtlas = "CryPenguinAtlas"
+        static let miniPenguinName = "minipengu"
         
         static let playAction = "Play"
         static let cheerAction = "Cheer"

@@ -54,18 +54,34 @@ class PrefsHelper: UserDefaults {
         UserDefaults.standard.synchronize()
     }
     
+    static func setLastLevelScoreInfo(to value:String) {
+        UserDefaults.standard.set(value, forKey: C.S.lastScoreInfoKey)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getLastLevelScoreInfo() -> String {
+        if let data = UserDefaults.standard.string(forKey: C.S.lastScoreInfoKey) {
+            return data
+        } else {
+            return ""
+        }
+    }
+    
     static func getScores(for level: Int) -> [ScoreEntry]{
         let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
-        if let data = UserDefaults.standard.object(forKey: levelScoresKey) {
-            return data as! [ScoreEntry]
+        
+        if let data = UserDefaults.standard.string(forKey: levelScoresKey)   {
+            return scoresFromString(string: data)
         } else {
             return []
         }
     }
     
     static func setScores(for level: Int, with scores: [ScoreEntry]){
+        
         let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
-        UserDefaults.standard.set(scores, forKey: levelScoresKey)
+        
+        UserDefaults.standard.set(scoresToString(scoreArray: scores), forKey: levelScoresKey)
         UserDefaults.standard.synchronize()
     }
     
@@ -80,6 +96,29 @@ class PrefsHelper: UserDefaults {
                 break
             }
         }
+    }
+        
+    private static func scoresFromString(string: String) -> [ScoreEntry] {
+        let intermediate = string.components(separatedBy: "|")
+        var scoreArray = [ScoreEntry]()
+        var score = ScoreEntry()
+        for element in intermediate {
+            let row = element.components(separatedBy: "-")
+            score.numberOfShots = Int(row[0]) ?? 0
+            score.numberOfSeconds = CGFloat(Double(row[1]) ?? 0)
+            scoreArray.append(score)
+        }
+        return scoreArray
+        
+    }
+    
+    private static func scoresToString(scoreArray: [ScoreEntry]) -> String {
+        var intermediate = [String]()
+        for element in scoreArray {
+            let row = String(element.numberOfShots)+"-"+String(format: "%.1f",element.numberOfSeconds)
+            intermediate.append(row)
+        }
+        return intermediate.joined(separator: "|")
     }
 }
 
