@@ -10,7 +10,7 @@ import SpriteKit
 class CollisionHelper {
     
      
-    static func ckeckGrid(grid: inout [GridCell], at collisionIndex: Int) -> Int {
+    static func ckeckGrid(grid: inout [GridCell], at collisionIndex: Int) -> CollisionReturnValue {
         // first round: check whether we have a triplet or more of the same
         // color so that we can drop the bubbles
         checkAndInfectNeigbours(grid: grid, at: collisionIndex)
@@ -19,6 +19,7 @@ class CollisionHelper {
         let numberOfInfectedBubbles = numberOfInfectedBubbles(grid: grid)
         var numberOfBubblesInGrid = 0
         var didDrop = false
+        var returnValue = CollisionReturnValue()
         
         for (index,cell) in grid.enumerated() {
             if cell.bubble != nil {
@@ -55,8 +56,9 @@ class CollisionHelper {
                 }
             }
         }
-        
-        return numberOfBubblesInGrid
+        returnValue.bubblesLeft = numberOfBubblesInGrid
+        returnValue.didDrop = didDrop
+        return returnValue
     }
     
     private static func checkAndInfectNeigbours(grid: [GridCell], at startIndex: Int) {

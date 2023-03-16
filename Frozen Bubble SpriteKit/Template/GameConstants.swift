@@ -109,8 +109,8 @@ struct C {
         static let objectZ:CGFloat = 1
         static let compressorZ:CGFloat = 2
         static let bubbleZ:CGFloat = 2
-        static let panelZ:CGFloat = 3
-        static let hudZ:CGFloat = 4
+        static let hudZ:CGFloat = 3
+        static let panelZ:CGFloat = 4
 
     }
     

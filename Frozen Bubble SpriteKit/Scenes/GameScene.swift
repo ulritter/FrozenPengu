@@ -41,9 +41,11 @@ class GameScene: SKScene {
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
     var dtCumulated: TimeInterval = 0
-    var compressorTimer: TimeInterval = 0
     var hurryTimer: TimeInterval = 0
     var startTime: TimeInterval!
+    var autoshootTimer: TimeInterval = 0
+    
+    var shotCounter: Int = 0
     
     var theGrid = [GridCell]()
     var playField: SKSpriteNode!
@@ -83,7 +85,9 @@ class GameScene: SKScene {
     var isSoundOn: Bool!
     var bubbleType: String!
     var stroredLevelIndex: Int!
+    var lastTouchPosition = CGPoint.zero
     
+    var collisionReturnValue = CollisionReturnValue()
     var shotBubble: Bubble!
     var reserveBubble: Bubble!
     var remainingBubbleColors = [1,2,3,4,5,6,7,8]
@@ -128,6 +132,7 @@ class GameScene: SKScene {
         addBackButton()
         startTime = Date.timeIntervalSinceReferenceDate
         numberOfShots = 0
+        lastTouchPosition = CGPoint(x: frame.midX, y: frame.midY)
 
     }
     
@@ -253,6 +258,7 @@ class GameScene: SKScene {
         addChild(reserveBubble)
         lastReserveBubbleColorKey = reserveBubbleColorKey
         culateRemainingBubbleColors()
+
     }
     
     func getRandomBubbleColorKey () -> Int {
@@ -422,6 +428,10 @@ class GameScene: SKScene {
     }
     
     func shootBubble(to touchPos: CGPoint) {
+        shotCounter += 1
+        if shotCounter > C.B.maxColumns-1 {
+            pushCompressor()
+        }
         let polePositionBubble = self.childNode(withName: C.S.shotBubbleName) as! Bubble
         let shotBubble = Bubble(with: frame.size, as: polePositionBubble.getColor())
         shotBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
@@ -447,34 +457,35 @@ class GameScene: SKScene {
         }
     }
     
-    func pushCompressor (test: Bool) {
+    func pushCompressor () {
+        shotCounter = 0
         if initialCompressorPosition > 0 {
             initialCompressorPosition -= 1
             compressor.down()
             compressor.position = CGPoint(x: frame.minX, y: physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(initialCompressorPosition))
-            for child in self.children {
-                if child.name == C.S.bubbleName {
-                    let c = child as! Bubble
+//            for child in self.children {
+//                if child.name == C.S.bubbleName {
+//                    let c = child as! Bubble
+//                    c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
+//                }
+//            }
+            
+            for index in 0..<theGrid.count {
+                theGrid[index].position!.y = theGrid[index].position!.y-bubbleCellHeight*C.B.bubbleYModifier
+                if theGrid[index].bubble != nil {
+                    var c = theGrid[index].bubble! as Bubble
                     c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
                 }
             }
-            
-        } else if test {
-            compressor.reset()
-            initialCompressorPosition = C.B.maxRows
-            compressor.position = CGPoint(x: frame.minX, y: physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(initialCompressorPosition))
-            for child in self.children {
-                if child.name == C.S.bubbleName {
-                    let c = child as! Bubble
-                    c.position.y = c.position.y+bubbleCellHeight*CGFloat(C.B.maxRows)*C.B.bubbleYModifier
-                }
+            if isSoundOn {
+                run(soundPlayer.newRootSoloSound)
             }
         }
     }
     
     func fieldBlink() {
         for child in self.children {
-        if child.name == C.S.bubbleName {
+        if child is Bubble {
             let c = child as! Bubble
                 c.blink()
             }
@@ -500,6 +511,7 @@ class GameScene: SKScene {
             if (touchPos.y >= physicsBoundsBottom) {
                 if gameState == .ready {
 
+                    lastTouchPosition = touchPos
                     gameState = .ongoing
                     rotateLauncher(pos: touchPos)
                     shootBubble(to: touchPos)
@@ -534,6 +546,19 @@ class GameScene: SKScene {
         }
         lastTime = currentTime
         if dtCumulated > 0.01 {
+            autoshootTimer += dtCumulated
+
+            
+            switch autoshootTimer {
+            case 15.0:
+                // hurry
+                break
+            case 20.0:
+                //shoot
+                break
+            default:
+                break
+            }
             
             dtCumulated=0
             if gameState != .won && gameState != .lost {
@@ -560,25 +585,26 @@ class GameScene: SKScene {
                                     PhysicsHelper.addPhysicsBody(to: dockingBubble, with: C.S.bubbleName)
                                     dockingBubble.name = C.S.bubbleName
                                     let gridIndex = closestEmptyCell(point: c.position)
-                                    if gridIndex < theGrid.count {
+                                    if gridIndex < theGrid.count && theGrid[gridIndex].position!.y > physicsBoundsBottom {
                                         theGrid[gridIndex].bubble = dockingBubble
                                         dockingBubble.position = theGrid[gridIndex].position!
                                         addChild(dockingBubble)
-                                        if isSoundOn {
-                                            run(soundPlayer.stickSound)
-                                        }
                                         
                                         c.removeFromParent()
-                                        let preNumberOfBubbles = countBubbles()
-                                        let postNumberOfBubbles = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
-                                        if (postNumberOfBubbles <= preNumberOfBubbles) && isSoundOn {
-                                            run(soundPlayer.destroyGroupdSound)
+                                        collisionReturnValue = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
+                                        
+                                        let numberOfRemainingBubbles = collisionReturnValue.bubblesLeft
+                                        if isSoundOn {
+                                            if collisionReturnValue.didDrop {
+                                                run(soundPlayer.destroyGroupdSound)
+                                            } else {
+                                                run(soundPlayer.stickSound)
+                                            }
                                         }
-                                        if postNumberOfBubbles == 0 {
+                                        if numberOfRemainingBubbles == 0 {
                                             if isSoundOn {
                                                 run(soundPlayer.applauseSound)
                                             }
-
                                             gameState = .won
                                             self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                         }
@@ -601,18 +627,6 @@ class GameScene: SKScene {
         }
     }
     
-    func countBubbles() -> Int {
-        var count = 0
-        for gridCell in theGrid {
-            if gridCell.bubble != nil {
-                let c = gridCell.bubble! as Bubble
-                if c.name == C.S.gridBubbleName {
-                    count += 1
-                }
-            }
-        }
-        return count
-    }
     
     //    func textureTest() {
     //        var ind = 0

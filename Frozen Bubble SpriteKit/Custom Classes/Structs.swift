@@ -25,3 +25,8 @@ struct ScoreSet {
     var scorePosition: Int = 0
     var scores: [ScoreEntry] = []
 }
+
+struct CollisionReturnValue{
+    var didDrop: Bool = false
+    var bubblesLeft: Int = Int.max
+}
