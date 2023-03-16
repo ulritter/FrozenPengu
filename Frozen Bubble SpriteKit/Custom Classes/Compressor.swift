@@ -24,9 +24,8 @@ class Compressor: SKSpriteNode {
         compressorPlunger = SKSpriteNode(imageNamed: C.S.compressorName)
         compressorPlunger.anchorPoint = CGPoint.zero
         compressorPlunger.scale(to: size, width: true, multiplier: 1.0)
-//        PhysicsHelper.addPhysicsBody(to: compressorPlunger, with: C.S.topBorderName)
         addChild(compressorPlunger)
-        compressorPlunger.zPosition = C.Z.hudZ
+        compressorPlunger.zPosition = C.Z.compressorZ
         self.bodyHeight = bodyHeight
         self.parentSize = size
     }
@@ -36,10 +35,6 @@ class Compressor: SKSpriteNode {
     }
     
     func down() {
-        if PrefsHelper.isSoundOn() {
-//            run(soundPlayer.newRootSoloSound)
-        }
-        
         let compressorBodyL = SKSpriteNode(imageNamed: C.S.compressorBodyName)
         let compressorBodyR = SKSpriteNode(imageNamed: C.S.compressorBodyName)
         compressorBodyL.size.height = bodyHeight

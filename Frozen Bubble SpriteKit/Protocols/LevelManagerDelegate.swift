@@ -10,5 +10,5 @@ import Foundation
 protocol LevelManagerDelegate {
     
     func loadLevel(level: Int) -> [Int]
-   
+    func getNumberOfLevels () -> Int
 }

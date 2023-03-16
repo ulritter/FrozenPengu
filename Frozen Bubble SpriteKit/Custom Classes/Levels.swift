@@ -16,14 +16,12 @@ class Levels {
     
     func loadLevels() {
         if let path = Bundle.main.path(forResource: "levels", ofType: "txt") {
-            print ("level init txtfile")
             let url = URL(filePath: path)
             var levelItem =  [Int]()
             let charSet = ["-","0","1","2","3","4","5","6","7"]
             do {
                 let levelsRawText = try String(contentsOf: url, encoding: .utf8)
                 let levels = levelsRawText.components(separatedBy: "\n\n")  as [String]
-                print ("levels.count: \(levels.count)")
                 for level in levels {
                     for char in level {
                         var charInt = C.B.emptyMarker
@@ -42,7 +40,7 @@ class Levels {
                 print(error.localizedDescription)
             }
         } else {
-            print("No Levels found")
+            print(C.S.noLevelsFoundMessage)
         }
     }
     

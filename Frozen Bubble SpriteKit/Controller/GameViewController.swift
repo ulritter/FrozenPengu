@@ -13,8 +13,12 @@ class GameViewController: UIViewController {
     
     //load levels from levels file and instantiate them in an array of arrays
     var levels = Levels()
+    var numberOfLevels: Int = 0
 
     override func viewDidLoad() {
+    
+        levels =  Levels()
+        numberOfLevels = levels.numberOfLevels()
         super.viewDidLoad()
         presentMenuScene()
     }
@@ -51,7 +55,7 @@ extension GameViewController: SceneManagerDelegate {
     }
     
     func presentScoresScene() {
-        let scene = ScoresScene(size: view.bounds.size)
+        let scene = ScoresScene(size: view.bounds.size, levelManagerDelegate: self)
         scene.backgroundColor = UIColor.black
         scene.scaleMode = .aspectFit
         scene.sceneManagerDelegate = self
@@ -67,7 +71,7 @@ extension GameViewController: SceneManagerDelegate {
     }
     
     func presentCreditsScene() {
-        let scene = CreditsScene(size: view.bounds.size)
+        let scene = CreditsScene(size: view.bounds.size, levelManagerDelegate: self)
         scene.backgroundColor = UIColor.black
         scene.scaleMode = .aspectFit
         scene.sceneManagerDelegate = self
@@ -92,5 +96,10 @@ extension GameViewController: LevelManagerDelegate {
     func loadLevel(level: Int) -> [Int] {
         let retlevel = levels.getLevel(level: level)
         return retlevel
+    }
+    
+    func getNumberOfLevels () -> Int {
+        numberOfLevels = levels.numberOfLevels()
+        return numberOfLevels
     }
 }

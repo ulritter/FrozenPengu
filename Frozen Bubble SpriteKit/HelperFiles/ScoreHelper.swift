@@ -34,8 +34,7 @@ class ScoreHelper {
         newScore.numberOfShots = numberOfShots
         newScore.numberOfSeconds = numberOfSeconds.rounded(toPlaces: 1)
         levelScores.append(newScore)
-        print ("newscore: \(newScore)")
-        
+         
         levelScores.sort {
             $0.numberOfShots == $1.numberOfShots ? $0.numberOfSeconds < $1.numberOfSeconds : $0.numberOfShots < $1.numberOfShots
         }

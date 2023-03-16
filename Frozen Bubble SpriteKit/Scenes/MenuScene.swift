@@ -7,6 +7,7 @@
 
 import SpriteKit
 
+// Intro and main menu
 class MenuScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?

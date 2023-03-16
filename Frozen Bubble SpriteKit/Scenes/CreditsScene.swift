@@ -15,6 +15,17 @@ class CreditsScene: SKScene {
     var backgroundImage: SKSpriteNode!
     var titleLabel: SKLabelNode!
     
+    var levelManagerDelegate: LevelManagerDelegate?
+    
+    init(size: CGSize,levelManagerDelegate: LevelManagerDelegate) {
+        super.init(size: size)
+        self.levelManagerDelegate = levelManagerDelegate
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint.zero
         layoutView()
@@ -45,7 +56,6 @@ class CreditsScene: SKScene {
         addChild(titleLabel)
         
         for (index, creditsTextLine) in C.S.creditsContent.enumerated() {
-            print("\(creditsTextLine)")
             var creditsLabel: SKLabelNode!
             creditsLabel = SKLabelNode(fontNamed: C.S.gameFontName)
             creditsLabel.text = creditsTextLine
@@ -63,12 +73,26 @@ class CreditsScene: SKScene {
 
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        gotoPrefsScene(0)
-    }
-    func gotoPrefsScene(_: Int) {
-        sceneManagerDelegate?.presentPrefsScene()
+        gotoNextScene()
     }
     
+    func gotoNextScene() {
+        let maxLevels = levelManagerDelegate!.getNumberOfLevels()
+        let actLevel = PrefsHelper.getSinglePlayerLevel()
+        // we increase the level before calling the ScoreScene
+        // so the value in Userdefaults schows the next level to be played.
+        // The only occasion the score scene takes us here is when
+        // the user has completed the last level
+        if actLevel < maxLevels {
+            // we are here because the player went to Credits
+            // before the last level was played
+            sceneManagerDelegate?.presentPrefsScene()
+        } else {
+            //we have been called after the last level of the game has been played
+            PrefsHelper.setSinglePlayerLevel(to: 0)
+            sceneManagerDelegate?.presentMenuScene()
+        }
+    }
 
 
 }

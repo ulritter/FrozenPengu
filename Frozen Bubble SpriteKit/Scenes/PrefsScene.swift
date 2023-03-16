@@ -5,7 +5,7 @@
 //  Created by Uwe Ritter on 13.03.23.
 //
 
-
+// Show the highscore list for the last successfully played level
 import SpriteKit
 
 class PrefsScene: SKScene {
@@ -104,29 +104,29 @@ class PrefsScene: SKScene {
         resetLabel.zPosition = C.Z.hudZ
         resetButton.addChild(resetLabel)
         
-        backButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
+        backButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoCreditsScene, index: 0)
         backButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.65)
         backButton.scale(to: frame.size, width: false, multiplier: 0.1)
         backButton.zPosition = C.Z.hudZ
         addChild(backButton)
         
         backLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        backLabel.text = C.S.backToGameText
-        backLabel.scale(to: frame.size, width: true, multiplier: 4)
+        backLabel.text = C.S.showCreditsText
+        backLabel.scale(to: frame.size, width: true, multiplier: 2.5)
         backLabel.position = CGPoint(x: frame.minX, y: frame.minY-backLabel.frame.size.height/2.0)
         backLabel.fontColor = C.S.frozenMenuButtonFontColor
         backLabel.zPosition = C.Z.hudZ
         backButton.addChild(backLabel)
         
-        creditButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoCreditsScene, index: 0)
+        creditButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
         creditButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.8)
         creditButton.scale(to: frame.size, width: false, multiplier: 0.1)
         creditButton.zPosition = C.Z.hudZ
         addChild(creditButton)
         
         creditLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        creditLabel.text = C.S.showCreditsText
-        creditLabel.scale(to: frame.size, width: true, multiplier: 2.5)
+        creditLabel.text = C.S.backToGameText
+        creditLabel.scale(to: frame.size, width: true, multiplier: 4)
         creditLabel.position = CGPoint(x: frame.minX, y: frame.minY-creditLabel.frame.size.height/2.0)
         creditLabel.fontColor = C.S.frozenMenuButtonFontColor
         creditLabel.zPosition = C.Z.hudZ

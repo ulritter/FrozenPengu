@@ -58,9 +58,9 @@ class PrefsHelper: UserDefaults {
         if UserDefaults().valueExists(forKey: C.S.actualLevelPrefsKey) {
             return UserDefaults.standard.integer(forKey: C.S.actualLevelPrefsKey)
         } else {
-            UserDefaults.standard.set(Int(1), forKey: C.S.actualLevelPrefsKey)
+            UserDefaults.standard.set(Int(0), forKey: C.S.actualLevelPrefsKey)
             UserDefaults.standard.synchronize()
-            return 1
+            return 0
         }
     }
     

@@ -10,6 +10,16 @@ import SpriteKit
 class ScoresScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
+    var levelManagerDelegate: LevelManagerDelegate?
+    
+    init(size: CGSize,levelManagerDelegate: LevelManagerDelegate) {
+        super.init(size: size)
+        self.levelManagerDelegate = levelManagerDelegate
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint.zero
@@ -60,8 +70,8 @@ class ScoresScene: SKScene {
             scoreMarker.anchorPoint=CGPoint.zero
             scoreMarker.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.011, scoreLine.frame.minY)
             scoreMarker.alpha=markerAlpha
-            let shotsText = score.numberOfShots == 1 ? "shot" : "shots"
-            scoreLabel.text = "\(index+1) - \(score.numberOfShots) \(shotsText) - \(score.numberOfSeconds) secs"
+            let shotsText = score.numberOfShots == 1 ? C.S.shotSingularText : C.S.shotPluralText
+            scoreLabel.text = "\(index+1) - \(score.numberOfShots) \(shotsText) - \(score.numberOfSeconds) \(C.S.secondsText)"
             scoreLabel.fontSize = 200.0
             scoreLabel.scale(to: frame.size, width: true, multiplier: 0.1)
             scoreLabel.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.075, scoreLine.frame.minY)
@@ -74,7 +84,7 @@ class ScoresScene: SKScene {
                 addChild(scoreLine)
             } else {
                 if lastPosition == -1 {
-                    scoreLabel.text = "*** Wasn't Highscore ***"
+                    scoreLabel.text = C.S.wasntHighsdcoreText
                     addChild(scoreLine)
                 }
             }
@@ -82,10 +92,20 @@ class ScoresScene: SKScene {
 
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        gotoGameScene(0)
+        gotoNextScene()
     }
-    func gotoGameScene(_: Int) {
-        sceneManagerDelegate?.presentGameScene()
+    
+    func gotoNextScene() {
+        let maxLevels = levelManagerDelegate!.getNumberOfLevels()
+        // we increase the level before calling the ScoreScene
+        // so the value in Userdefaults schows the next level to be played
+        let nextLevel = PrefsHelper.getSinglePlayerLevel()
+        if nextLevel < maxLevels {
+            sceneManagerDelegate?.presentGameScene()
+        } else {
+            // the last level of the game has been played
+            sceneManagerDelegate?.presentCreditsScene()
+        }
     }
     
 

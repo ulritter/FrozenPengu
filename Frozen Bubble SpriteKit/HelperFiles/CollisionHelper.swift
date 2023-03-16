@@ -86,7 +86,6 @@ class CollisionHelper {
                         if cell.bubble?.getColor() == collisionColor {
                             cell.bubble?.infect()
                             // we found a neighbour with the same color
-//                            print ("neighbour infected")
                             checkAndInfectNeigbours(grid: grid, at: index)
                         }
                     }

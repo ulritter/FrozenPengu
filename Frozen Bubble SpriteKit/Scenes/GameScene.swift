@@ -5,15 +5,14 @@
 //  Created by Uwe Ritter on 02.03.23.
 //
 
-//TODO: Compressor down timer
-//TODO: Blink & hurry timer & display
+// Main game engine
 
 import SpriteKit
 
 class GameScene: SKScene {
      
     enum GameState {
-        case ready, ongoing, paused, won, lost, hurry
+        case ready, ongoing, paused, won, lost
     }
     
     var gameState: GameState = GameState.ready {
@@ -26,14 +25,21 @@ class GameScene: SKScene {
             case .paused:
                 break
             case .won:
+                self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                 ScoreHelper.updateScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
+                if isSoundOn {
+                    run(soundPlayer.applauseSound)
+                }
                 penguin.animate(for: C.S.cheerAction)
                 addGameEndPanel(win: true)
             case .lost:
+                self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                fieldFreeze()
+                if isSoundOn {
+                    run(soundPlayer.nohSound)
+                }
                 penguin.animate(for: C.S.cryAction)
                 addGameEndPanel(win: false)
-            case .hurry:
-                break
             }
         }
     }
@@ -44,6 +50,7 @@ class GameScene: SKScene {
     var hurryTimer: TimeInterval = 0
     var startTime: TimeInterval!
     var autoshootTimer: TimeInterval = 0
+    var autoshootWarningStage: Int = 0
     
     var shotCounter: Int = 0
     
@@ -99,9 +106,8 @@ class GameScene: SKScene {
     init(size: CGSize,levelManagerDelegate: LevelManagerDelegate) {
         super.init(size: size)
         self.levelManagerDelegate = levelManagerDelegate
-        let levelKey = PrefsHelper.getSinglePlayerLevel()
+        self.levelKey = PrefsHelper.getSinglePlayerLevel()
         self.level = self.levelManagerDelegate.loadLevel(level: levelKey)
-        self.levelKey = levelKey
         PrefsHelper.setBubbleType(to: C.S.bubbleColorblindPrefix)
     }
     
@@ -113,8 +119,6 @@ class GameScene: SKScene {
         self.anchorPoint = CGPoint.zero
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.0)
-//        physicsBody = SKPhysicsBody(edgeFrom: CGPoint(x: frame.minX, y: frame.minY), to: CGPoint(x: frame.maxX, y: frame.minY))
-//        physicsBody!.categoryBitMask = C.P.frameCategory
         
         getPrefs()
         addPlayfield()
@@ -125,6 +129,7 @@ class GameScene: SKScene {
         addLauncher()
         addLevelLabel()
         buildGrid()
+        addHurryPanel()
         loadActualLevel()
         lastReserveBubbleColorKey = getRandomBubbleColorKey()
         addBubblePair()
@@ -279,7 +284,7 @@ class GameScene: SKScene {
     
     func addSwitchButton () {
         let switchButton = SpriteKitButton(buttonColor: UIColor.clear, buttonSize: CGSizeMake(bubbleCellWidth, launcherY-reserverBubbleY+bubbleCellHeight ),  action: switchLauncherBubbles, index: 0)
-        switchButton.size = CGSizeMake(bubbleCellWidth, launcherY-reserverBubbleY+bubbleCellHeight )
+        switchButton.size = CGSizeMake(bubbleCellWidth*1.5, launcherY-reserverBubbleY+bubbleCellHeight )
         switchButton.anchorPoint = CGPoint(x: 0.5, y: 0.0)
         switchButton.alpha = 0.5
         switchButton.position = CGPoint(x: launcherX, y: reserverBubbleY-bubbleCellHeight/2)
@@ -332,9 +337,18 @@ class GameScene: SKScene {
             panel = SpriteKitButton(defaultButtonImage: C.S.losePanel, action: gotoGame, index: 0)
         }
         panel.scale(to: frame.size, width: true, multiplier: 1.0)
-//        panel.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         panel.position = CGPoint(x: frame.midX, y: frame.midY)
         panel.zPosition = C.Z.panelZ
+        addChild(panel)
+    }
+    
+    func addHurryPanel() {
+        let panel = SKSpriteNode(imageNamed: C.S.hurryPanel)
+        panel.scale(to: frame.size, width: true, multiplier: 1.0)
+        panel.position = CGPoint(x: frame.midX, y: frame.midY)
+        panel.zPosition = C.Z.panelZ
+        panel.name = C.S.hurryPanel
+        panel.alpha = 0.0
         addChild(panel)
     }
     
@@ -403,7 +417,7 @@ class GameScene: SKScene {
         var minIndex = Int.max
         var index = 0
         for row in 0...C.B.maxRows-1 {
-            let actRow = C.B.maxRows - 1 - row
+            let actRow = C.B.maxRows - row - 1
             let unEven = actRow % 2 == 0
             let actMaxColumns = unEven ? C.B.maxColumns - 1 : C.B.maxColumns
             
@@ -429,9 +443,11 @@ class GameScene: SKScene {
     
     func shootBubble(to touchPos: CGPoint) {
         shotCounter += 1
+        childNode(withName: C.S.hurryPanel)?.alpha = 0.0
         if shotCounter > C.B.maxColumns-1 {
             pushCompressor()
         }
+        autoshootTimer = 0
         let polePositionBubble = self.childNode(withName: C.S.shotBubbleName) as! Bubble
         let shotBubble = Bubble(with: frame.size, as: polePositionBubble.getColor())
         shotBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
@@ -463,18 +479,17 @@ class GameScene: SKScene {
             initialCompressorPosition -= 1
             compressor.down()
             compressor.position = CGPoint(x: frame.minX, y: physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(initialCompressorPosition))
-//            for child in self.children {
-//                if child.name == C.S.bubbleName {
-//                    let c = child as! Bubble
-//                    c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
-//                }
-//            }
             
             for index in 0..<theGrid.count {
                 theGrid[index].position!.y = theGrid[index].position!.y-bubbleCellHeight*C.B.bubbleYModifier
                 if theGrid[index].bubble != nil {
-                    var c = theGrid[index].bubble! as Bubble
+                    let c = theGrid[index].bubble! as Bubble
                     c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
+                    if c.position.y < physicsBoundsBottom+bubbleCellHeight/4 {
+                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                        gameState = .lost
+                        break
+                    }
                 }
             }
             if isSoundOn {
@@ -500,12 +515,46 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    func autoshootHandler() {
+        if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 0 && gameState == .ready {
+            autoshootWarningStage = 1
+        }
+        if autoshootWarningStage > 0 {
+            if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 1 {
+                childNode(withName: C.S.hurryPanel)?.alpha = 1.0
+                if isSoundOn {
+                    run(soundPlayer.hurrySound)
+                }
+                autoshootWarningStage += 1
+            }
+            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime && autoshootWarningStage == 2 {
+                fieldBlink()
+                autoshootWarningStage += 1
+            }
+            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoshootWarningStage == 3 {
+                fieldBlink()
+                autoshootWarningStage += 1
+            }
+            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*3.0 && autoshootWarningStage == 4 {
+                fieldBlink()
+                autoshootWarningStage += 1
+            }
+            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*4.0 && autoshootWarningStage == 5 {
+                fieldBlink()
+                autoshootWarningStage += 1
+            }
+            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*5.0  && autoshootWarningStage == 6 {
+                autoshootWarningStage = 0
+                shootBubble(to: lastTouchPosition)
+            }
+        }
+    }
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
                 
         if let touch = touches.first {
-            
             let touchPos = touch.location(in: self)
 
             if (touchPos.y >= physicsBoundsBottom) {
@@ -519,7 +568,6 @@ class GameScene: SKScene {
                     numberOfShots += 1
                 }
             }
-//            pushCompressor(test: true)
             
         }
     }
@@ -529,8 +577,6 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.childNode(withName: C.S.shotBubbleName)?.removeFromParent()
-//        addBubblePair()
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -545,21 +591,10 @@ class GameScene: SKScene {
             dtCumulated += dt
         }
         lastTime = currentTime
-        if dtCumulated > 0.01 {
+        if dtCumulated > 0.005 {
             autoshootTimer += dtCumulated
+            autoshootHandler()
 
-            
-            switch autoshootTimer {
-            case 15.0:
-                // hurry
-                break
-            case 20.0:
-                //shoot
-                break
-            default:
-                break
-            }
-            
             dtCumulated=0
             if gameState != .won && gameState != .lost {
                 gameState = .ready
@@ -574,22 +609,28 @@ class GameScene: SKScene {
                         }
                         if c.name == C.S.flyingBubbleName {
                             for (_, gridCell) in theGrid.enumerated() {
-                                if ((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth) && (gridCell.bubble != nil))
+                                if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
+                                     &&  (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
                                     || ((gridCell.bubble == nil) && (c.position.y > theGrid[0].position!.y)
-                                        && (TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth))
+                                        && (TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth)))
                                 {
                                     gameState = .ready
                                     let dockingBubble = Bubble(with: frame.size, as: c.getColor())
                                     dockingBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
                                     dockingBubble.zPosition = C.Z.bubbleZ
                                     PhysicsHelper.addPhysicsBody(to: dockingBubble, with: C.S.bubbleName)
-                                    dockingBubble.name = C.S.bubbleName
+                                    dockingBubble.name = C.S.gridBubbleName
                                     let gridIndex = closestEmptyCell(point: c.position)
-                                    if gridIndex < theGrid.count && theGrid[gridIndex].position!.y > physicsBoundsBottom {
+                                    
+                                    if gridIndex < theGrid.count {
+                                        if theGrid[gridIndex].position!.y < physicsBoundsBottom-bubbleCellWidth/4 {
+                                            self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                                            gameState = .lost
+                                            break
+                                        }
                                         theGrid[gridIndex].bubble = dockingBubble
                                         dockingBubble.position = theGrid[gridIndex].position!
                                         addChild(dockingBubble)
-                                        
                                         c.removeFromParent()
                                         collisionReturnValue = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
                                         
@@ -602,20 +643,12 @@ class GameScene: SKScene {
                                             }
                                         }
                                         if numberOfRemainingBubbles == 0 {
-                                            if isSoundOn {
-                                                run(soundPlayer.applauseSound)
-                                            }
                                             gameState = .won
-                                            self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                         }
                                     } else {
                                         //we are past "theGrid" size and haven't found an empty grid position
-                                        fieldFreeze()
-                                        if isSoundOn {
-                                            run(soundPlayer.nohSound)
-                                        }
-                                        gameState = .lost
                                         self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                                        gameState = .lost
                                     }
                                     break
                                 }
@@ -626,30 +659,6 @@ class GameScene: SKScene {
             }
         }
     }
-    
-    
-    //    func textureTest() {
-    //        var ind = 0
-    //        var blink = true
-    //
-    //        if initialCompressorPosition % 2 == 0 {
-    //            blink = !blink
-    //        }
-    //
-    //        for child in self.children {
-    //            if child.name == C.S.bubbleName {
-    //                let c = child as! Bubble
-    //                if blink {
-    //                    c.blink()
-    //                } else {
-    //                    c.setTexture(textureKey: 1)
-    //                }
-    //                ind += 1
-    //            }
-    //        }
-    //    }
-    
-
 }
 
 extension GameScene: SKPhysicsContactDelegate {

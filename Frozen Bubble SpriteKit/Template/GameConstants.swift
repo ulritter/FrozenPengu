@@ -61,6 +61,7 @@ struct C {
         
         static let winPanel = "win_panel"
         static let losePanel = "lose_panel"
+        static let hurryPanel = "hurry"
         static let frozenMenuButton = "FrozenMenuButton"
         static let frozenMenuButtonFontColor = ColorHelper.hexStringToUIColor(hex: "#251749")
         static let levelLabelFontColor = ColorHelper.hexStringToUIColor(hex: "#CCCCCC")
@@ -88,11 +89,17 @@ struct C {
         static let showCreditsText = "Credits"
         static let backToMenuText = "Back to Menu"
         static let backToGameText = "Back to Game"
+        static let wasntHighsdcoreText = "*** Wasn't Highscore ***"
+        static let shotSingularText = "shot"
+        static let shotPluralText = "shots"
+        static let secondsText = "secs"
+        static let noLevelsFoundMessage = "No Levels found"
         
         static let creditsContent = [
-            "Coded for IOS from scratch",
-            " with SpriteKit by ",
-            "** Uwe Ritter IT Beratung **",
+            "Completeley recoded for IOS by ",
+            "** Uwe Ritter **",
+            "If you want to buy me a coffee:",
+            "uritter@web.de",
             " ",
             "Thanks to original game",
             "contributors/devlopers:",
@@ -125,6 +132,9 @@ struct C {
         
         static let emptyMarker = Int.max
         static let maxScoreEntries = 15
+        
+        static let autoshootTriggerTime = 5.0
+        static let autoshootDeltaTime = 1.0
     }
     
     struct P {
