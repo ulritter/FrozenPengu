@@ -1,6 +1,6 @@
-#  Frozen Bubbles for iOS Re-Implementation
+#  Frozen Bubble for iOS Re-Implementation
 
-I liked to play "Frozen Bubbles" both on Linux Systems way back in the 90s and later on Android due to its simplicity and its lovely penguin artwork.
+I liked to play "Frozen Bubble" both on Linux Systems way back in the 90s and later on Android due to its simplicity and its lovely penguin artwork.
 
 When I switched back to using an iPhone again, I missed this game. There were similar games in the AppStore but nothing that would compare to what I had in mind. 
 
