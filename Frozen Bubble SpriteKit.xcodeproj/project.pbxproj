@@ -334,6 +334,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
+				ORGANIZATIONNAME = "Uwe Ritter IT Beratung";
 				TargetAttributes = {
 					E261D21029B0D5BD00E6AC6E = {
 						CreatedOnToolsVersion = 14.2;

@@ -3,27 +3,12 @@
 //  Frozen Bubble SpriteKit
 //
 //  Created by Uwe Ritter on 14.03.23.
+//  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
 import SpriteKit
 
 class ScoreHelper {
-//
-//    var imageNode: SKSpriteNode /* pengu or asterisk*/
-//    var firstFillerNode: SKLabelNode /* "-""*/
-//    var numberOfShotsNode: SKLabelNode
-//    var secondFillerNode: SKLabelNode /* " shots""*/
-//    var numberOfSecondsNode: SKLabelNode
-//    var secondsTextNode: SKLabelNode /* " - secs" */
-//    var numberOfShots: Int
-//    var numberOfSeconds: CGFloat
-//    var isHighScore: Bool
-//
-//    init(numberOfShots: Int,  numberOfSeconds: CGFloat) {
-//        self.isHighScore = false
-//        self.numberOfShots = numberOfShots
-//        self.numberOfSeconds = numberOfSeconds
-//    }
     
     static func updateScoreTable (for levelKey: Int, with numberOfShots: Int,  taking numberOfSeconds: CGFloat) {
 

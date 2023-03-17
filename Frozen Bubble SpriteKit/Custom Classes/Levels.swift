@@ -3,6 +3,7 @@
 //  Frozen Bubble SpriteKit
 //
 //  Created by Uwe Ritter on 10.03.23.
+//  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
 import SpriteKit
@@ -40,7 +41,7 @@ class Levels {
                 print(error.localizedDescription)
             }
         } else {
-            print(C.S.noLevelsFoundMessage)
+            print(C.S.noLevelsFoundText)
         }
     }
     

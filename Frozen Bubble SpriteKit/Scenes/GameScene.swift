@@ -3,6 +3,7 @@
 //  Frozen Bubble SpriteKit
 //
 //  Created by Uwe Ritter on 02.03.23.
+//  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
 // Main game engine
@@ -16,6 +17,7 @@ class GameScene: SKScene {
     }
     
     var gameState: GameState = GameState.ready {
+        // game state observer
         willSet {
             switch newValue {
             case .ready:
@@ -90,6 +92,7 @@ class GameScene: SKScene {
     var levelLabelY: CGFloat!
     
     var isSoundOn: Bool!
+    var isMusicOn: Bool!
     var bubbleType: String!
     var stroredLevelIndex: Int!
     var lastTouchPosition = CGPoint.zero
@@ -108,7 +111,9 @@ class GameScene: SKScene {
         self.levelManagerDelegate = levelManagerDelegate
         self.levelKey = PrefsHelper.getSinglePlayerLevel()
         self.level = self.levelManagerDelegate.loadLevel(level: levelKey)
-        PrefsHelper.setBubbleType(to: C.S.bubbleColorblindPrefix)
+        self.isSoundOn = PrefsHelper.isSoundOn()
+        self.isMusicOn = PrefsHelper.isMusicOn()
+        self.bubbleType = PrefsHelper.getBubbleType()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -120,7 +125,6 @@ class GameScene: SKScene {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.0)
         
-        getPrefs()
         addPlayfield()
         getPropotionsAndPositions()
         addBorders()
@@ -163,11 +167,6 @@ class GameScene: SKScene {
         levelLabelX = self.frame.width*60/711
     }
     
-    func getPrefs () {
-        isSoundOn = PrefsHelper.isSoundOn()
-        bubbleType = PrefsHelper.getBubbleType()
-        stroredLevelIndex = PrefsHelper.getSinglePlayerLevel()
-    }
     
     func addPlayfield() {
         playField = SKSpriteNode(imageNamed: C.S.playBackgroundName)
@@ -217,13 +216,13 @@ class GameScene: SKScene {
     
     func addLevelLabel() {
         let levelLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        levelLabel.text = String(levelKey)
+        levelLabel.text = String(levelKey+1) // array index starts from 0 as always
         levelLabel.fontSize = 200.0
         levelLabel.scale(to: frame.size, width: true, multiplier: 0.05)
         levelLabel.position = CGPoint(x: levelLabelX, y: levelLabelY)
         levelLabel.fontColor = C.S.levelLabelFontColor
         
-        levelLabel.zPosition = C.Z.hudZ+10
+        levelLabel.zPosition = C.Z.panelZ
         addChild(levelLabel)
     }
     
@@ -368,7 +367,8 @@ class GameScene: SKScene {
     }
     
     func buildGrid() {
-        // TODO: build relative to compressor position
+        // create a one dimensional array describing a two domensional grid by
+        // assigning the position on the screen relative to the actual screen size
         theGrid.removeAll()
         var gridCell = GridCell()
 
@@ -397,6 +397,8 @@ class GameScene: SKScene {
     }
     
     func closestEmptyCell(point: CGPoint) -> Int {
+        // get the position of the closest empty cell
+        // which can be used for docking
         var oldDistance = CGFloat(Int.max)
         var snapIndex = Int.max
 
@@ -412,9 +414,8 @@ class GameScene: SKScene {
     }
     
     func loadActualLevel() {
-        //load level array into grid
+        // populate "theGrid" with actual level data
         let minY = CGFloat(Int.max)
-        var minIndex = Int.max
         var index = 0
         for row in 0...C.B.maxRows-1 {
             let actRow = C.B.maxRows - row - 1
@@ -432,9 +433,6 @@ class GameScene: SKScene {
                     theGrid[index].bubble = bubble
                     addChild(bubble)
                 }
-                if theGrid[index].position!.y < minY {
-                    minIndex = index
-                }
                 index += 1
             }
         }
@@ -442,6 +440,9 @@ class GameScene: SKScene {
     }
     
     func shootBubble(to touchPos: CGPoint) {
+        // shoot a bubble towards a point, push
+        // the compressor everey n shots, and
+        // reset the autoshoot timer
         shotCounter += 1
         childNode(withName: C.S.hurryPanel)?.alpha = 0.0
         if shotCounter > C.B.maxColumns-1 {
@@ -464,6 +465,7 @@ class GameScene: SKScene {
     }
     
     func rotateLauncher(pos: CGPoint) {
+        // rotate the launcher sprite towards a point
         let normalY = launcherY!
         if pos.y >= physicsBoundsBottom {
             
@@ -474,6 +476,8 @@ class GameScene: SKScene {
     }
     
     func pushCompressor () {
+        // push the compressor one grid row downwards and adjust
+        // the coordinates in "theGrid" accordingly
         shotCounter = 0
         if initialCompressorPosition > 0 {
             initialCompressorPosition -= 1
@@ -499,6 +503,7 @@ class GameScene: SKScene {
     }
     
     func fieldBlink() {
+        // let all bubbles blink by toggling the texture
         for child in self.children {
         if child is Bubble {
             let c = child as! Bubble
@@ -508,6 +513,7 @@ class GameScene: SKScene {
     }
     
     func fieldFreeze() {
+        // let all bubbles freeze by switching the texture
         for child in self.children {
         if child is Bubble {
             let c = child as! Bubble
@@ -517,6 +523,7 @@ class GameScene: SKScene {
     }
     
     func autoshootHandler() {
+        // handle autoshoot warnings / actions
         if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 0 && gameState == .ready {
             autoshootWarningStage = 1
         }
@@ -608,6 +615,9 @@ class GameScene: SKScene {
                             c.removeFromParent()
                         }
                         if c.name == C.S.flyingBubbleName {
+                            // check if we can dock somewhere
+                            // we don't use physics body for docking due to timing issues (both balls would bounce)
+                            // but rather check the grid coordinates
                             for (_, gridCell) in theGrid.enumerated() {
                                 if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
                                      &&  (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
@@ -621,7 +631,7 @@ class GameScene: SKScene {
                                     PhysicsHelper.addPhysicsBody(to: dockingBubble, with: C.S.bubbleName)
                                     dockingBubble.name = C.S.gridBubbleName
                                     let gridIndex = closestEmptyCell(point: c.position)
-                                    
+                                    c.removeFromParent()
                                     if gridIndex < theGrid.count {
                                         if theGrid[gridIndex].position!.y < physicsBoundsBottom-bubbleCellWidth/4 {
                                             self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
@@ -631,7 +641,7 @@ class GameScene: SKScene {
                                         theGrid[gridIndex].bubble = dockingBubble
                                         dockingBubble.position = theGrid[gridIndex].position!
                                         addChild(dockingBubble)
-                                        c.removeFromParent()
+                                       
                                         collisionReturnValue = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
                                         
                                         let numberOfRemainingBubbles = collisionReturnValue.bubblesLeft

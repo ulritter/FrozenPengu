@@ -3,6 +3,7 @@
 //  Frozen Bubble SpriteKit
 //
 //  Created by Uwe Ritter on 13.03.23.
+//  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
 // Show the highscore list for the last successfully played level
@@ -20,8 +21,9 @@ class PrefsScene: SKScene {
     var musicButton: SpriteKitButton!
     var musicLabel: SKLabelNode!
     var musicText: String!
-    var resetButton: SpriteKitButton!
-    var resetLabel: SKLabelNode!
+    var bubbleTypeButton: SpriteKitButton!
+    var bubbleTypeLabel: SKLabelNode!
+    var bubbleTypeText: String!
     var backButton: SpriteKitButton!
     var backLabel: SKLabelNode!
     var creditButton: SpriteKitButton!
@@ -33,9 +35,10 @@ class PrefsScene: SKScene {
     override func didMove(to view: SKView) {
         
         isSoundOn = PrefsHelper.isSoundOn()
-        soundText = isSoundOn ? C.S.soundOnText : C.S.soundOffText
+        soundText = isSoundOn ? C.S.switchSoundOffText : C.S.switchSoundOnText
         isMusicOn = PrefsHelper.isMusicOn()
-        musicText = isMusicOn ? C.S.musicOnText : C.S.musicOffText
+        musicText = isMusicOn ? C.S.switchMusicOffText : C.S.switchMusicOnText
+        bubbleTypeText = PrefsHelper.getBubbleType() == C.S.bubblePrefix ? C.S.colorblindBubblesText : C.S.normalBubblesText
         layoutView()
     }
     
@@ -59,78 +62,78 @@ class PrefsScene: SKScene {
         let yTop = backgroundImageBottom + backgroundImage.frame.height*950/1024
 
         
-        let buttonWidth = backgroundImage.frame.width*0.6
-        let buttonHeight = backgroundImage.frame.height*0.1
+//        let buttonWidth = backgroundImage.frame.width*0.6
+//        let buttonHeight = backgroundImage.frame.height*0.1
         
-        soundButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: toggleSound, index: 0)
-        soundButton.scale(to: frame.size, width: false, multiplier: 0.1)
+        soundButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: toggleSound, index: 0)
+        soundButton.scale(to: frame.size, width: false, multiplier: 0.08)
         soundButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.2)
         soundButton.zPosition = C.Z.hudZ
         addChild(soundButton)
         
         soundLabel = SKLabelNode(fontNamed: C.S.gameFontName)
         soundLabel.text = soundText
-        soundLabel.scale(to: frame.size, width: true, multiplier: 3.5)
+        soundLabel.scale(to: frame.size, width: true, multiplier: 3.8)
         soundLabel.fontColor = C.S.frozenMenuButtonFontColor
         soundLabel.zPosition = C.Z.hudZ
         soundButton.addChild(soundLabel)
         soundLabel.position = CGPoint(x: frame.minX, y: frame.minY-soundLabel.frame.size.height/2.0)
         
-        musicButton  = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: toggleMusic, index: 0)
+        musicButton  = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: toggleMusic, index: 0)
         musicButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.35)
-        musicButton.scale(to: frame.size, width: false, multiplier: 0.1)
+        musicButton.scale(to: frame.size, width: false, multiplier: 0.08)
         musicButton.zPosition = C.Z.hudZ
         addChild(musicButton)
         
         musicLabel = SKLabelNode(fontNamed: C.S.gameFontName)
         musicLabel.text = musicText
-        musicLabel.scale(to: frame.size, width: true, multiplier: 3.5)
+        musicLabel.scale(to: frame.size, width: true, multiplier: 3.8)
         musicLabel.position = CGPoint(x: frame.minX, y: frame.minY-musicLabel.frame.size.height/2.0)
         musicLabel.fontColor = C.S.frozenMenuButtonFontColor
         musicLabel.zPosition = C.Z.hudZ
         musicButton.addChild(musicLabel)
         
-        resetButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: resetScores, index: 0)
-        resetButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.5)
-        resetButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        resetButton.zPosition = C.Z.hudZ
-        addChild(resetButton)
+        bubbleTypeButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: toggleBubbeType, index: 0)
+        bubbleTypeButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.5)
+        bubbleTypeButton.scale(to: frame.size, width: false, multiplier: 0.08)
+        bubbleTypeButton.zPosition = C.Z.hudZ
+        addChild(bubbleTypeButton)
         
-        resetLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        resetLabel.text = C.S.resetHighScoresText
-        resetLabel.scale(to: frame.size, width: true, multiplier: 4.8)
-        resetLabel.position = CGPoint(x: frame.minX, y: frame.minY-resetLabel.frame.size.height/2.0)
-        resetLabel.fontColor = C.S.frozenMenuButtonFontColor
-        resetLabel.zPosition = C.Z.hudZ
-        resetButton.addChild(resetLabel)
+        bubbleTypeLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+        bubbleTypeLabel.text = bubbleTypeText
+        bubbleTypeLabel.scale(to: frame.size, width: true, multiplier: 4.3)
+        bubbleTypeLabel.position = CGPoint(x: frame.minX, y: frame.minY-bubbleTypeLabel.frame.size.height/2.0)
+        bubbleTypeLabel.fontColor = C.S.frozenMenuButtonFontColor
+        bubbleTypeLabel.zPosition = C.Z.hudZ
+        bubbleTypeButton.addChild(bubbleTypeLabel)
         
-        backButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoCreditsScene, index: 0)
-        backButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.65)
-        backButton.scale(to: frame.size, width: false, multiplier: 0.1)
-        backButton.zPosition = C.Z.hudZ
-        addChild(backButton)
-        
-        backLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        backLabel.text = C.S.showCreditsText
-        backLabel.scale(to: frame.size, width: true, multiplier: 2.5)
-        backLabel.position = CGPoint(x: frame.minX, y: frame.minY-backLabel.frame.size.height/2.0)
-        backLabel.fontColor = C.S.frozenMenuButtonFontColor
-        backLabel.zPosition = C.Z.hudZ
-        backButton.addChild(backLabel)
-        
-        creditButton = SpriteKitButton(defaultButtonImage: C.S.frozenMenuButton, action: gotoGameScene, index: 0)
-        creditButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.8)
-        creditButton.scale(to: frame.size, width: false, multiplier: 0.1)
+        creditButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: gotoCreditsScene, index: 0)
+        creditButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.65)
+        creditButton.scale(to: frame.size, width: false, multiplier: 0.08)
         creditButton.zPosition = C.Z.hudZ
         addChild(creditButton)
         
         creditLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        creditLabel.text = C.S.backToGameText
-        creditLabel.scale(to: frame.size, width: true, multiplier: 4)
+        creditLabel.text = C.S.showCreditsText
+        creditLabel.scale(to: frame.size, width: true, multiplier: 2.1)
         creditLabel.position = CGPoint(x: frame.minX, y: frame.minY-creditLabel.frame.size.height/2.0)
         creditLabel.fontColor = C.S.frozenMenuButtonFontColor
         creditLabel.zPosition = C.Z.hudZ
         creditButton.addChild(creditLabel)
+        
+        backButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: gotoGameScene, index: 0)
+        backButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.8)
+        backButton.scale(to: frame.size, width: false, multiplier: 0.08)
+        backButton.zPosition = C.Z.hudZ
+        addChild(backButton)
+        
+        backLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+        backLabel.text = C.S.backToGameText
+        backLabel.scale(to: frame.size, width: true, multiplier: 3.5)
+        backLabel.position = CGPoint(x: frame.minX, y: frame.minY-backLabel.frame.size.height/2.0)
+        backLabel.fontColor = C.S.frozenMenuButtonFontColor
+        backLabel.zPosition = C.Z.hudZ
+        backButton.addChild(backLabel)
         
         titleLabel = SKLabelNode(fontNamed: C.S.gameFontName)
         titleLabel.text = C.S.settingsText
@@ -142,10 +145,10 @@ class PrefsScene: SKScene {
     func toggleSound(_: Int) {
         isSoundOn = !isSoundOn
         if isSoundOn {
-            soundLabel.text = C.S.soundOnText
+            soundLabel.text = C.S.switchSoundOffText
             PrefsHelper.setSound(to: C.S.onKey)
         } else {
-            soundLabel.text = C.S.soundOffText
+            soundLabel.text = C.S.switchSoundOnText
             PrefsHelper.setSound(to: C.S.offKey)
         }
     }
@@ -153,14 +156,23 @@ class PrefsScene: SKScene {
     func toggleMusic(_: Int) {
         isMusicOn = !isMusicOn
         if isMusicOn {
-            musicLabel.text = C.S.musicOnText
+            musicLabel.text = C.S.switchMusicOffText
             PrefsHelper.setMusic(to: C.S.onKey)
         } else {
-            musicLabel.text = C.S.musicOffText
+            musicLabel.text = C.S.switchMusicOnText
             PrefsHelper.setMusic(to: C.S.offKey)
         }
     }
     
+    func toggleBubbeType(_: Int) {
+        if PrefsHelper.getBubbleType() == C.S.bubblePrefix {
+            bubbleTypeLabel.text = C.S.normalBubblesText
+            PrefsHelper.setBubbleType(to: C.S.bubbleColorblindPrefix)
+        } else {
+            bubbleTypeLabel.text = C.S.colorblindBubblesText
+            PrefsHelper.setBubbleType(to: C.S.bubblePrefix)
+        }
+    }
     
     func gotoGameScene(_: Int) {
         sceneManagerDelegate?.presentGameScene()
@@ -185,6 +197,8 @@ class PrefsScene: SKScene {
     func resetScores(_: Int) {
         PrefsHelper.removeAllScores()
     }
+
+
     
     
 }

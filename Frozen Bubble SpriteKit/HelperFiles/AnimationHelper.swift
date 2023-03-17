@@ -3,6 +3,7 @@
 //  Super Indie Runner
 //
 //  Created by Uwe Ritter on 27.02.23.
+//  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
 import SpriteKit

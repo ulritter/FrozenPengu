@@ -3,6 +3,7 @@
 //  Frozen Bubble SpriteKit
 //
 //  Created by Uwe Ritter on 02.03.23.
+//  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
 import UIKit
@@ -63,6 +64,7 @@ struct C {
         static let losePanel = "lose_panel"
         static let hurryPanel = "hurry"
         static let frozenMenuButton = "FrozenMenuButton"
+        static let longFrozenMenuButton = "LongFrozenMenuButton"
         static let frozenMenuButtonFontColor = ColorHelper.hexStringToUIColor(hex: "#251749")
         static let levelLabelFontColor = ColorHelper.hexStringToUIColor(hex: "#CCCCCC")
         
@@ -81,10 +83,10 @@ struct C {
         
         static let settingsText = "Settings"
         static let creditsText = "Credits"
-        static let soundOnText = "Sound is On"
-        static let soundOffText = "Sound is Off"
-        static let musicOnText = "Music is On"
-        static let musicOffText = "Music is Off"
+        static let switchSoundOnText = "Switch Sound On"
+        static let switchSoundOffText = "Switch Sound Off"
+        static let switchMusicOnText = "Switch Music On"
+        static let switchMusicOffText = "Switch Music Off"
         static let resetHighScoresText = "Clear Highscores"
         static let showCreditsText = "Credits"
         static let backToMenuText = "Back to Menu"
@@ -93,7 +95,9 @@ struct C {
         static let shotSingularText = "shot"
         static let shotPluralText = "shots"
         static let secondsText = "secs"
-        static let noLevelsFoundMessage = "No Levels found"
+        static let noLevelsFoundText = "No Levels found"
+        static let normalBubblesText = "Standard Bubbles"
+        static let colorblindBubblesText = "Colorblind Bubbles"
         
         static let creditsContent = [
             "Completeley recoded for IOS by ",
@@ -103,9 +107,9 @@ struct C {
             " ",
             "Thanks to original game",
             "contributors/devlopers:",
-            "Guillaume Cottenceau - design",
-            "Alexis Younes - graphics",
-            "Matthias Le Bidan - music",
+            "Guillaume Cottenceau-design, code",
+            "Alexis Younes-graphics",
+            "Matthias Le Bidan-music",
         ]
         
     }
@@ -115,9 +119,9 @@ struct C {
         static let farBGZ:CGFloat = 0
         static let objectZ:CGFloat = 1
         static let compressorZ:CGFloat = 2
-        static let bubbleZ:CGFloat = 2
-        static let hudZ:CGFloat = 3
-        static let panelZ:CGFloat = 4
+        static let bubbleZ:CGFloat = 3
+        static let hudZ:CGFloat = 4
+        static let panelZ:CGFloat = 5
 
     }
     
