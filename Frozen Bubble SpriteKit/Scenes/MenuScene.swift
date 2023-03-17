@@ -85,7 +85,7 @@ class MenuScene: SKScene {
     }
     
     func resetGameScene(_: Int) {
-        PrefsHelper.setSinglePlayerLevel(to: 1)
+        PrefsHelper.setSinglePlayerLevel(to: 0)
         sceneManagerDelegate?.presentGameScene()
     }
 

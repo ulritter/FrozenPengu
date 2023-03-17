@@ -395,23 +395,7 @@ class GameScene: SKScene {
             }
         }
     }
-    
-    func closestEmptyCell(point: CGPoint) -> Int {
-        // get the position of the closest empty cell
-        // which can be used for docking
-        var oldDistance = CGFloat(Int.max)
-        var snapIndex = Int.max
 
-        for (index, gridCell) in theGrid.enumerated() {
-            let testPoint = gridCell.position!
-            let distance = TrigonometryHelper.distance(testPoint, point)
-            if (distance < oldDistance) && gridCell.bubble == nil && distance < bubbleCellWidth {
-                oldDistance = distance
-                snapIndex = index
-            }
-        }
-        return snapIndex
-    }
     
     func loadActualLevel() {
         // populate "theGrid" with actual level data
@@ -439,6 +423,24 @@ class GameScene: SKScene {
         culateRemainingBubbleColors()
     }
     
+    func closestEmptyCell(point: CGPoint) -> Int {
+        // get the position of the closest empty cell
+        // which can be used for docking
+        var oldDistance = CGFloat(Int.max)
+        var snapIndex = Int.max
+
+        for (index, gridCell) in theGrid.enumerated() {
+            let testPoint = gridCell.position!
+            let distance = TrigonometryHelper.distance(testPoint, point)
+            if (distance < oldDistance) && gridCell.bubble == nil && distance < bubbleCellWidth {
+                oldDistance = distance
+                snapIndex = index
+            }
+        }
+        return snapIndex
+    }
+    
+
     func shootBubble(to touchPos: CGPoint) {
         // shoot a bubble towards a point, push
         // the compressor everey n shots, and
