@@ -11,4 +11,6 @@ The current implementation id fairly straightforward without too many bells and 
 Enjoy!
 
 
+<img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb1.png" width = "200" height = "286">  <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb2.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb3.png" width = "200" height = "286">
+<img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb4.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb5.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb6.png" width = "200" height = "286">
 
