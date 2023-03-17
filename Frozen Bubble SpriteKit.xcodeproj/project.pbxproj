@@ -30,6 +30,12 @@
 		E261D23D29B20EC300E6AC6E /* SKNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */; };
 		E261D23F29B24EE100E6AC6E /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */; };
 		E261D24129B25D0000E6AC6E /* Penguin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D24029B25D0000E6AC6E /* Penguin.swift */; };
+		E295133029C4E29B006AADA4 /* fb1.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132A29C4E29A006AADA4 /* fb1.png */; };
+		E295133129C4E29B006AADA4 /* fb3.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132B29C4E29A006AADA4 /* fb3.png */; };
+		E295133229C4E29B006AADA4 /* fb6.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132C29C4E29A006AADA4 /* fb6.png */; };
+		E295133329C4E29B006AADA4 /* fb2.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132D29C4E29A006AADA4 /* fb2.png */; };
+		E295133429C4E29B006AADA4 /* fb5.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132E29C4E29B006AADA4 /* fb5.png */; };
+		E295133529C4E29B006AADA4 /* fb4.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132F29C4E29B006AADA4 /* fb4.png */; };
 		E29CEC7F29B4C8B700AF7445 /* PrefsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC7E29B4C8B700AF7445 /* PrefsHelper.swift */; };
 		E29CEC8129B5044900AF7445 /* SceneManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */; };
 		E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */; };
@@ -90,6 +96,13 @@
 		E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
 		E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		E261D24029B25D0000E6AC6E /* Penguin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penguin.swift; sourceTree = "<group>"; };
+		E295132929C4DE5F006AADA4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E295132A29C4E29A006AADA4 /* fb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb1.png; sourceTree = "<group>"; };
+		E295132B29C4E29A006AADA4 /* fb3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb3.png; sourceTree = "<group>"; };
+		E295132C29C4E29A006AADA4 /* fb6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb6.png; sourceTree = "<group>"; };
+		E295132D29C4E29A006AADA4 /* fb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb2.png; sourceTree = "<group>"; };
+		E295132E29C4E29B006AADA4 /* fb5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb5.png; sourceTree = "<group>"; };
+		E295132F29C4E29B006AADA4 /* fb4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb4.png; sourceTree = "<group>"; };
 		E29CEC7E29B4C8B700AF7445 /* PrefsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsHelper.swift; sourceTree = "<group>"; };
 		E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagerDelegate.swift; sourceTree = "<group>"; };
 		E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitButton.swift; sourceTree = "<group>"; };
@@ -140,6 +153,13 @@
 		E261D20829B0D5BD00E6AC6E = {
 			isa = PBXGroup;
 			children = (
+				E295132A29C4E29A006AADA4 /* fb1.png */,
+				E295132D29C4E29A006AADA4 /* fb2.png */,
+				E295132B29C4E29A006AADA4 /* fb3.png */,
+				E295132F29C4E29B006AADA4 /* fb4.png */,
+				E295132E29C4E29B006AADA4 /* fb5.png */,
+				E295132C29C4E29A006AADA4 /* fb6.png */,
+				E295132929C4DE5F006AADA4 /* README.md */,
 				E261D21329B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */,
 				E261D21229B0D5BD00E6AC6E /* Products */,
 			);
@@ -367,12 +387,16 @@
 				E2E20B4029C2697B009BAB5C /* whip.wav in Resources */,
 				E2AE57F229C2530C00D0463A /* noh.wav in Resources */,
 				E2AE57FD29C2530C00D0463A /* frozen-mainzik-2p.wav in Resources */,
+				E295133029C4E29B006AADA4 /* fb1.png in Resources */,
 				E2AE57EF29C2530C00D0463A /* typewriter.wav in Resources */,
 				E2AE57ED29C2530C00D0463A /* stick.wav in Resources */,
+				E295133329C4E29B006AADA4 /* fb2.png in Resources */,
 				E2AE57F429C2530C00D0463A /* hurry.wav in Resources */,
 				E261D22029B0D5BD00E6AC6E /* Main.storyboard in Resources */,
 				E2AE57F629C2530C00D0463A /* menu_change.wav in Resources */,
+				E295133529C4E29B006AADA4 /* fb4.png in Resources */,
 				E29CEC8F29B5C4AD00AF7445 /* theBubbleLetters.ttf in Resources */,
+				E295133429C4E29B006AADA4 /* fb5.png in Resources */,
 				E261D22229B0D5BE00E6AC6E /* Assets.xcassets in Resources */,
 				E2AE57F529C2530C00D0463A /* introzik.wav in Resources */,
 				E2AE57FC29C2530C00D0463A /* newroot.wav in Resources */,
@@ -380,12 +404,14 @@
 				E21024A729B39FF3002DA2A2 /* levels.txt in Resources */,
 				E2AE57FA29C2530C00D0463A /* frozen-mainzik-1p.wav in Resources */,
 				E2AE57FF29C2530C00D0463A /* destroy_group.wav in Resources */,
+				E295133129C4E29B006AADA4 /* fb3.png in Resources */,
 				E2AE57FE29C2530C00D0463A /* newroot_solo.wav in Resources */,
 				E2AE57F329C2530C00D0463A /* snore.wav in Resources */,
 				E2AE57FB29C2530C00D0463A /* cancel.wav in Resources */,
 				E2AE580329C254C400D0463A /* button.wav in Resources */,
 				E261D22529B0D5BE00E6AC6E /* LaunchScreen.storyboard in Resources */,
 				E2AE57EE29C2530C00D0463A /* rebound.wav in Resources */,
+				E295133229C4E29B006AADA4 /* fb6.png in Resources */,
 				E2AE57F029C2530C00D0463A /* menu_selected.wav in Resources */,
 				E2AE57F929C2530C00D0463A /* chatted.wav in Resources */,
 				E2AE57F829C2530C00D0463A /* lose.wav in Resources */,
