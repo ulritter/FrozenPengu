@@ -102,14 +102,14 @@ struct C {
         static let audioVolumeText = "Swipe for Music Volume: "
         
         static let creditsContent = [
-            "Completeley recoded for IOS by ",
+            "Entirely re-coded for IOS by ",
             "** Uwe Ritter **",
             "If you want to buy me a coffee:",
-            "uritter@web.de",
-            " ",
-            "Thanks to original game",
-            "contributors/devlopers:",
-            "Guillaume Cottenceau-design, code",
+            ">>>>>uritter@web.de<<<<<",
+            "-----Thanks to:-----",
+            "Nicolas Ramz-mod Player",
+            "Original game developers:",
+            "Guillaume Cottenceau-design",
             "Alexis Younes-graphics",
             "Matthias Le Bidan-music",
         ]
