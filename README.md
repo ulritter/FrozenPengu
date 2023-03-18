@@ -29,4 +29,4 @@ and special thanks to:
 
 Nicolas RAMZ - http://www.warpdesign.fr/
 
-for his code to play Amiga xxx.mod files as backgroung music!
+for his code to be able to play Amiga Tracker Music xxx.mod files as low footprint background music!
