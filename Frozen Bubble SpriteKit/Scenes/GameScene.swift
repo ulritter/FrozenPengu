@@ -13,7 +13,7 @@ import SpriteKit
 class GameScene: SKScene {
      
     enum GameState {
-        case ready, ongoing, paused, won, lost
+        case ready, ongoing, won, lost
     }
     
     var gameState: GameState = GameState.ready {
@@ -24,8 +24,6 @@ class GameScene: SKScene {
                 break
             case .ongoing:
                 penguin.animate(for: C.S.playAction)
-            case .paused:
-                break
             case .won:
                 self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                 ScoreHelper.updateScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
@@ -80,6 +78,8 @@ class GameScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
     var sKPhysicsContactDelegate: SKPhysicsContactDelegate?
+    var modPlayerDelegate: ModPlayerDelegate!
+    
     var level: [Int]!
     var levelKey: Int!
 
@@ -102,18 +102,34 @@ class GameScene: SKScene {
     var reserveBubble: Bubble!
     var remainingBubbleColors = [1,2,3,4,5,6,7,8]
     var levelManagerDelegate: LevelManagerDelegate!
-    
     var numberOfShots = 0
     
     
-    init(size: CGSize,levelManagerDelegate: LevelManagerDelegate) {
+    init(size: CGSize,levelManagerDelegate: LevelManagerDelegate, modPlayerDelegate: ModPlayerDelegate) {
         super.init(size: size)
         self.levelManagerDelegate = levelManagerDelegate
+        self.modPlayerDelegate = modPlayerDelegate
         self.levelKey = PrefsHelper.getSinglePlayerLevel()
         self.level = self.levelManagerDelegate.loadLevel(level: levelKey)
         self.isSoundOn = PrefsHelper.isSoundOn()
         self.isMusicOn = PrefsHelper.isMusicOn()
         self.bubbleType = PrefsHelper.getBubbleType()
+        
+//        if isMusicOn {
+//            if !self.modPlayerDelegate.isMusicPlaying() {
+//                self.modPlayerDelegate.audioStart()
+//            }
+//        } else {
+//            if self.modPlayerDelegate.isMusicPlaying() {
+//                self.modPlayerDelegate.audioPause()
+//            }
+//        }
+        
+        if isMusicOn {
+                self.modPlayerDelegate.audioStart()
+        } else {
+                self.modPlayerDelegate.audioPause()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -399,7 +415,6 @@ class GameScene: SKScene {
     
     func loadActualLevel() {
         // populate "theGrid" with actual level data
-        let minY = CGFloat(Int.max)
         var index = 0
         for row in 0...C.B.maxRows-1 {
             let actRow = C.B.maxRows - row - 1
@@ -526,36 +541,106 @@ class GameScene: SKScene {
     
     func autoshootHandler() {
         // handle autoshoot warnings / actions
-        if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 0 && gameState == .ready {
-            autoshootWarningStage = 1
-        }
-        if autoshootWarningStage > 0 {
-            if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 1 {
-                childNode(withName: C.S.hurryPanel)?.alpha = 1.0
-                if isSoundOn {
-                    run(soundPlayer.hurrySound)
+        if gameState == .ready {
+            if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 0 && gameState == .ready {
+                autoshootWarningStage = 1
+            }
+            
+            if autoshootWarningStage > 0 {
+                if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 1 {
+                    childNode(withName: C.S.hurryPanel)?.alpha = 1.0
+                    if isSoundOn {
+                        run(soundPlayer.hurrySound)
+                    }
+                    autoshootWarningStage += 1
                 }
-                autoshootWarningStage += 1
+                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime && autoshootWarningStage == 2 {
+                    fieldBlink()
+                    autoshootWarningStage += 1
+                }
+                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoshootWarningStage == 3 {
+                    fieldBlink()
+                    autoshootWarningStage += 1
+                }
+                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*3.0 && autoshootWarningStage == 4 {
+                    fieldBlink()
+                    autoshootWarningStage += 1
+                }
+                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*4.0 && autoshootWarningStage == 5 {
+                    fieldBlink()
+                    autoshootWarningStage += 1
+                }
+                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*5.0  && autoshootWarningStage == 6 {
+                    autoshootWarningStage = 0
+                    shootBubble(to: lastTouchPosition)
+                }
             }
-            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime && autoshootWarningStage == 2 {
-                fieldBlink()
-                autoshootWarningStage += 1
-            }
-            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoshootWarningStage == 3 {
-                fieldBlink()
-                autoshootWarningStage += 1
-            }
-            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*3.0 && autoshootWarningStage == 4 {
-                fieldBlink()
-                autoshootWarningStage += 1
-            }
-            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*4.0 && autoshootWarningStage == 5 {
-                fieldBlink()
-                autoshootWarningStage += 1
-            }
-            if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*5.0  && autoshootWarningStage == 6 {
-                autoshootWarningStage = 0
-                shootBubble(to: lastTouchPosition)
+        }
+    }
+    
+    func handlePlayField() {
+        if gameState != .won && gameState != .lost {
+            gameState = .ready
+            for child in self.children {
+                if child is Bubble {
+                    let c = child as! Bubble
+                    if c.isFlying() {
+                        gameState = .ongoing
+                    }
+                    if c.position.y < playFieldBottom {
+                        c.removeFromParent()
+                    }
+                    if c.name == C.S.flyingBubbleName {
+                        // check if we can dock somewhere
+                        // we don't use physics body for docking due to timing issues (both balls would bounce)
+                        // but rather check the grid coordinates
+                        for (_, gridCell) in theGrid.enumerated() {
+                            if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
+                                 &&  (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
+                                || ((gridCell.bubble == nil) && (c.position.y > theGrid[0].position!.y)
+                                    && (TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth)))
+                            {
+                                gameState = .ready
+                                let dockingBubble = Bubble(with: frame.size, as: c.getColor())
+                                dockingBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
+                                dockingBubble.zPosition = C.Z.bubbleZ
+                                PhysicsHelper.addPhysicsBody(to: dockingBubble, with: C.S.bubbleName)
+                                dockingBubble.name = C.S.gridBubbleName
+                                let gridIndex = closestEmptyCell(point: c.position)
+                                c.removeFromParent()
+                                if gridIndex < theGrid.count {
+                                    if theGrid[gridIndex].position!.y < physicsBoundsBottom-bubbleCellWidth/4 {
+                                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                                        gameState = .lost
+                                        break
+                                    }
+                                    theGrid[gridIndex].bubble = dockingBubble
+                                    dockingBubble.position = theGrid[gridIndex].position!
+                                    addChild(dockingBubble)
+                                   
+                                    collisionReturnValue = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
+                                    
+                                    let numberOfRemainingBubbles = collisionReturnValue.bubblesLeft
+                                    if isSoundOn {
+                                        if collisionReturnValue.didDrop {
+                                            run(soundPlayer.destroyGroupdSound)
+                                        } else {
+                                            run(soundPlayer.stickSound)
+                                        }
+                                    }
+                                    if numberOfRemainingBubbles == 0 {
+                                        gameState = .won
+                                    }
+                                } else {
+                                    //we are past "theGrid" size and haven't found an empty grid position
+                                    self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                                    gameState = .lost
+                                }
+                                break
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -603,72 +688,8 @@ class GameScene: SKScene {
         if dtCumulated > 0.005 {
             autoshootTimer += dtCumulated
             autoshootHandler()
-
             dtCumulated=0
-            if gameState != .won && gameState != .lost {
-                gameState = .ready
-                for child in self.children {
-                    if child is Bubble {
-                        let c = child as! Bubble
-                        if c.isFlying() {
-                            gameState = .ongoing
-                        }
-                        if c.position.y < playFieldBottom {
-                            c.removeFromParent()
-                        }
-                        if c.name == C.S.flyingBubbleName {
-                            // check if we can dock somewhere
-                            // we don't use physics body for docking due to timing issues (both balls would bounce)
-                            // but rather check the grid coordinates
-                            for (_, gridCell) in theGrid.enumerated() {
-                                if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
-                                     &&  (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
-                                    || ((gridCell.bubble == nil) && (c.position.y > theGrid[0].position!.y)
-                                        && (TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth)))
-                                {
-                                    gameState = .ready
-                                    let dockingBubble = Bubble(with: frame.size, as: c.getColor())
-                                    dockingBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
-                                    dockingBubble.zPosition = C.Z.bubbleZ
-                                    PhysicsHelper.addPhysicsBody(to: dockingBubble, with: C.S.bubbleName)
-                                    dockingBubble.name = C.S.gridBubbleName
-                                    let gridIndex = closestEmptyCell(point: c.position)
-                                    c.removeFromParent()
-                                    if gridIndex < theGrid.count {
-                                        if theGrid[gridIndex].position!.y < physicsBoundsBottom-bubbleCellWidth/4 {
-                                            self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                                            gameState = .lost
-                                            break
-                                        }
-                                        theGrid[gridIndex].bubble = dockingBubble
-                                        dockingBubble.position = theGrid[gridIndex].position!
-                                        addChild(dockingBubble)
-                                       
-                                        collisionReturnValue = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
-                                        
-                                        let numberOfRemainingBubbles = collisionReturnValue.bubblesLeft
-                                        if isSoundOn {
-                                            if collisionReturnValue.didDrop {
-                                                run(soundPlayer.destroyGroupdSound)
-                                            } else {
-                                                run(soundPlayer.stickSound)
-                                            }
-                                        }
-                                        if numberOfRemainingBubbles == 0 {
-                                            gameState = .won
-                                        }
-                                    } else {
-                                        //we are past "theGrid" size and haven't found an empty grid position
-                                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                                        gameState = .lost
-                                    }
-                                    break
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            handlePlayField()
         }
     }
 }

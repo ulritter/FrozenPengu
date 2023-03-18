@@ -100,7 +100,6 @@ class CollisionHelper {
         //first mark all cells containing bubbles
         for (_,cell) in grid.enumerated() {
             if cell.bubble != nil {
-                let c = cell.bubble!
                 cell.bubble?.infect()
             }
         }

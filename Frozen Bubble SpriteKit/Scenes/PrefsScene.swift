@@ -12,6 +12,7 @@ import SpriteKit
 class PrefsScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
+    var modPlayerDelegate: ModPlayerDelegate!
     
     var backgroundImage: SKSpriteNode!
     var titleLabel: SKLabelNode!
@@ -28,12 +29,26 @@ class PrefsScene: SKScene {
     var backLabel: SKLabelNode!
     var creditButton: SpriteKitButton!
     var creditLabel: SKLabelNode!
+    var volumeLabel: SKLabelNode!
+    var backgroundImageBottom: CGFloat!
+    var backgroundVolume: Float!
     
+    var showVolume: Bool = false
     var isSoundOn: Bool = true
     var isMusicOn: Bool = true
     
+    init (size: CGSize, modPlayerDelegate: ModPlayerDelegate) {
+        super.init(size: size)
+        self.modPlayerDelegate = modPlayerDelegate
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
         
+        backgroundVolume = PrefsHelper.getBackgroundAudioVolume()
         isSoundOn = PrefsHelper.isSoundOn()
         soundText = isSoundOn ? C.S.switchSoundOffText : C.S.switchSoundOnText
         isMusicOn = PrefsHelper.isMusicOn()
@@ -54,7 +69,7 @@ class PrefsScene: SKScene {
         let ySize = (xSize / backgroundImage.size.width) * backgroundImage.size.height
         backgroundImage.size = CGSize(width: xSize, height: ySize)
         
-        let backgroundImageBottom = (self.frame.size.height-backgroundImage.frame.size.height)/2
+        backgroundImageBottom = (self.frame.size.height-backgroundImage.frame.size.height)/2
         backgroundImage.position = CGPoint(x: 0.0, y: backgroundImageBottom)
         backgroundImage.zPosition = C.Z.farBGZ
         addChild(backgroundImage)
@@ -64,6 +79,13 @@ class PrefsScene: SKScene {
         
 //        let buttonWidth = backgroundImage.frame.width*0.6
 //        let buttonHeight = backgroundImage.frame.height*0.1
+        
+        volumeLabel = SKLabelNode (fontNamed: C.S.gameFontName)
+        volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
+        volumeLabel.position = CGPoint(x: frame.midX, y: frame.height*0.1)
+        volumeLabel.scale(to: frame.size, width: true, multiplier: 0.8)
+        volumeLabel.alpha = PrefsHelper.isMusicOn() ? 1.0 : 0.0
+        addChild(volumeLabel)
         
         soundButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: toggleSound, index: 0)
         soundButton.scale(to: frame.size, width: false, multiplier: 0.08)
@@ -156,11 +178,16 @@ class PrefsScene: SKScene {
     func toggleMusic(_: Int) {
         isMusicOn = !isMusicOn
         if isMusicOn {
+            modPlayerDelegate.loadRandomSong()
             musicLabel.text = C.S.switchMusicOffText
             PrefsHelper.setMusic(to: C.S.onKey)
+            volumeLabel.alpha = 1.0
+            modPlayerDelegate.audioStart()
         } else {
             musicLabel.text = C.S.switchMusicOnText
             PrefsHelper.setMusic(to: C.S.offKey)
+            volumeLabel.alpha = 0.0
+            modPlayerDelegate.audioPause()
         }
     }
     
@@ -199,7 +226,39 @@ class PrefsScene: SKScene {
     }
 
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+                
+        if let touch = touches.first {
+            let touchpoint:CGPoint = touch.location(in: self)
+            if  touchpoint.y < backgroundImageBottom {
+                let factor = touchpoint.x/frame.maxX
+                backgroundVolume = Float(2*factor)
+                volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
+                modPlayerDelegate.setAudioVolume(to: backgroundVolume)
+            }
+        }
+    }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let touchpoint:CGPoint = touch.location(in: self)
+            if  touchpoint.y < backgroundImageBottom {
+                let factor = touchpoint.x/frame.maxX
+                backgroundVolume = Float(2*factor)
+                volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
+                modPlayerDelegate.setAudioVolume(to: backgroundVolume)
+            }
+        }
+
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        PrefsHelper.setBackgroundAudioVolume(to: backgroundVolume)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        return
+    }
     
 }
 

@@ -40,6 +40,23 @@ class PrefsHelper: UserDefaults {
         UserDefaults.standard.synchronize()
     }
     
+    static func getBackgroundAudioVolume ()  -> Float {
+        if let data = UserDefaults.standard.string(forKey: C.S.audioVolumeKey) {
+            return Float(data) ?? 0.25
+        } else {
+            UserDefaults.standard.set("0.25", forKey: C.S.audioVolumeKey)
+            UserDefaults.standard.synchronize()
+            return 0.25
+        }
+    }
+    
+    static func setBackgroundAudioVolume (to volume: Float) {
+        let volumeString = String(volume)
+        UserDefaults.standard.set(volumeString, forKey: C.S.audioVolumeKey)
+        UserDefaults.standard.synchronize()
+    }
+
+    
     static func getBubbleType ()  -> String {
         if let data = UserDefaults.standard.string(forKey: C.S.bubbleTypeKey) {
             return data

@@ -36,6 +36,26 @@
 		E295133329C4E29B006AADA4 /* fb2.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132D29C4E29A006AADA4 /* fb2.png */; };
 		E295133429C4E29B006AADA4 /* fb5.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132E29C4E29B006AADA4 /* fb5.png */; };
 		E295133529C4E29B006AADA4 /* fb4.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132F29C4E29B006AADA4 /* fb4.png */; };
+		E295134C29C50BBF006AADA4 /* ModPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295134B29C50BBF006AADA4 /* ModPlayer.swift */; };
+		E295135629C5116C006AADA4 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295135529C5116C006AADA4 /* DataExtension.swift */; };
+		E295136129C51216006AADA4 /* ModPlayerAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295135E29C51216006AADA4 /* ModPlayerAudioUnit.swift */; };
+		E295136229C51216006AADA4 /* CustomAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295135F29C51216006AADA4 /* CustomAudioUnit.swift */; };
+		E295136329C51216006AADA4 /* Effects.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295136029C51216006AADA4 /* Effects.swift */; };
+		E295136529C515C9006AADA4 /* BinUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295136429C515C9006AADA4 /* BinUtils.swift */; };
+		E295136629C51664006AADA4 /* aftertherain.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134429C509BC006AADA4 /* aftertherain.mod */; };
+		E295136729C51667006AADA4 /* androidrupture.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295133F29C509BC006AADA4 /* androidrupture.mod */; };
+		E295136829C5166A006AADA4 /* artificial.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134729C509BD006AADA4 /* artificial.mod */; };
+		E295136929C5166E006AADA4 /* bluestars.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295133E29C509BC006AADA4 /* bluestars.mod */; };
+		E295136A29C51671006AADA4 /* chungababe.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134229C509BC006AADA4 /* chungababe.mod */; };
+		E295136B29C51674006AADA4 /* crystalhammer.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134129C509BC006AADA4 /* crystalhammer.mod */; };
+		E295136C29C51678006AADA4 /* dreamscope.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134329C509BC006AADA4 /* dreamscope.mod */; };
+		E295136D29C5167A006AADA4 /* freefall.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134529C509BC006AADA4 /* freefall.mod */; };
+		E295136E29C5167E006AADA4 /* homesick.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134629C509BC006AADA4 /* homesick.mod */; };
+		E295136F29C51681006AADA4 /* popcorn.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134829C509BD006AADA4 /* popcorn.mod */; };
+		E295137029C51684006AADA4 /* stardustmemories.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134029C509BC006AADA4 /* stardustmemories.mod */; };
+		E295137129C51687006AADA4 /* technostyleiii.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134929C509BD006AADA4 /* technostyleiii.mod */; };
+		E295137329C525A1006AADA4 /* ModPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295137229C525A1006AADA4 /* ModPlayerDelegate.swift */; };
+		E295137529C52CF7006AADA4 /* bgmusic.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295137429C52CF7006AADA4 /* bgmusic.mod */; };
 		E29CEC7F29B4C8B700AF7445 /* PrefsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC7E29B4C8B700AF7445 /* PrefsHelper.swift */; };
 		E29CEC8129B5044900AF7445 /* SceneManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */; };
 		E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */; };
@@ -103,6 +123,26 @@
 		E295132D29C4E29A006AADA4 /* fb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb2.png; sourceTree = "<group>"; };
 		E295132E29C4E29B006AADA4 /* fb5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb5.png; sourceTree = "<group>"; };
 		E295132F29C4E29B006AADA4 /* fb4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb4.png; sourceTree = "<group>"; };
+		E295133E29C509BC006AADA4 /* bluestars.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluestars.mod; sourceTree = "<group>"; };
+		E295133F29C509BC006AADA4 /* androidrupture.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = androidrupture.mod; sourceTree = "<group>"; };
+		E295134029C509BC006AADA4 /* stardustmemories.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = stardustmemories.mod; sourceTree = "<group>"; };
+		E295134129C509BC006AADA4 /* crystalhammer.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = crystalhammer.mod; sourceTree = "<group>"; };
+		E295134229C509BC006AADA4 /* chungababe.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = chungababe.mod; sourceTree = "<group>"; };
+		E295134329C509BC006AADA4 /* dreamscope.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = dreamscope.mod; sourceTree = "<group>"; };
+		E295134429C509BC006AADA4 /* aftertherain.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = aftertherain.mod; sourceTree = "<group>"; };
+		E295134529C509BC006AADA4 /* freefall.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = freefall.mod; sourceTree = "<group>"; };
+		E295134629C509BC006AADA4 /* homesick.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = homesick.mod; sourceTree = "<group>"; };
+		E295134729C509BD006AADA4 /* artificial.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = artificial.mod; sourceTree = "<group>"; };
+		E295134829C509BD006AADA4 /* popcorn.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = popcorn.mod; sourceTree = "<group>"; };
+		E295134929C509BD006AADA4 /* technostyleiii.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = technostyleiii.mod; sourceTree = "<group>"; };
+		E295134B29C50BBF006AADA4 /* ModPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModPlayer.swift; sourceTree = "<group>"; };
+		E295135529C5116C006AADA4 /* DataExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		E295135E29C51216006AADA4 /* ModPlayerAudioUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModPlayerAudioUnit.swift; sourceTree = "<group>"; };
+		E295135F29C51216006AADA4 /* CustomAudioUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAudioUnit.swift; sourceTree = "<group>"; };
+		E295136029C51216006AADA4 /* Effects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
+		E295136429C515C9006AADA4 /* BinUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinUtils.swift; sourceTree = "<group>"; };
+		E295137229C525A1006AADA4 /* ModPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModPlayerDelegate.swift; sourceTree = "<group>"; };
+		E295137429C52CF7006AADA4 /* bgmusic.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = bgmusic.mod; sourceTree = "<group>"; };
 		E29CEC7E29B4C8B700AF7445 /* PrefsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsHelper.swift; sourceTree = "<group>"; };
 		E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagerDelegate.swift; sourceTree = "<group>"; };
 		E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitButton.swift; sourceTree = "<group>"; };
@@ -176,11 +216,12 @@
 		E261D21329B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */ = {
 			isa = PBXGroup;
 			children = (
-				E29CEC8D29B5C0BD00AF7445 /* Frozen-Bubble-SpriteKit-Info.plist */,
 				E261D22C29B0D5F200E6AC6E /* Controller */,
 				E261D23729B0D70A00E6AC6E /* Custom Classes */,
 				E261D23029B0D6A300E6AC6E /* Extensions */,
+				E29CEC8D29B5C0BD00AF7445 /* Frozen-Bubble-SpriteKit-Info.plist */,
 				E261D22E29B0D65000E6AC6E /* HelperFiles */,
+				E295133629C508A9006AADA4 /* ModPlayer */,
 				E261D23129B0D6AB00E6AC6E /* Protocols */,
 				E261D23329B0D6C300E6AC6E /* Resources */,
 				E261D22B29B0D5DD00E6AC6E /* Scenes */,
@@ -255,6 +296,7 @@
 			children = (
 				E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */,
 				E255838129BC672100292729 /* LevelManagerDelegate.swift */,
+				E295137229C525A1006AADA4 /* ModPlayerDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -262,6 +304,7 @@
 		E261D23329B0D6C300E6AC6E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E295133D29C509A2006AADA4 /* ModAudio */,
 				E261D23429B0D6DB00E6AC6E /* Audio */,
 				E21024A629B39FF3002DA2A2 /* levels.txt */,
 				E261D22129B0D5BE00E6AC6E /* Assets.xcassets */,
@@ -323,6 +366,71 @@
 				E255838529BDC94000292729 /* Structs.swift */,
 			);
 			path = "Custom Classes";
+			sourceTree = "<group>";
+		};
+		E295133629C508A9006AADA4 /* ModPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E295135429C5114B006AADA4 /* ModExtensions */,
+				E295134D29C51134006AADA4 /* AudioUnit */,
+				E295134A29C50B95006AADA4 /* ModPlayer */,
+				E295133B29C50963006AADA4 /* Utils */,
+			);
+			path = ModPlayer;
+			sourceTree = "<group>";
+		};
+		E295133B29C50963006AADA4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E295136429C515C9006AADA4 /* BinUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		E295133D29C509A2006AADA4 /* ModAudio */ = {
+			isa = PBXGroup;
+			children = (
+				E295134429C509BC006AADA4 /* aftertherain.mod */,
+				E295137429C52CF7006AADA4 /* bgmusic.mod */,
+				E295133F29C509BC006AADA4 /* androidrupture.mod */,
+				E295134729C509BD006AADA4 /* artificial.mod */,
+				E295133E29C509BC006AADA4 /* bluestars.mod */,
+				E295134229C509BC006AADA4 /* chungababe.mod */,
+				E295134129C509BC006AADA4 /* crystalhammer.mod */,
+				E295134329C509BC006AADA4 /* dreamscope.mod */,
+				E295134529C509BC006AADA4 /* freefall.mod */,
+				E295134629C509BC006AADA4 /* homesick.mod */,
+				E295134829C509BD006AADA4 /* popcorn.mod */,
+				E295134029C509BC006AADA4 /* stardustmemories.mod */,
+				E295134929C509BD006AADA4 /* technostyleiii.mod */,
+			);
+			path = ModAudio;
+			sourceTree = "<group>";
+		};
+		E295134A29C50B95006AADA4 /* ModPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E295134B29C50BBF006AADA4 /* ModPlayer.swift */,
+			);
+			path = ModPlayer;
+			sourceTree = "<group>";
+		};
+		E295134D29C51134006AADA4 /* AudioUnit */ = {
+			isa = PBXGroup;
+			children = (
+				E295135F29C51216006AADA4 /* CustomAudioUnit.swift */,
+				E295136029C51216006AADA4 /* Effects.swift */,
+				E295135E29C51216006AADA4 /* ModPlayerAudioUnit.swift */,
+			);
+			path = AudioUnit;
+			sourceTree = "<group>";
+		};
+		E295135429C5114B006AADA4 /* ModExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				E295135529C5116C006AADA4 /* DataExtension.swift */,
+			);
+			path = ModExtensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,17 +499,25 @@
 				E2AE57EF29C2530C00D0463A /* typewriter.wav in Resources */,
 				E2AE57ED29C2530C00D0463A /* stick.wav in Resources */,
 				E295133329C4E29B006AADA4 /* fb2.png in Resources */,
+				E295137029C51684006AADA4 /* stardustmemories.mod in Resources */,
+				E295136D29C5167A006AADA4 /* freefall.mod in Resources */,
 				E2AE57F429C2530C00D0463A /* hurry.wav in Resources */,
+				E295137129C51687006AADA4 /* technostyleiii.mod in Resources */,
 				E261D22029B0D5BD00E6AC6E /* Main.storyboard in Resources */,
 				E2AE57F629C2530C00D0463A /* menu_change.wav in Resources */,
 				E295133529C4E29B006AADA4 /* fb4.png in Resources */,
+				E295136B29C51674006AADA4 /* crystalhammer.mod in Resources */,
 				E29CEC8F29B5C4AD00AF7445 /* theBubbleLetters.ttf in Resources */,
 				E295133429C4E29B006AADA4 /* fb5.png in Resources */,
 				E261D22229B0D5BE00E6AC6E /* Assets.xcassets in Resources */,
 				E2AE57F529C2530C00D0463A /* introzik.wav in Resources */,
 				E2AE57FC29C2530C00D0463A /* newroot.wav in Resources */,
 				E2AE57F129C2530C00D0463A /* malus.wav in Resources */,
+				E295136929C5166E006AADA4 /* bluestars.mod in Resources */,
 				E21024A729B39FF3002DA2A2 /* levels.txt in Resources */,
+				E295136E29C5167E006AADA4 /* homesick.mod in Resources */,
+				E295136829C5166A006AADA4 /* artificial.mod in Resources */,
+				E295136A29C51671006AADA4 /* chungababe.mod in Resources */,
 				E2AE57FA29C2530C00D0463A /* frozen-mainzik-1p.wav in Resources */,
 				E2AE57FF29C2530C00D0463A /* destroy_group.wav in Resources */,
 				E295133129C4E29B006AADA4 /* fb3.png in Resources */,
@@ -411,12 +527,17 @@
 				E2AE580329C254C400D0463A /* button.wav in Resources */,
 				E261D22529B0D5BE00E6AC6E /* LaunchScreen.storyboard in Resources */,
 				E2AE57EE29C2530C00D0463A /* rebound.wav in Resources */,
+				E295137529C52CF7006AADA4 /* bgmusic.mod in Resources */,
+				E295136F29C51681006AADA4 /* popcorn.mod in Resources */,
+				E295136629C51664006AADA4 /* aftertherain.mod in Resources */,
 				E295133229C4E29B006AADA4 /* fb6.png in Resources */,
 				E2AE57F029C2530C00D0463A /* menu_selected.wav in Resources */,
+				E295136729C51667006AADA4 /* androidrupture.mod in Resources */,
 				E2AE57F929C2530C00D0463A /* chatted.wav in Resources */,
 				E2AE57F829C2530C00D0463A /* lose.wav in Resources */,
 				E2AE580129C2530C00D0463A /* pause.wav in Resources */,
 				E29CEC8C29B5C00300AF7445 /* unanimous.inverted-brk.ttf in Resources */,
+				E295136C29C51678006AADA4 /* dreamscope.mod in Resources */,
 				E2AE57F729C2530C00D0463A /* applause.wav in Resources */,
 				E2AE580029C2530C00D0463A /* launch.wav in Resources */,
 			);
@@ -434,26 +555,33 @@
 				E21024A529B38F24002DA2A2 /* ColorHelper.swift in Sources */,
 				E21024D329B3B253002DA2A2 /* SoundPlayer.swift in Sources */,
 				E21024A329B38B8D002DA2A2 /* Bubble.swift in Sources */,
+				E295135629C5116C006AADA4 /* DataExtension.swift in Sources */,
+				E295134C29C50BBF006AADA4 /* ModPlayer.swift in Sources */,
 				E261D21B29B0D5BD00E6AC6E /* GameScene.swift in Sources */,
+				E295136329C51216006AADA4 /* Effects.swift in Sources */,
 				E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */,
 				E261D23B29B0D9BE00E6AC6E /* GameConstants.swift in Sources */,
 				E2AE57CC29BFB48100D0463A /* PrefsScene.swift in Sources */,
 				E261D23F29B24EE100E6AC6E /* AnimationHelper.swift in Sources */,
 				E261D23D29B20EC300E6AC6E /* SKNode+Extensions.swift in Sources */,
+				E295137329C525A1006AADA4 /* ModPlayerDelegate.swift in Sources */,
 				E29CEC7F29B4C8B700AF7445 /* PrefsHelper.swift in Sources */,
 				E255838629BDC94000292729 /* Structs.swift in Sources */,
 				E21024A129B38B3A002DA2A2 /* Compressor.swift in Sources */,
 				E21024D729B63770002DA2A2 /* Launcher.swift in Sources */,
 				E261D21D29B0D5BD00E6AC6E /* GameViewController.swift in Sources */,
+				E295136529C515C9006AADA4 /* BinUtils.swift in Sources */,
 				E2AE57D229C0720C00D0463A /* CreditsScene.swift in Sources */,
 				E2AE57CE29C04FDC00D0463A /* ScoreHelper.swift in Sources */,
 				E29CEC8829B5425B00AF7445 /* MenuScene.swift in Sources */,
 				E255838429BCDD3E00292729 /* ScoresScene.swift in Sources */,
 				E255838229BC672200292729 /* LevelManagerDelegate.swift in Sources */,
 				E261D21529B0D5BD00E6AC6E /* AppDelegate.swift in Sources */,
+				E295136129C51216006AADA4 /* ModPlayerAudioUnit.swift in Sources */,
 				E255837E29B87F2E00292729 /* Line.swift in Sources */,
 				E255838A29BE2F9300292729 /* CollisionHelper.swift in Sources */,
 				E29CEC8129B5044900AF7445 /* SceneManagerDelegate.swift in Sources */,
+				E295136229C51216006AADA4 /* CustomAudioUnit.swift in Sources */,
 				E2E20B3E29BB307C009BAB5C /* Levels.swift in Sources */,
 				E21024D929B68401002DA2A2 /* TrigonometryHelper.swift in Sources */,
 			);

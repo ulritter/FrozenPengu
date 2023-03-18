@@ -33,6 +33,7 @@ struct C {
         static let actualLevelPrefsKey = "singleLevel"
         static let actualLevelScoreKeyPrefix = "level-"
         static let lastScoreInfoKey = "lastScore"
+        static let audioVolumeKey = "audioVolume"
         
         static let playBackgroundName = "PlayBackground"
         static let menuBackgroundName = "MenuBackground"
@@ -98,6 +99,7 @@ struct C {
         static let noLevelsFoundText = "No Levels found"
         static let normalBubblesText = "Standard Bubbles"
         static let colorblindBubblesText = "Colorblind Bubbles"
+        static let audioVolumeText = "Swipe for Music Volume: "
         
         static let creditsContent = [
             "Completeley recoded for IOS by ",
