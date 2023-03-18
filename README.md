@@ -17,7 +17,7 @@ Enjoy!
 <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb4.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb5.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb6.png" width = "200" height = "286">
 
 
-###Thanks and Credits to:
+## Thanks and Credits to:
 
 Guillaume Cottenceau: design & original programming
 Alexis Younes (Ayo73): graphics & original website design

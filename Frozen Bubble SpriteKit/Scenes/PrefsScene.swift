@@ -244,7 +244,7 @@ class PrefsScene: SKScene {
             let touchpoint:CGPoint = touch.location(in: self)
             if  touchpoint.y < backgroundImageBottom {
                 let factor = touchpoint.x/frame.maxX
-                backgroundVolume = Float(2*factor)
+                backgroundVolume = Float(5*factor)
                 volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
                 modPlayerDelegate.setAudioVolume(to: backgroundVolume)
             }
