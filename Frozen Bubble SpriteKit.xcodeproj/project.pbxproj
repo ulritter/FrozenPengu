@@ -47,15 +47,11 @@
 		E295136829C5166A006AADA4 /* artificial.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134729C509BD006AADA4 /* artificial.mod */; };
 		E295136929C5166E006AADA4 /* bluestars.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295133E29C509BC006AADA4 /* bluestars.mod */; };
 		E295136A29C51671006AADA4 /* chungababe.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134229C509BC006AADA4 /* chungababe.mod */; };
-		E295136B29C51674006AADA4 /* crystalhammer.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134129C509BC006AADA4 /* crystalhammer.mod */; };
-		E295136C29C51678006AADA4 /* dreamscope.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134329C509BC006AADA4 /* dreamscope.mod */; };
 		E295136D29C5167A006AADA4 /* freefall.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134529C509BC006AADA4 /* freefall.mod */; };
-		E295136E29C5167E006AADA4 /* homesick.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134629C509BC006AADA4 /* homesick.mod */; };
 		E295136F29C51681006AADA4 /* popcorn.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134829C509BD006AADA4 /* popcorn.mod */; };
 		E295137029C51684006AADA4 /* stardustmemories.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134029C509BC006AADA4 /* stardustmemories.mod */; };
 		E295137129C51687006AADA4 /* technostyleiii.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295134929C509BD006AADA4 /* technostyleiii.mod */; };
 		E295137329C525A1006AADA4 /* ModPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E295137229C525A1006AADA4 /* ModPlayerDelegate.swift */; };
-		E295137529C52CF7006AADA4 /* bgmusic.mod in Resources */ = {isa = PBXBuildFile; fileRef = E295137429C52CF7006AADA4 /* bgmusic.mod */; };
 		E29CEC7F29B4C8B700AF7445 /* PrefsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC7E29B4C8B700AF7445 /* PrefsHelper.swift */; };
 		E29CEC8129B5044900AF7445 /* SceneManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */; };
 		E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */; };
@@ -116,6 +112,7 @@
 		E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
 		E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		E261D24029B25D0000E6AC6E /* Penguin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penguin.swift; sourceTree = "<group>"; };
+		E285E17529C78E3D00898015 /* homesick.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = homesick.mod; sourceTree = "<group>"; };
 		E295132929C4DE5F006AADA4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E295132A29C4E29A006AADA4 /* fb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb1.png; sourceTree = "<group>"; };
 		E295132B29C4E29A006AADA4 /* fb3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb3.png; sourceTree = "<group>"; };
@@ -126,12 +123,9 @@
 		E295133E29C509BC006AADA4 /* bluestars.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = bluestars.mod; sourceTree = "<group>"; };
 		E295133F29C509BC006AADA4 /* androidrupture.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = androidrupture.mod; sourceTree = "<group>"; };
 		E295134029C509BC006AADA4 /* stardustmemories.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = stardustmemories.mod; sourceTree = "<group>"; };
-		E295134129C509BC006AADA4 /* crystalhammer.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = crystalhammer.mod; sourceTree = "<group>"; };
 		E295134229C509BC006AADA4 /* chungababe.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = chungababe.mod; sourceTree = "<group>"; };
-		E295134329C509BC006AADA4 /* dreamscope.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = dreamscope.mod; sourceTree = "<group>"; };
 		E295134429C509BC006AADA4 /* aftertherain.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = aftertherain.mod; sourceTree = "<group>"; };
 		E295134529C509BC006AADA4 /* freefall.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = freefall.mod; sourceTree = "<group>"; };
-		E295134629C509BC006AADA4 /* homesick.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = homesick.mod; sourceTree = "<group>"; };
 		E295134729C509BD006AADA4 /* artificial.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = artificial.mod; sourceTree = "<group>"; };
 		E295134829C509BD006AADA4 /* popcorn.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = popcorn.mod; sourceTree = "<group>"; };
 		E295134929C509BD006AADA4 /* technostyleiii.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = technostyleiii.mod; sourceTree = "<group>"; };
@@ -142,7 +136,6 @@
 		E295136029C51216006AADA4 /* Effects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effects.swift; sourceTree = "<group>"; };
 		E295136429C515C9006AADA4 /* BinUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinUtils.swift; sourceTree = "<group>"; };
 		E295137229C525A1006AADA4 /* ModPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModPlayerDelegate.swift; sourceTree = "<group>"; };
-		E295137429C52CF7006AADA4 /* bgmusic.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = bgmusic.mod; sourceTree = "<group>"; };
 		E29CEC7E29B4C8B700AF7445 /* PrefsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsHelper.swift; sourceTree = "<group>"; };
 		E29CEC8029B5044900AF7445 /* SceneManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManagerDelegate.swift; sourceTree = "<group>"; };
 		E29CEC8329B5404800AF7445 /* SpriteKitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitButton.swift; sourceTree = "<group>"; };
@@ -390,16 +383,13 @@
 		E295133D29C509A2006AADA4 /* ModAudio */ = {
 			isa = PBXGroup;
 			children = (
+				E285E17529C78E3D00898015 /* homesick.mod */,
 				E295134429C509BC006AADA4 /* aftertherain.mod */,
-				E295137429C52CF7006AADA4 /* bgmusic.mod */,
 				E295133F29C509BC006AADA4 /* androidrupture.mod */,
 				E295134729C509BD006AADA4 /* artificial.mod */,
 				E295133E29C509BC006AADA4 /* bluestars.mod */,
 				E295134229C509BC006AADA4 /* chungababe.mod */,
-				E295134129C509BC006AADA4 /* crystalhammer.mod */,
-				E295134329C509BC006AADA4 /* dreamscope.mod */,
 				E295134529C509BC006AADA4 /* freefall.mod */,
-				E295134629C509BC006AADA4 /* homesick.mod */,
 				E295134829C509BD006AADA4 /* popcorn.mod */,
 				E295134029C509BC006AADA4 /* stardustmemories.mod */,
 				E295134929C509BD006AADA4 /* technostyleiii.mod */,
@@ -506,7 +496,6 @@
 				E261D22029B0D5BD00E6AC6E /* Main.storyboard in Resources */,
 				E2AE57F629C2530C00D0463A /* menu_change.wav in Resources */,
 				E295133529C4E29B006AADA4 /* fb4.png in Resources */,
-				E295136B29C51674006AADA4 /* crystalhammer.mod in Resources */,
 				E29CEC8F29B5C4AD00AF7445 /* theBubbleLetters.ttf in Resources */,
 				E295133429C4E29B006AADA4 /* fb5.png in Resources */,
 				E261D22229B0D5BE00E6AC6E /* Assets.xcassets in Resources */,
@@ -515,7 +504,6 @@
 				E2AE57F129C2530C00D0463A /* malus.wav in Resources */,
 				E295136929C5166E006AADA4 /* bluestars.mod in Resources */,
 				E21024A729B39FF3002DA2A2 /* levels.txt in Resources */,
-				E295136E29C5167E006AADA4 /* homesick.mod in Resources */,
 				E295136829C5166A006AADA4 /* artificial.mod in Resources */,
 				E295136A29C51671006AADA4 /* chungababe.mod in Resources */,
 				E2AE57FA29C2530C00D0463A /* frozen-mainzik-1p.wav in Resources */,
@@ -527,7 +515,6 @@
 				E2AE580329C254C400D0463A /* button.wav in Resources */,
 				E261D22529B0D5BE00E6AC6E /* LaunchScreen.storyboard in Resources */,
 				E2AE57EE29C2530C00D0463A /* rebound.wav in Resources */,
-				E295137529C52CF7006AADA4 /* bgmusic.mod in Resources */,
 				E295136F29C51681006AADA4 /* popcorn.mod in Resources */,
 				E295136629C51664006AADA4 /* aftertherain.mod in Resources */,
 				E295133229C4E29B006AADA4 /* fb6.png in Resources */,
@@ -537,7 +524,6 @@
 				E2AE57F829C2530C00D0463A /* lose.wav in Resources */,
 				E2AE580129C2530C00D0463A /* pause.wav in Resources */,
 				E29CEC8C29B5C00300AF7445 /* unanimous.inverted-brk.ttf in Resources */,
-				E295136C29C51678006AADA4 /* dreamscope.mod in Resources */,
 				E2AE57F729C2530C00D0463A /* applause.wav in Resources */,
 				E2AE580029C2530C00D0463A /* launch.wav in Resources */,
 			);

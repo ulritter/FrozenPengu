@@ -23,8 +23,6 @@ class GameViewController: UIViewController {
         "artificial",
         "bluestars",
         "chungababe",
-        "crystalhammer",
-        "dreamscope",
         "freefall",
         "homesick",
         "popcorn",
