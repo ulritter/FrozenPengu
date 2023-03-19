@@ -264,13 +264,12 @@ class PrefsScene: SKScene {
     }
     
     func getVolumeFromPosition(at position: CGFloat) -> CGFloat {
-        if position < frame.maxX*0.1 {
+        if position < frame.minX+frame.maxX*0.1 {
             return 0
-        } else if position > frame.maxX*0.9 {
+        } else if position > frame.maxX-frame.maxX*0.1 {
             return 1
         } else {
-            var relativeZero = position-frame.maxX*0.2
-            return relativeZero/frame.maxX*0.8
+            return (position-frame.maxX*0.1)/(frame.maxX-frame.maxX*0.2)
         }
     }
     
