@@ -181,6 +181,9 @@ class PrefsScene: SKScene {
             modPlayerDelegate.loadRandomSong()
             musicLabel.text = C.S.switchMusicOffText
             PrefsHelper.setMusic(to: C.S.onKey)
+            backgroundVolume=PrefsHelper.getBackgroundAudioVolume()
+            modPlayerDelegate.setAudioVolume(to: backgroundVolume)
+            volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*100)
             volumeLabel.alpha = 1.0
             modPlayerDelegate.audioStart()
         } else {
@@ -231,9 +234,9 @@ class PrefsScene: SKScene {
         if let touch = touches.first {
             let touchpoint:CGPoint = touch.location(in: self)
             if  touchpoint.y < backgroundImageBottom {
-                let factor = touchpoint.x/frame.maxX
-                backgroundVolume = Float(2*factor)
-                volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
+                let volume = getVolumeFromPosition(at: touchpoint.x)
+                backgroundVolume = Float(volume)
+                volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*100)
                 modPlayerDelegate.setAudioVolume(to: backgroundVolume)
             }
         }
@@ -243,9 +246,9 @@ class PrefsScene: SKScene {
         if let touch = touches.first {
             let touchpoint:CGPoint = touch.location(in: self)
             if  touchpoint.y < backgroundImageBottom {
-                let factor = touchpoint.x/frame.maxX
-                backgroundVolume = Float(5*factor)
-                volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
+                let volume = getVolumeFromPosition(at: touchpoint.x)
+                backgroundVolume = Float(volume)
+                volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*100)
                 modPlayerDelegate.setAudioVolume(to: backgroundVolume)
             }
         }
@@ -258,6 +261,17 @@ class PrefsScene: SKScene {
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         return
+    }
+    
+    func getVolumeFromPosition(at position: CGFloat) -> CGFloat {
+        if position < frame.maxX*0.1 {
+            return 0
+        } else if position > frame.maxX*0.9 {
+            return 1
+        } else {
+            var relativeZero = position-frame.maxX*0.2
+            return relativeZero/frame.maxX*0.8
+        }
     }
     
 }

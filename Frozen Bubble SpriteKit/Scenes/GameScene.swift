@@ -11,6 +11,8 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var sceneAudio: SKAudioNode!
      
     enum GameState {
         case ready, ongoing, won, lost
@@ -28,7 +30,19 @@ class GameScene: SKScene {
                 self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                 ScoreHelper.updateScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
                 if isSoundOn {
+                
                     run(soundPlayer.applauseSound)
+//                    let applause = SKAudioNode(fileNamed: "applause.wav")
+//                    applause.autoplayLooped = false
+//                    self.addChild(applause)
+//                    self.run(SKAction.sequence([
+//
+//                        SKAction.wait(forDuration: 0.5),
+//                        SKAction.run {
+//                               // this will start playing the pling once.
+//                            applause.run(SKAction.play())
+//                           }
+//                       ]))
                 }
                 penguin.animate(for: C.S.cheerAction)
                 addGameEndPanel(win: true)
@@ -107,6 +121,7 @@ class GameScene: SKScene {
     
     init(size: CGSize,levelManagerDelegate: LevelManagerDelegate, modPlayerDelegate: ModPlayerDelegate) {
         super.init(size: size)
+        self.sceneAudio = SKAudioNode()
         self.levelManagerDelegate = levelManagerDelegate
         self.modPlayerDelegate = modPlayerDelegate
         self.levelKey = PrefsHelper.getSinglePlayerLevel()

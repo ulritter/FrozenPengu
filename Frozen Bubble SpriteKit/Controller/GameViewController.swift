@@ -39,13 +39,14 @@ class GameViewController: UIViewController {
 
         levels =  Levels()
         numberOfLevels = levels.numberOfLevels()
-        
         modPlayer.loadData(fileName: getRandomMusicFile())
         
         if PrefsHelper.isMusicOn() {
-            self.modPlayer.audioStart()
             self.modPlayer.audioVolume(to: PrefsHelper.getBackgroundAudioVolume())
+            self.modPlayer.audioStart()
+
         } else {
+            self.modPlayer.audioVolume(to: PrefsHelper.getBackgroundAudioVolume())
             modPlayer.audioStart()
             modPlayer.audioPause()
         }

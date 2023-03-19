@@ -12,7 +12,8 @@ import AVFoundation
 var sampleRateHz = 48000.0
 //var testFrequency = 880.0
 var testFrequency = 600.0
-var testVolume = 0.1
+//var testVolume = 0.1
+var testVolume = 1.0
 var toneCount = 0
 
 class CustomAudioUnit: AUAudioUnit {

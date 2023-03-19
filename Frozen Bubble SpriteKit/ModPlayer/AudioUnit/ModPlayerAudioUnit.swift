@@ -532,6 +532,7 @@ class ModPlayerAudioUnit: CustomAudioUnit {
                                 // actually mix audio
                                 (ptr! + Int(i + bufferOffset)).pointee += (sample.data![Int(floor(channel.samplePos))] * Float(channel.volume)) / 64.0
                                 
+                                //>>>>>>speed
                                 let sampleSpeed = 7093789.2 / ((channel.period * 2.0) * self.mixingRate)
                                 
                                 channel.samplePos += sampleSpeed
