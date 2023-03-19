@@ -27,6 +27,6 @@ Amaury Amblard-Ladurantie: original website coding & graphics support
 
 and special thanks to:
 
-Nicolas RAMZ - http://www.warpdesign.fr/
+Nicolas Ramz - http://www.warpdesign.fr/
 
 for his code to be able to play Amiga Tracker Music xxx.mod files as low footprint background music!

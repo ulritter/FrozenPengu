@@ -2,7 +2,7 @@
 //  DataExtension.swift
 //  modplayer
 //
-//  Created by Nico on 18/07/2019.
+//  Created by Nicolas Ramz - http://www.warpdesign.fr/ on 18/07/2019.
 //  Copyright © 2019 Nico. All rights reserved.
 //
 

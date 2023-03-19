@@ -2,12 +2,12 @@
 //  ModPlayerController.swift
 //  Frozen Bubble SpriteKit
 //
-//  Created by Uwe Ritter on 17.03.23.
+//  Adapted by Uwe Ritter on 17.03.23.
 //  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 //  Original modplayer code by:
 //
-//  Nico on 16/07/2019.
+//  Nicolas Ramz - http://www.warpdesign.fr/ on 16/07/2019.
 //  Copyright © 2019 Nico. All rights reserved.
 //
 
