@@ -119,7 +119,7 @@ class PrefsHelper: UserDefaults {
     }
     
     static func removeAllScores() {
-        var level = 1
+        var level = 0
         while true {
             let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
             if UserDefaults.standard.valueExists(forKey: levelScoresKey) {

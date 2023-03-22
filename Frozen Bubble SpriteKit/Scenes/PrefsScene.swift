@@ -33,6 +33,10 @@ class PrefsScene: SKScene {
     var backgroundImageBottom: CGFloat!
     var backgroundVolume: Float!
     
+    var clearScoresKey1: Int = 0
+    var clearScoresKey2: Int = 0
+    var clearScoresKey3: Int = 0
+    
     var showVolume: Bool = false
     var isSoundOn: Bool = true
     var isMusicOn: Bool = true
@@ -54,6 +58,9 @@ class PrefsScene: SKScene {
         isMusicOn = PrefsHelper.isMusicOn()
         musicText = isMusicOn ? C.S.switchMusicOffText : C.S.switchMusicOnText
         bubbleTypeText = PrefsHelper.getBubbleType() == C.S.bubblePrefix ? C.S.colorblindBubblesText : C.S.normalBubblesText
+        clearScoresKey1 = 0
+        clearScoresKey2 = 0
+        clearScoresKey3 = 0
         layoutView()
     }
     
@@ -165,6 +172,8 @@ class PrefsScene: SKScene {
     }
     
     func toggleSound(_: Int) {
+        clearScoresKey1 += 1
+        checkIfScoresAreToBeDeleted()
         isSoundOn = !isSoundOn
         if isSoundOn {
             soundLabel.text = C.S.switchSoundOffText
@@ -176,6 +185,8 @@ class PrefsScene: SKScene {
     }
     
     func toggleMusic(_: Int) {
+        clearScoresKey2 += 1
+        checkIfScoresAreToBeDeleted()
         isMusicOn = !isMusicOn
         if isMusicOn {
             modPlayerDelegate.loadRandomSong()
@@ -195,12 +206,34 @@ class PrefsScene: SKScene {
     }
     
     func toggleBubbeType(_: Int) {
+        clearScoresKey3 += 1
+        checkIfScoresAreToBeDeleted()
         if PrefsHelper.getBubbleType() == C.S.bubblePrefix {
             bubbleTypeLabel.text = C.S.normalBubblesText
             PrefsHelper.setBubbleType(to: C.S.bubbleColorblindPrefix)
         } else {
             bubbleTypeLabel.text = C.S.colorblindBubblesText
             PrefsHelper.setBubbleType(to: C.S.bubblePrefix)
+        }
+    }
+    
+    func checkIfScoresAreToBeDeleted() {
+        // hidden code to reset score tables
+        if clearScoresKey1 == 3 &&
+            clearScoresKey2 == 2 &&
+            clearScoresKey3 == 5 {
+            let easterEgg = SKSpriteNode(imageNamed: C.S.deleteScoresIndicator)
+            easterEgg.zPosition = C.Z.panelZ
+            easterEgg.scale(to: frame.size, width: true, multiplier: 1)
+            easterEgg.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(easterEgg)
+            run(SKAction.wait(forDuration: 1.0)) {
+                easterEgg.removeFromParent()
+            }
+            PrefsHelper.removeAllScores()
+            clearScoresKey1 = 0
+            clearScoresKey2 = 0
+            clearScoresKey3 = 0
         }
     }
     

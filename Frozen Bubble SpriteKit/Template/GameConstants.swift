@@ -60,6 +60,7 @@ struct C {
         static let emptyButton = "EmptyButton"
         static let cancelButton = "CancelButton"
         static let backButton = "IngameBackButton"
+        static let deleteScoresIndicator = "CancelButton"
         
         static let winPanel = "win_panel"
         static let losePanel = "lose_panel"
