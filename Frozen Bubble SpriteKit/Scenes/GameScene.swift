@@ -32,17 +32,6 @@ class GameScene: SKScene {
                 if isSoundOn {
                 
                     run(soundPlayer.applauseSound)
-//                    let applause = SKAudioNode(fileNamed: "applause.wav")
-//                    applause.autoplayLooped = false
-//                    self.addChild(applause)
-//                    self.run(SKAction.sequence([
-//
-//                        SKAction.wait(forDuration: 0.5),
-//                        SKAction.run {
-//                               // this will start playing the pling once.
-//                            applause.run(SKAction.play())
-//                           }
-//                       ]))
                 }
                 penguin.animate(for: C.S.cheerAction)
                 addGameEndPanel(win: true)
@@ -382,21 +371,6 @@ class GameScene: SKScene {
         addChild(panel)
     }
     
-
-    func gotoMenu(_: Int) {
-        sceneManagerDelegate?.presentMenuScene()
-    }
-    
-    func gotoGame(_: Int) {
-        sceneManagerDelegate?.presentGameScene()
-    }
-    
-    func gotoScore(_: Int) {
-        levelKey += 1
-        PrefsHelper.setSinglePlayerLevel(to: levelKey)
-        sceneManagerDelegate?.presentScoresScene()
-    }
-    
     func buildGrid() {
         // create a one dimensional array describing a two domensional grid by
         // assigning the position on the screen relative to the actual screen size
@@ -709,6 +683,20 @@ class GameScene: SKScene {
             handlePlayField()
         }
     }
+    
+    func gotoMenu(_: Int) {
+        sceneManagerDelegate?.presentMenuScene()
+    }
+    
+    func gotoGame(_: Int) {
+        sceneManagerDelegate?.presentGameScene()
+    }
+    
+    func gotoScore(_: Int) {
+        levelKey += 1
+        PrefsHelper.setSinglePlayerLevel(to: levelKey)
+        sceneManagerDelegate?.presentScoresScene()
+    }
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -732,5 +720,6 @@ extension GameScene: SKPhysicsContactDelegate {
     
     func didEnd(_ contact: SKPhysicsContact) {
     }
+    
 }
 

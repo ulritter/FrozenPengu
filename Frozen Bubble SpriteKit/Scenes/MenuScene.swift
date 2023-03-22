@@ -86,6 +86,7 @@ class MenuScene: SKScene {
     
     func resetGameScene(_: Int) {
         PrefsHelper.setSinglePlayerLevel(to: 0)
+        PrefsHelper.setLastLevelScoreInfo(to: "\(0)-\(-1)")
         sceneManagerDelegate?.presentGameScene()
     }
 

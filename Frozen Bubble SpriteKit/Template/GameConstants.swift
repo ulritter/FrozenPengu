@@ -72,6 +72,7 @@ struct C {
         static let arcadeLabelText = "Arcade"
         static let puzzleLabelText = "Puzzle"
         static let settingsLabelText = "Settings"
+        static let levelText = "Level "
         
         static let playPenguinAtlas = "PlayPenguinAtlas"
         static let cheerPenguinAtlas = "CheerPenguinAtlas"
@@ -92,7 +93,7 @@ struct C {
         static let showCreditsText = "Credits"
         static let backToMenuText = "Back to Menu"
         static let backToGameText = "Back to Game"
-        static let wasntHighsdcoreText = "*** Wasn't Highscore ***"
+        static let wasntHighscoreText = "*** Wasn't Highscore ***"
         static let shotSingularText = "shot"
         static let shotPluralText = "shots"
         static let secondsText = "secs"

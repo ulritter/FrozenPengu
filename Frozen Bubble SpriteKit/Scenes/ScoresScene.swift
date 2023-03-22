@@ -48,7 +48,15 @@ class ScoresScene: SKScene {
         let lastLevel = Int(scoreInfo[0])!
         let lastPosition = Int(scoreInfo[1]) ?? -1
         let scores = PrefsHelper.getScores(for: lastLevel)
-
+        
+        var levelLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+        levelLabel.text = "\(C.S.levelText)\(lastLevel+1)"
+        levelLabel.fontSize = 200.0
+        levelLabel.zPosition = C.Z.hudZ
+        levelLabel.scale(to: frame.size, width: true, multiplier: 0.25)
+        levelLabel.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.76, backgroundImage.frame.maxY*0.95)
+        addChild(levelLabel)
+        
         for index in 0...scores.count {
             
             var scoreLine: SKSpriteNode!
@@ -85,7 +93,7 @@ class ScoresScene: SKScene {
                 addChild(scoreLine)
             } else {
                 if lastPosition == -1 {
-                    scoreLabel.text = C.S.wasntHighsdcoreText
+                    scoreLabel.text = C.S.wasntHighscoreText
                     addChild(scoreLine)
                 }
             }
@@ -98,7 +106,7 @@ class ScoresScene: SKScene {
     
     func gotoNextScene() {
         let maxLevels = levelManagerDelegate!.getNumberOfLevels()
-        // we increase the level before calling the ScoreScene
+        // we increased the level before calling the ScoreScene
         // so the value in Userdefaults schows the next level to be played
         let nextLevel = PrefsHelper.getSinglePlayerLevel()
         if nextLevel < maxLevels {

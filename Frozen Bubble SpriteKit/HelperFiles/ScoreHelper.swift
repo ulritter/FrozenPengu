@@ -15,15 +15,16 @@ class ScoreHelper {
         var newScore = ScoreEntry()
         var scorePosition:Int = -1
         var levelScores = PrefsHelper.getScores(for: levelKey)
+        let actNumberOfSeconds = numberOfSeconds.rounded(toPlaces: 1)
 
         newScore.numberOfShots = numberOfShots
-        newScore.numberOfSeconds = numberOfSeconds.rounded(toPlaces: 1)
+        newScore.numberOfSeconds = actNumberOfSeconds
         levelScores.append(newScore)
          
         levelScores.sort {
             $0.numberOfShots == $1.numberOfShots ? $0.numberOfSeconds < $1.numberOfSeconds : $0.numberOfShots < $1.numberOfShots
         }
-        scorePosition = levelScores.firstIndex(where: {$0.numberOfShots == numberOfShots && $0.numberOfSeconds == numberOfSeconds.rounded(toPlaces: 1)}) ?? -1
+        scorePosition = levelScores.firstIndex(where: {$0.numberOfShots == numberOfShots && $0.numberOfSeconds == actNumberOfSeconds}) ?? -1
         
         if levelScores.count > C.B.maxScoreEntries {
             levelScores.removeLast()
