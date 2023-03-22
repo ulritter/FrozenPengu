@@ -481,18 +481,20 @@ class GameScene: SKScene {
             pushCompressor()
         }
         autoshootTimer = 0
-        let polePositionBubble = self.childNode(withName: C.S.shotBubbleName) as! Bubble
-        let shotBubble = Bubble(with: frame.size, as: polePositionBubble.getColor())
-        shotBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
-        shotBubble.position = CGPoint(x: launcherX, y: launcherY)
-        shotBubble.zPosition = C.Z.bubbleZ
-        PhysicsHelper.addPhysicsBody(to: shotBubble, with: C.S.bubbleName)
-        shotBubble.physicsBody!.categoryBitMask = C.P.shootBubbleCategory
-        shotBubble.name = C.S.flyingBubbleName
-        addChild(shotBubble)
-        shotBubble.shoot(from: CGPointMake(launcherX, launcherY), to: touchPos)
-        if isSoundOn {
-            run(soundPlayer.launchSound)
+        if gameState != .lost {
+            let polePositionBubble = self.childNode(withName: C.S.shotBubbleName) as! Bubble
+            let shotBubble = Bubble(with: frame.size, as: polePositionBubble.getColor())
+            shotBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
+            shotBubble.position = CGPoint(x: launcherX, y: launcherY)
+            shotBubble.zPosition = C.Z.bubbleZ
+            PhysicsHelper.addPhysicsBody(to: shotBubble, with: C.S.bubbleName)
+            shotBubble.physicsBody!.categoryBitMask = C.P.shootBubbleCategory
+            shotBubble.name = C.S.flyingBubbleName
+            addChild(shotBubble)
+            shotBubble.shoot(from: CGPointMake(launcherX, launcherY), to: touchPos)
+            if isSoundOn {
+                run(soundPlayer.launchSound)
+            }
         }
     }
     
@@ -570,7 +572,7 @@ class GameScene: SKScene {
                     autoshootWarningStage += 1
                 }
                 if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime && autoshootWarningStage == 2 {
-                    fieldBlink()
+                    childNode(withName: C.S.hurryPanel)?.alpha = 0.0
                     autoshootWarningStage += 1
                 }
                 if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoshootWarningStage == 3 {

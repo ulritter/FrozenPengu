@@ -64,7 +64,8 @@ class GameViewController: UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+//            return .allButUpsideDown
+            return .portrait
         } else {
             return .all
         }
@@ -151,16 +152,19 @@ extension GameViewController: ModPlayerDelegate {
     func audioStart() {
         modPlayer.audioStart()
         musicIsPlaying = true
+        print("audio start")
     }
     
     func audioStop() {
         modPlayer.audioStop()
         musicIsPlaying = false
+        print("audio stop")
     }
     
     func audioPause() {
         modPlayer.audioPause()
         musicIsPlaying = false
+        print("audio pause")
     }
     
     func loadData(file: String) {
