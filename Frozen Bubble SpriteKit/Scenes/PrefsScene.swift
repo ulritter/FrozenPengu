@@ -222,13 +222,13 @@ class PrefsScene: SKScene {
         if clearScoresKey1 == 3 &&
             clearScoresKey2 == 2 &&
             clearScoresKey3 == 5 {
-            let easterEgg = SKSpriteNode(imageNamed: C.S.deleteScoresIndicator)
-            easterEgg.zPosition = C.Z.panelZ
-            easterEgg.scale(to: frame.size, width: true, multiplier: 1)
-            easterEgg.position = CGPoint(x: frame.midX, y: frame.midY)
-            addChild(easterEgg)
+            let deleteScoresIndicator = SKSpriteNode(imageNamed: C.S.deleteScoresIndicator)
+            deleteScoresIndicator.zPosition = C.Z.panelZ
+            deleteScoresIndicator.scale(to: frame.size, width: true, multiplier: 1)
+            deleteScoresIndicator.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(deleteScoresIndicator)
             run(SKAction.wait(forDuration: 1.0)) {
-                easterEgg.removeFromParent()
+                deleteScoresIndicator.removeFromParent()
             }
             PrefsHelper.removeAllScores()
             clearScoresKey1 = 0

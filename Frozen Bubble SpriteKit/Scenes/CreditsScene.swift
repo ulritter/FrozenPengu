@@ -90,6 +90,7 @@ class CreditsScene: SKScene {
             sceneManagerDelegate?.presentPrefsScene()
         } else {
             //we have been called after the last level of the game has been played
+            PrefsHelper.setLastLevelScoreInfo(to: "\(0)-\(-1)")
             PrefsHelper.setSinglePlayerLevel(to: 0)
             sceneManagerDelegate?.presentMenuScene()
         }

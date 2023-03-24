@@ -52,7 +52,6 @@ class GameScene: SKScene {
     var dtCumulated: TimeInterval = 0
     var hurryTimer: TimeInterval = 0
     var startTime: TimeInterval!
-    var autoshootTimer: TimeInterval = 0
     var autoshootWarningStage: Int = 0
     
     var shotCounter: Int = 0
@@ -144,6 +143,7 @@ class GameScene: SKScene {
         self.anchorPoint = CGPoint.zero
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.0)
+        autoshootTimer = 0
         
         addPlayfield()
         getPropotionsAndPositions()
