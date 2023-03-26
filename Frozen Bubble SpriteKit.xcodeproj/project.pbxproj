@@ -83,7 +83,6 @@
 		E2AE580029C2530C00D0463A /* launch.wav in Resources */ = {isa = PBXBuildFile; fileRef = E2AE57EB29C2530C00D0463A /* launch.wav */; };
 		E2AE580129C2530C00D0463A /* pause.wav in Resources */ = {isa = PBXBuildFile; fileRef = E2AE57EC29C2530C00D0463A /* pause.wav */; };
 		E2AE580329C254C400D0463A /* button.wav in Resources */ = {isa = PBXBuildFile; fileRef = E2AE580229C254C400D0463A /* button.wav */; };
-		E2DEBDBA29CD799C00188C29 /* GameGlobals.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DEBDB929CD799C00188C29 /* GameGlobals.swift */; };
 		E2E20B3E29BB307C009BAB5C /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E20B3D29BB307C009BAB5C /* Levels.swift */; };
 		E2E20B4029C2697B009BAB5C /* whip.wav in Resources */ = {isa = PBXBuildFile; fileRef = E2E20B3F29C2697B009BAB5C /* whip.wav */; };
 /* End PBXBuildFile section */
@@ -169,7 +168,6 @@
 		E2AE57EB29C2530C00D0463A /* launch.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = launch.wav; sourceTree = "<group>"; };
 		E2AE57EC29C2530C00D0463A /* pause.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pause.wav; sourceTree = "<group>"; };
 		E2AE580229C254C400D0463A /* button.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = button.wav; sourceTree = "<group>"; };
-		E2DEBDB929CD799C00188C29 /* GameGlobals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGlobals.swift; sourceTree = "<group>"; };
 		E2E20B3D29BB307C009BAB5C /* Levels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		E2E20B3F29C2697B009BAB5C /* whip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = whip.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -274,7 +272,6 @@
 			children = (
 				E261D21429B0D5BD00E6AC6E /* AppDelegate.swift */,
 				E261D23A29B0D9BE00E6AC6E /* GameConstants.swift */,
-				E2DEBDB929CD799C00188C29 /* GameGlobals.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
@@ -544,7 +541,6 @@
 				E21024A529B38F24002DA2A2 /* ColorHelper.swift in Sources */,
 				E21024D329B3B253002DA2A2 /* SoundPlayer.swift in Sources */,
 				E21024A329B38B8D002DA2A2 /* Bubble.swift in Sources */,
-				E2DEBDBA29CD799C00188C29 /* GameGlobals.swift in Sources */,
 				E295135629C5116C006AADA4 /* DataExtension.swift in Sources */,
 				E295134C29C50BBF006AADA4 /* ModPlayer.swift in Sources */,
 				E261D21B29B0D5BD00E6AC6E /* GameScene.swift in Sources */,
@@ -730,6 +726,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -760,6 +757,7 @@
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

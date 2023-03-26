@@ -37,7 +37,8 @@ class ModPlayer {
         // panic
         if fileName != "" {
             if let path = Bundle.main.path(forResource: fileName, ofType: "mod") {
-                myURL = URL(filePath: path)
+                myURL = URL(fileURLWithPath: path)
+//                myURL = URL(filePath: path) // works only on iOS >= 16.0 
                 do {
                     let data = try Data(contentsOf: myURL)
                     let outputFormat = audioEngine.outputNode.inputFormat(forBus: 0)  // AVAudioFormat

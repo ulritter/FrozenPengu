@@ -17,7 +17,8 @@ class Levels {
     
     func loadLevels() {
         if let path = Bundle.main.path(forResource: "levels", ofType: "txt") {
-            let url = URL(filePath: path)
+//            let url = URL(filePath: path) // works only on iOS >= 16.0 
+            let url = URL(fileURLWithPath: path)
             var levelItem =  [Int]()
             let charSet = ["-","0","1","2","3","4","5","6","7"]
             do {

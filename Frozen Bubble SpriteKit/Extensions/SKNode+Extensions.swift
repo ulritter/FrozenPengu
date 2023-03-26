@@ -12,7 +12,8 @@ extension SKNode {
     
     class func unarchiveFromFile (file: String) -> SKNode? {
         if let path = Bundle.main.path(forResource: file, ofType: "sks") {
-            let url = URL(filePath: path)
+//            let url = URL(filePath: path) // works only on iOS >= 16.0
+            let url = URL(fileURLWithPath: path)
             do {
                 let sceneData = try Data(contentsOf: url, options: .mappedIfSafe)
                 let archiver = try NSKeyedUnarchiver(forReadingFrom: sceneData)

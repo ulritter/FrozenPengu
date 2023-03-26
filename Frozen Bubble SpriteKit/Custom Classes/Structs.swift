@@ -31,3 +31,14 @@ struct CollisionReturnValue{
     var didDrop: Bool = false
     var bubblesLeft: Int = Int.max
 }
+
+struct Autoshoot {
+    var timer: TimeInterval = 0
+    var stage: Int = 0
+}
+
+// normally, a global variable is not a good idea
+// in this case, however, we need to access this from
+// AppDelegate and by this global we are saving clumsy
+// (maybe cleaner) observer constructs
+var autoShoot = Autoshoot()

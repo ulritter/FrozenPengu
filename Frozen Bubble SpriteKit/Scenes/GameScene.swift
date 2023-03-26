@@ -52,7 +52,6 @@ class GameScene: SKScene {
     var dtCumulated: TimeInterval = 0
     var hurryTimer: TimeInterval = 0
     var startTime: TimeInterval!
-    var autoshootWarningStage: Int = 0
     
     var shotCounter: Int = 0
     
@@ -143,10 +142,11 @@ class GameScene: SKScene {
         self.anchorPoint = CGPoint.zero
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.0)
-        autoshootTimer = 0
+        autoShoot.timer = 0
+        autoShoot.stage = 0
         
         addPlayfield()
-        getPropotionsAndPositions()
+        setPropotionsAndPositions()
         addBorders()
         addPenguin()
         addCompressor()
@@ -165,7 +165,7 @@ class GameScene: SKScene {
 
     }
     
-    func getPropotionsAndPositions() {
+    func setPropotionsAndPositions() {
         // get all proportions and positions for given device dimensions
         // determine bubble dimensions
         let refBubble = Bubble(with: frame.size, as: 1)
@@ -303,7 +303,7 @@ class GameScene: SKScene {
     
     func addSwitchButton () {
         let switchButton = SpriteKitButton(buttonColor: UIColor.clear, buttonSize: CGSizeMake(bubbleCellWidth, launcherY-reserverBubbleY+bubbleCellHeight ),  action: switchLauncherBubbles, index: 0)
-        switchButton.size = CGSizeMake(bubbleCellWidth*1.5, launcherY-reserverBubbleY+bubbleCellHeight )
+        switchButton.size = CGSizeMake(bubbleCellWidth*2.5, launcherY-reserverBubbleY+bubbleCellHeight*2 )
         switchButton.anchorPoint = CGPoint(x: 0.5, y: 0.0)
         switchButton.alpha = 0.5
         switchButton.position = CGPoint(x: launcherX, y: reserverBubbleY-bubbleCellHeight/2)
@@ -454,7 +454,7 @@ class GameScene: SKScene {
         if shotCounter > C.B.maxColumns-1 {
             pushCompressor()
         }
-        autoshootTimer = 0
+        autoShoot.timer = 0
         if gameState != .lost {
             let polePositionBubble = self.childNode(withName: C.S.shotBubbleName) as! Bubble
             let shotBubble = Bubble(with: frame.size, as: polePositionBubble.getColor())
@@ -533,36 +533,36 @@ class GameScene: SKScene {
     func autoshootHandler() {
         // handle autoshoot warnings / actions
         if gameState == .ready {
-            if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 0 && gameState == .ready {
-                autoshootWarningStage = 1
+            if  autoShoot.timer > C.B.autoshootTriggerTime && autoShoot.stage == 0 && gameState == .ready {
+                autoShoot.stage = 1
             }
             
-            if autoshootWarningStage > 0 {
-                if autoshootTimer > C.B.autoshootTriggerTime && autoshootWarningStage == 1 {
+            if autoShoot.stage > 0 {
+                if  autoShoot.timer > C.B.autoshootTriggerTime && autoShoot.stage == 1 {
                     childNode(withName: C.S.hurryPanel)?.alpha = 1.0
                     if isSoundOn {
                         run(soundPlayer.hurrySound)
                     }
-                    autoshootWarningStage += 1
+                    autoShoot.stage += 1
                 }
-                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime && autoshootWarningStage == 2 {
+                if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime && autoShoot.stage == 2 {
                     childNode(withName: C.S.hurryPanel)?.alpha = 0.0
-                    autoshootWarningStage += 1
+                    autoShoot.stage += 1
                 }
-                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoshootWarningStage == 3 {
+                if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoShoot.stage == 3 {
                     fieldBlink()
-                    autoshootWarningStage += 1
+                    autoShoot.stage += 1
                 }
-                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*3.0 && autoshootWarningStage == 4 {
+                if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*3.0 && autoShoot.stage == 4 {
                     fieldBlink()
-                    autoshootWarningStage += 1
+                    autoShoot.stage += 1
                 }
-                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*4.0 && autoshootWarningStage == 5 {
+                if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*4.0 && autoShoot.stage == 5 {
                     fieldBlink()
-                    autoshootWarningStage += 1
+                    autoShoot.stage += 1
                 }
-                if autoshootTimer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*5.0  && autoshootWarningStage == 6 {
-                    autoshootWarningStage = 0
+                if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*5.0  && autoShoot.stage == 6 {
+                    autoShoot.stage = 0
                     shootBubble(to: lastTouchPosition)
                 }
             }
@@ -677,7 +677,7 @@ class GameScene: SKScene {
         }
         lastTime = currentTime
         if dtCumulated > 0.005 {
-            autoshootTimer += dtCumulated
+            autoShoot.timer += dtCumulated
             autoshootHandler()
             dtCumulated=0
             handlePlayField()
