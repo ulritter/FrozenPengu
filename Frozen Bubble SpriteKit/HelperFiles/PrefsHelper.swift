@@ -72,6 +72,21 @@ class PrefsHelper: UserDefaults {
         UserDefaults.standard.synchronize()
     }
     
+    static func getGameMode ()  -> String {
+        if let data = UserDefaults.standard.string(forKey: C.S.gameModeKey)  {
+            return data
+        } else {
+            UserDefaults.standard.set(C.S.puzzleText, forKey: C.S.gameModeKey)
+            UserDefaults.standard.synchronize()
+            return C.S.puzzleText
+        }
+    }
+    
+    static func setGameMode (to value: String) {
+        UserDefaults.standard.set(value, forKey: C.S.gameModeKey)
+        UserDefaults.standard.synchronize()
+    }
+    
     static func getSinglePlayerLevel ()  -> Int {
         if UserDefaults().valueExists(forKey: C.S.actualLevelPrefsKey) {
             return UserDefaults.standard.integer(forKey: C.S.actualLevelPrefsKey)
@@ -87,20 +102,46 @@ class PrefsHelper: UserDefaults {
         UserDefaults.standard.synchronize()
     }
     
-    static func setLastLevelScoreInfo(to value:String) {
-        UserDefaults.standard.set(value, forKey: C.S.lastScoreInfoKey)
+    static func setLastArcadeScoreInfo(to value:String) {
+        UserDefaults.standard.set(value, forKey: C.S.lastArcadeScoreInfoKey)
         UserDefaults.standard.synchronize()
     }
     
-    static func getLastLevelScoreInfo() -> String {
-        if let data = UserDefaults.standard.string(forKey: C.S.lastScoreInfoKey) {
+    static func getLastArcadeScoreInfo() -> String {
+        if let data = UserDefaults.standard.string(forKey: C.S.lastArcadeScoreInfoKey) {
             return data
         } else {
             return ""
         }
     }
     
-    static func getScores(for level: Int) -> [ScoreEntry]{
+    static func setLastPuzzleLevelScoreInfo(to value:String) {
+        UserDefaults.standard.set(value, forKey: C.S.lastPuzzleScoreInfoKey)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getLastPuzzleLevelScoreInfo() -> String {
+        if let data = UserDefaults.standard.string(forKey: C.S.lastPuzzleScoreInfoKey) {
+            return data
+        } else {
+            return ""
+        }
+    }
+    
+    static func getArcadeScores() -> [ScoreEntry]{
+        if let data = UserDefaults.standard.string(forKey: C.S.arcadeScoresKey)   {
+            return scoresFromString(string: data)
+        } else {
+            return []
+        }
+    }
+    
+    static func setArcadeScores(with scores: [ScoreEntry]){
+        UserDefaults.standard.set(scoresToString(scoreArray: scores), forKey: C.S.arcadeScoresKey)
+        UserDefaults.standard.synchronize()
+    }
+    
+    static func getPuzzleScores(for level: Int) -> [ScoreEntry]{
         let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
         
         if let data = UserDefaults.standard.string(forKey: levelScoresKey)   {
@@ -110,7 +151,7 @@ class PrefsHelper: UserDefaults {
         }
     }
     
-    static func setScores(for level: Int, with scores: [ScoreEntry]){
+    static func setPuzzleScores(for level: Int, with scores: [ScoreEntry]){
         
         let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
         
@@ -120,6 +161,7 @@ class PrefsHelper: UserDefaults {
     
     static func removeAllScores() {
         var level = 0
+        UserDefaults.standard.removeObject(forKey: C.S.arcadeScoresKey)
         while true {
             let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
             if UserDefaults.standard.valueExists(forKey: levelScoresKey) {

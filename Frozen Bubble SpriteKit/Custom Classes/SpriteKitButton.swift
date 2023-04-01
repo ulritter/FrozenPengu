@@ -60,7 +60,6 @@ class SpriteKitButton: SKSpriteNode {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if PrefsHelper.isSoundOn() {
-//            run(soundPlayer.buttonSound)
         }
         defaultButton.alpha = minAlpha
     }

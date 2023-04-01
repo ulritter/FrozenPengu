@@ -28,7 +28,7 @@ class GameScene: SKScene {
                 penguin.animate(for: C.S.playAction)
             case .won:
                 self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                ScoreHelper.updateScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
+                ScoreHelper.updatePuzzleScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
                 if isSoundOn {
                 
                     run(soundPlayer.applauseSound)
@@ -40,6 +40,9 @@ class GameScene: SKScene {
                 fieldFreeze()
                 if isSoundOn {
                     run(soundPlayer.nohSound)
+                }
+                if !isPuzzle {
+                    ScoreHelper.updateArcadeScoreTable(with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
                 }
                 penguin.animate(for: C.S.cryAction)
                 addGameEndPanel(win: false)
@@ -56,6 +59,7 @@ class GameScene: SKScene {
     var shotCounter: Int = 0
     
     var theGrid = [GridCell]()
+    var theAddonGrid = [GridCell]()
     var playField: SKSpriteNode!
     var penguin: Penguin!
     var compressor: Compressor!
@@ -70,6 +74,7 @@ class GameScene: SKScene {
     var physicsBoundsBottom: CGFloat!
     var physicsBoundsLeft: CGFloat!
     var physicsBoundsTop: CGFloat!
+    var yTop: CGFloat!
     var reserverBubbleY: CGFloat!
     var lastReserveBubbleColorKey: Int!
     
@@ -104,6 +109,9 @@ class GameScene: SKScene {
     var remainingBubbleColors = [1,2,3,4,5,6,7,8]
     var levelManagerDelegate: LevelManagerDelegate!
     var numberOfShots = 0
+    var isPuzzle = true
+    var isLongLine = false
+    var driftDivider = 0
     
     
     init(size: CGSize,levelManagerDelegate: LevelManagerDelegate, modPlayerDelegate: ModPlayerDelegate) {
@@ -117,16 +125,6 @@ class GameScene: SKScene {
         self.isMusicOn = PrefsHelper.isMusicOn()
         self.bubbleType = PrefsHelper.getBubbleType()
         
-//        if isMusicOn {
-//            if !self.modPlayerDelegate.isMusicPlaying() {
-//                self.modPlayerDelegate.audioStart()
-//            }
-//        } else {
-//            if self.modPlayerDelegate.isMusicPlaying() {
-//                self.modPlayerDelegate.audioPause()
-//            }
-//        }
-        
         if isMusicOn {
                 self.modPlayerDelegate.audioStart()
         } else {
@@ -139,6 +137,7 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        isPuzzle = PrefsHelper.getGameMode() == C.S.puzzleText
         self.anchorPoint = CGPoint.zero
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -8.0)
@@ -157,12 +156,13 @@ class GameScene: SKScene {
         loadActualLevel()
         lastReserveBubbleColorKey = getRandomBubbleColorKey()
         addBubblePair()
-        addSwitchButton()
         addBackButton()
         startTime = Date.timeIntervalSinceReferenceDate
         numberOfShots = 0
         lastTouchPosition = CGPoint(x: frame.midX, y: frame.midY)
-
+        if !isPuzzle {
+            addArcadeRowOnTop()
+        }
     }
     
     func setPropotionsAndPositions() {
@@ -183,6 +183,7 @@ class GameScene: SKScene {
         reserverBubbleY = playFieldBottom+(playField.frame.height-playField.frame.height*971/1024)
         physicsBoundsRight = physicsBoundsLeft + bubbleCellWidth*CGFloat(C.B.maxColumns)
         physicsBoundsTop = physicsBoundsBottom + bubbleCellHeight*CGFloat(C.B.maxRows)
+        yTop = physicsBoundsBottom + bubbleCellHeight*C.B.bubbleYModifier*CGFloat(C.B.maxRows)
         levelLabelY = playFieldBottom+(playField.frame.height-playField.frame.height*970/1024)
         levelLabelX = self.frame.width*60/711
     }
@@ -236,9 +237,15 @@ class GameScene: SKScene {
     
     func addLevelLabel() {
         let levelLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        levelLabel.text = String(levelKey+1) // array index starts from 0 as always
-        levelLabel.fontSize = 200.0
-        levelLabel.scale(to: frame.size, width: true, multiplier: 0.05)
+        if isPuzzle {
+            levelLabel.text = String(levelKey+1) // array index starts from 0 as always
+            levelLabel.fontSize = 200.0
+            levelLabel.scale(to: frame.size, width: true, multiplier: 0.05)
+        } else {
+            levelLabel.text = String(C.S.arcadeText)
+            levelLabel.fontSize = 200.0
+            levelLabel.scale(to: frame.size, width: true, multiplier: 0.17)
+        }
         levelLabel.position = CGPoint(x: levelLabelX, y: levelLabelY)
         levelLabel.fontColor = C.S.levelLabelFontColor
         
@@ -248,7 +255,8 @@ class GameScene: SKScene {
     
     func addCompressor() {
         compressor = Compressor(with: playField.size, and: bubbleCellHeight*C.B.bubbleYModifier)
-        compressor.position = CGPoint(x: frame.minX, y: physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*12)
+        let compressorY = physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(C.B.maxRows)
+        compressor.position = CGPoint(x: frame.minX, y: compressorY)
         compressor.zPosition = C.Z.compressorZ
         addChild(compressor)
     }
@@ -286,32 +294,29 @@ class GameScene: SKScene {
     }
     
     func getRandomBubbleColorKey () -> Int {
-        return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count)]
+        if isPuzzle {
+            return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count)]
+        } else {
+            return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count-3)]
+        }
     }
     
     func culateRemainingBubbleColors() {
-        remainingBubbleColors.removeAll()
-        for cell in theGrid {
-            if cell.bubble != nil {
-                let c = cell.bubble!
-                if !(remainingBubbleColors.contains(c.bubbleColor)) {
-                    remainingBubbleColors.append(c.bubbleColor)
+        if isPuzzle {
+            remainingBubbleColors.removeAll()
+            for cell in theGrid {
+                if cell.bubble != nil {
+                    let c = cell.bubble!
+                    if !(remainingBubbleColors.contains(c.bubbleColor)) {
+                        remainingBubbleColors.append(c.bubbleColor)
+                    }
                 }
             }
         }
     }
     
-    func addSwitchButton () {
-        let switchButton = SpriteKitButton(buttonColor: UIColor.clear, buttonSize: CGSizeMake(bubbleCellWidth, launcherY-reserverBubbleY+bubbleCellHeight ),  action: switchLauncherBubbles, index: 0)
-        switchButton.size = CGSizeMake(bubbleCellWidth*2.5, launcherY-reserverBubbleY+bubbleCellHeight*2 )
-        switchButton.anchorPoint = CGPoint(x: 0.5, y: 0.0)
-        switchButton.alpha = 0.5
-        switchButton.position = CGPoint(x: launcherX, y: reserverBubbleY-bubbleCellHeight/2)
-        switchButton.zPosition = C.Z.hudZ
-        addChild(switchButton)
-    }
-    
     func switchLauncherBubbles(_: Int) {
+        
         let b1 = self.childNode(withName: C.S.shotBubbleName) as! Bubble
         let b2 = self.childNode(withName: C.S.reserveBubbleName) as! Bubble
         let b1Color = b1.getColor()
@@ -350,10 +355,14 @@ class GameScene: SKScene {
     
     func addGameEndPanel(win: Bool) {
         var panel: SpriteKitButton!
-        if win {
-            panel = SpriteKitButton(defaultButtonImage: C.S.winPanel, action: gotoScore, index: 0)
+        if win && isPuzzle {
+            panel = SpriteKitButton(defaultButtonImage: C.S.winPanel, action: gotoPuzzleScore, index: 0)
         } else {
-            panel = SpriteKitButton(defaultButtonImage: C.S.losePanel, action: gotoGame, index: 0)
+            if isPuzzle {
+                panel = SpriteKitButton(defaultButtonImage: C.S.losePanel, action: gotoGame, index: 0)
+            } else {
+                panel = SpriteKitButton(defaultButtonImage: C.S.losePanel, action: gotoArcadeScore, index: 0)
+            }
         }
         panel.scale(to: frame.size, width: true, multiplier: 1.0)
         panel.position = CGPoint(x: frame.midX, y: frame.midY)
@@ -388,12 +397,11 @@ class GameScene: SKScene {
             let actMaxColumns = unEven ? C.B.maxColumns - 1 : C.B.maxColumns
             
             for column in 0...actMaxColumns-1 {
+                innerY = bubbleCellHeight*C.B.bubbleYModifier*CGFloat(actRow)
                 if unEven {
                     innerX = bubbleCellWidth*CGFloat(column)+bubbleCellWidth/2
-                    innerY = bubbleCellHeight*C.B.bubbleYModifier*CGFloat(actRow)
                 } else {
                     innerX = bubbleCellWidth*CGFloat(column)
-                    innerY = bubbleCellHeight*C.B.bubbleYModifier*CGFloat(actRow)
                 }
                 gridCell.position = CGPoint(x: physicsBoundsLeft+innerX, y: physicsBoundsBottom+innerY+bubbleCellHeight/2)
                 theGrid.append(gridCell)
@@ -403,28 +411,64 @@ class GameScene: SKScene {
 
     
     func loadActualLevel() {
-        // populate "theGrid" with actual level data
+        // populate "theGrid" with actual level data if in puzzle mode
+        // or load the first half of the grid with random bubbles when
+        // in Arcade mode
         var index = 0
-        for row in 0...C.B.maxRows-1 {
+        var rows = 0
+        if isPuzzle {
+            rows = C.B.maxRows-1
+        } else {
+            rows = C.B.maxRows/2-1
+        }
+        
+        for row in 0...rows {
             let actRow = C.B.maxRows - row - 1
             let unEven = actRow % 2 == 0
             let actMaxColumns = unEven ? C.B.maxColumns - 1 : C.B.maxColumns
             
             for _ in 0...actMaxColumns-1 {
-                if index < level.count && (level[index] != C.B.emptyMarker) {
-                    let bubble = Bubble(with: frame.size, as: level[index]+1)
+                if (index < level.count && (level[index] != C.B.emptyMarker)) || !isPuzzle {
+                    var bubble: Bubble!
+                    if isPuzzle {
+                        bubble = Bubble(with: frame.size, as: level[index]+1)
+                    } else {
+                        bubble = Bubble(with: frame.size, as: getRandomBubbleColorKey())
+                    }
                     PhysicsHelper.addPhysicsBody(to: bubble, with: C.S.bubbleName)
                     bubble.zPosition = C.Z.bubbleZ
                     bubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
                     bubble.name = C.S.gridBubbleName
                     bubble.position = theGrid[index].position!
                     theGrid[index].bubble = bubble
-                    addChild(bubble)
+                    addChild(theGrid[index].bubble!)
                 }
                 index += 1
             }
         }
         culateRemainingBubbleColors()
+    }
+    
+    func addArcadeRowOnTop() {
+        var gridCell = GridCell()
+        let numberOfColumns = isLongLine ? C.B.maxColumns : C.B.maxColumns-1
+        let nextRowIndex = isLongLine ? C.B.maxColumns-1 : C.B.maxColumns
+        theAddonGrid.removeAll()
+        for index in 0...numberOfColumns-1 {
+            gridCell.position = theGrid[nextRowIndex+index].position!
+            let newY = gridCell.position!.y+bubbleCellHeight*C.B.bubbleYModifier*2
+            gridCell.position!.y = newY
+            let bubble = Bubble(with: frame.size, as: getRandomBubbleColorKey())
+            bubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
+            bubble.position = gridCell.position!
+            bubble.name = C.S.gridBubbleName
+            PhysicsHelper.addPhysicsBody(to: bubble, with: C.S.bubbleName)
+            bubble.zPosition = C.Z.bubbleZ
+            gridCell.bubble = bubble
+            theAddonGrid.append(gridCell)
+            addChild(gridCell.bubble!)
+        }
+        isLongLine = !isLongLine
     }
     
     func closestEmptyCell(point: CGPoint) -> Int {
@@ -451,7 +495,7 @@ class GameScene: SKScene {
         // reset the autoshoot timer
         shotCounter += 1
         childNode(withName: C.S.hurryPanel)?.alpha = 0.0
-        if shotCounter > C.B.maxColumns-1 {
+        if (shotCounter > C.B.maxColumns-1) && isPuzzle {
             pushCompressor()
         }
         autoShoot.timer = 0
@@ -508,6 +552,54 @@ class GameScene: SKScene {
                 run(soundPlayer.newRootSoloSound)
             }
         }
+    }
+    
+    func driftDownAndHandlePlayfield () {
+        // push the compressor one grid row downwards and adjust
+        // the coordinates in "theGrid" accordingly
+        driftDivider += 1
+        handlePlayField()
+        if driftDivider > 4 {
+            driftDivider = 0
+            let delta = 0.6
+            
+            for index in 0..<theAddonGrid.count {
+                theAddonGrid[index].position!.y = theAddonGrid[index].position!.y-delta
+                let c = theAddonGrid[index].bubble! as Bubble
+                c.position.y = c.position.y-delta
+            }
+            for index in 0..<theGrid.count {
+                theGrid[index].position!.y = theGrid[index].position!.y-delta
+                if theGrid[index].bubble != nil {
+                    let c = theGrid[index].bubble! as Bubble
+                    c.position.y = c.position.y-delta
+                    if c.position.y < physicsBoundsBottom+bubbleCellHeight/4 {
+                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                        gameState = .lost
+                        return
+                    }
+                }
+            }
+            handlePlayField()
+            if theAddonGrid[0].position!.y < yTop {
+                let offSet = theAddonGrid.count
+                
+                for i in 0..<theGrid.count {
+                    let index = theGrid.count-1-i
+                    let targetIndex = index-offSet
+                    if targetIndex >= 0 {
+                        theGrid[index] = theGrid[targetIndex]
+                    }
+                }
+                for i in 0..<theAddonGrid.count {
+                    theGrid[i] = theAddonGrid[i]
+                }
+                addArcadeRowOnTop()
+                handlePlayField()
+            }
+           
+        }
+        
     }
     
     func fieldBlink() {
@@ -587,7 +679,7 @@ class GameScene: SKScene {
                         // but rather check the grid coordinates
                         for (_, gridCell) in theGrid.enumerated() {
                             if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
-                                 &&  (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
+                                 && (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
                                 || ((gridCell.bubble == nil) && (c.position.y > theGrid[0].position!.y)
                                     && (TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth)))
                             {
@@ -619,7 +711,7 @@ class GameScene: SKScene {
                                             run(soundPlayer.stickSound)
                                         }
                                     }
-                                    if numberOfRemainingBubbles == 0 {
+                                    if (numberOfRemainingBubbles == 0) && isPuzzle {
                                         gameState = .won
                                     }
                                 } else {
@@ -636,6 +728,14 @@ class GameScene: SKScene {
         }
     }
 
+    func isSwitchTouch(at pos: CGPoint) -> Bool {
+        if ((pos.x > launcherX-bubbleCellWidth) && pos.x < (launcherX+bubbleCellWidth)) &&
+            ((pos.y > playFieldBottom) && (pos.y < physicsBoundsBottom)) {
+          return true
+        } else {
+            return false
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
                 
@@ -652,8 +752,9 @@ class GameScene: SKScene {
                     addBubblePair()
                     numberOfShots += 1
                 }
+            } else if isSwitchTouch(at: touchPos) {
+                switchLauncherBubbles(0)
             }
-            
         }
     }
     
@@ -680,7 +781,11 @@ class GameScene: SKScene {
             autoShoot.timer += dtCumulated
             autoshootHandler()
             dtCumulated=0
-            handlePlayField()
+            if !isPuzzle && gameState != .lost {
+                driftDownAndHandlePlayfield()
+            } else {
+                handlePlayField()
+            }
         }
     }
     
@@ -692,10 +797,14 @@ class GameScene: SKScene {
         sceneManagerDelegate?.presentGameScene()
     }
     
-    func gotoScore(_: Int) {
+    func gotoPuzzleScore(_: Int) {
         levelKey += 1
         PrefsHelper.setSinglePlayerLevel(to: levelKey)
-        sceneManagerDelegate?.presentScoresScene()
+        sceneManagerDelegate?.presentPuzzleScoresScene()
+    }
+    
+    func gotoArcadeScore(_: Int) {
+        sceneManagerDelegate?.presentArcadeScoresScene()
     }
 }
 

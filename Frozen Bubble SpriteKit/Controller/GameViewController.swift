@@ -48,7 +48,6 @@ class GameViewController: UIViewController {
             modPlayer.audioStart()
             modPlayer.audioPause()
         }
-
         presentMenuScene()
 
     }
@@ -98,8 +97,16 @@ extension GameViewController: SceneManagerDelegate {
         present(scene: scene)
     }
     
-    func presentScoresScene() {
-        let scene = ScoresScene(size: view.bounds.size, levelManagerDelegate: self)
+    func presentPuzzleScoresScene() {
+        let scene = PuzzleScoresScene(size: view.bounds.size, levelManagerDelegate: self)
+        scene.backgroundColor = UIColor.black
+        scene.scaleMode = .aspectFit
+        scene.sceneManagerDelegate = self
+        present(scene: scene)
+    }
+    
+    func presentArcadeScoresScene() {
+        let scene = ArcadeScoresScene(size: view.bounds.size)
         scene.backgroundColor = UIColor.black
         scene.scaleMode = .aspectFit
         scene.sceneManagerDelegate = self
@@ -126,7 +133,7 @@ extension GameViewController: SceneManagerDelegate {
         if let view = self.view as! SKView? {
             
             view.presentScene(scene)
-            view.ignoresSiblingOrder = true
+            view.ignoresSiblingOrder = false
 
             view.showsFPS = false
             view.showsNodeCount = false

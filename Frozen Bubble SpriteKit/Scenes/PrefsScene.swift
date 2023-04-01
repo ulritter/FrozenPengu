@@ -150,14 +150,14 @@ class PrefsScene: SKScene {
         creditLabel.zPosition = C.Z.hudZ
         creditButton.addChild(creditLabel)
         
-        backButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: gotoGameScene, index: 0)
+        backButton = SpriteKitButton(defaultButtonImage: C.S.longFrozenMenuButton, action: gotoMenuScene, index: 0)
         backButton.position = CGPoint(x: frame.midX, y: yTop-backgroundImage.frame.height*0.8)
         backButton.scale(to: frame.size, width: false, multiplier: 0.08)
         backButton.zPosition = C.Z.hudZ
         addChild(backButton)
         
         backLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        backLabel.text = C.S.backToGameText
+        backLabel.text = C.S.backToMenuText
         backLabel.scale(to: frame.size, width: true, multiplier: 3.5)
         backLabel.position = CGPoint(x: frame.minX, y: frame.minY-backLabel.frame.size.height/2.0)
         backLabel.fontColor = C.S.frozenMenuButtonFontColor
@@ -242,7 +242,7 @@ class PrefsScene: SKScene {
     }
     
     func gotoScoresScene(_: Int) {
-        sceneManagerDelegate?.presentScoresScene()
+        sceneManagerDelegate?.presentPuzzleScoresScene()
     }
     
     func gotoPrefsScene(_: Int) {

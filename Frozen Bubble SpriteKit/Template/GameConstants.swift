@@ -32,8 +32,11 @@ struct C {
         
         static let actualLevelPrefsKey = "singleLevel"
         static let actualLevelScoreKeyPrefix = "level-"
-        static let lastScoreInfoKey = "lastScore"
+        static let lastPuzzleScoreInfoKey = "lastScore"
+        static let lastArcadeScoreInfoKey = "lastArcade"
         static let audioVolumeKey = "audioVolume"
+        static let gameModeKey = "gameMode"                     
+        static let arcadeScoresKey = "arcadeScores"
         
         static let playBackgroundName = "PlayBackground"
         static let menuBackgroundName = "MenuBackground"
@@ -70,9 +73,10 @@ struct C {
         static let frozenMenuButtonFontColor = ColorHelper.hexStringToUIColor(hex: "#251749")
         static let levelLabelFontColor = ColorHelper.hexStringToUIColor(hex: "#CCCCCC")
         
-        static let arcadeLabelText = "Arcade"
-        static let puzzleLabelText = "Puzzle"
+        static let arcadeText = "Arcade"
+        static let puzzleText = "Puzzle"
         static let settingsLabelText = "Settings"
+        static let resetLevelLabelText = "Reset Level"
         static let levelText = "Level "
         
         static let playPenguinAtlas = "PlayPenguinAtlas"
@@ -123,9 +127,10 @@ struct C {
         static let farBGZ:CGFloat = 0
         static let objectZ:CGFloat = 1
         static let compressorZ:CGFloat = 2
-        static let bubbleZ:CGFloat = 3
-        static let hudZ:CGFloat = 4
+        static let hudZ:CGFloat = 3
+        static let bubbleZ:CGFloat = 4
         static let panelZ:CGFloat = 5
+
 
     }
     

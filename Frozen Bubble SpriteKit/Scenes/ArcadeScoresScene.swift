@@ -1,26 +1,17 @@
 //
-//  MenuScene.swift
+//  ArcadeScoresScene.swift
 //  Frozen Bubble SpriteKit
 //
-//  Created by Uwe Ritter on 05.03.23.
+//  Created by Uwe Ritter on 31.03.23.
 //  Copyright © 2023 Uwe Ritter IT Beratung. All rights reserved.
 //
 
+
 import SpriteKit
 
-class ScoresScene: SKScene {
+class ArcadeScoresScene: SKScene {
     
     var sceneManagerDelegate: SceneManagerDelegate?
-    var levelManagerDelegate: LevelManagerDelegate?
-    
-    init(size: CGSize,levelManagerDelegate: LevelManagerDelegate) {
-        super.init(size: size)
-        self.levelManagerDelegate = levelManagerDelegate
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint.zero
@@ -44,18 +35,17 @@ class ScoresScene: SKScene {
         
         let yTop = backgroundImageBottom + backgroundImage.frame.height*930/1024
         
-        let scoreInfo = PrefsHelper.getLastLevelScoreInfo().components(separatedBy: "-")
-        let lastLevel = Int(scoreInfo[0])!
-        let lastPosition = Int(scoreInfo[1]) ?? -1
-        let scores = PrefsHelper.getScores(for: lastLevel)
+        let scoreInfo = PrefsHelper.getLastArcadeScoreInfo()
+        let lastPosition = Int(scoreInfo)!
+        let scores = PrefsHelper.getArcadeScores()
         
-        var levelLabel = SKLabelNode(fontNamed: C.S.gameFontName)
-        levelLabel.text = "\(C.S.levelText)\(lastLevel+1)"
-        levelLabel.fontSize = 200.0
-        levelLabel.zPosition = C.Z.hudZ
-        levelLabel.scale(to: frame.size, width: true, multiplier: 0.25)
-        levelLabel.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.76, backgroundImage.frame.maxY*0.95)
-        addChild(levelLabel)
+        let arcadeLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+        arcadeLabel.text = "\(C.S.arcadeText)"
+        arcadeLabel.fontSize = 200.0
+        arcadeLabel.zPosition = C.Z.hudZ
+        arcadeLabel.scale(to: frame.size, width: true, multiplier: 0.25)
+        arcadeLabel.position=CGPointMake(backgroundImage.frame.minX+backgroundImage.frame.maxX*0.76, backgroundImage.frame.maxY*0.95)
+        addChild(arcadeLabel)
         
         for index in 0...scores.count {
             
@@ -101,23 +91,7 @@ class ScoresScene: SKScene {
 
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        gotoNextScene()
+        sceneManagerDelegate?.presentGameScene()
     }
-    
-    func gotoNextScene() {
-        let maxLevels = levelManagerDelegate!.getNumberOfLevels()
-        // we increased the level before calling the ScoreScene
-        // so the value in Userdefaults schows the next level to be played
-        let nextLevel = PrefsHelper.getSinglePlayerLevel()
-        if nextLevel < maxLevels {
-            sceneManagerDelegate?.presentGameScene()
-        } else {
-            // the last level of the game has been played
-            sceneManagerDelegate?.presentCreditsScene()
-        }
-    }
-    
-
-
 }
 

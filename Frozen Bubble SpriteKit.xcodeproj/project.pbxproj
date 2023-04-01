@@ -17,7 +17,7 @@
 		E255837E29B87F2E00292729 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255837D29B87F2E00292729 /* Line.swift */; };
 		E255838029B8821A00292729 /* PhysicsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255837F29B8821A00292729 /* PhysicsHelper.swift */; };
 		E255838229BC672200292729 /* LevelManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838129BC672100292729 /* LevelManagerDelegate.swift */; };
-		E255838429BCDD3E00292729 /* ScoresScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838329BCDD3E00292729 /* ScoresScene.swift */; };
+		E255838429BCDD3E00292729 /* PuzzleScoresScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838329BCDD3E00292729 /* PuzzleScoresScene.swift */; };
 		E255838629BDC94000292729 /* Structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838529BDC94000292729 /* Structs.swift */; };
 		E255838A29BE2F9300292729 /* CollisionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E255838929BE2F9300292729 /* CollisionHelper.swift */; };
 		E261D21529B0D5BD00E6AC6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D21429B0D5BD00E6AC6E /* AppDelegate.swift */; };
@@ -30,6 +30,7 @@
 		E261D23D29B20EC300E6AC6E /* SKNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */; };
 		E261D23F29B24EE100E6AC6E /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */; };
 		E261D24129B25D0000E6AC6E /* Penguin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261D24029B25D0000E6AC6E /* Penguin.swift */; };
+		E27900BA29D6DF2200B2DF43 /* ArcadeScoresScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27900B929D6DF2200B2DF43 /* ArcadeScoresScene.swift */; };
 		E295133029C4E29B006AADA4 /* fb1.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132A29C4E29A006AADA4 /* fb1.png */; };
 		E295133129C4E29B006AADA4 /* fb3.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132B29C4E29A006AADA4 /* fb3.png */; };
 		E295133229C4E29B006AADA4 /* fb6.png in Resources */ = {isa = PBXBuildFile; fileRef = E295132C29C4E29A006AADA4 /* fb6.png */; };
@@ -95,10 +96,11 @@
 		E21024D229B3B253002DA2A2 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
 		E21024D629B63770002DA2A2 /* Launcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launcher.swift; sourceTree = "<group>"; };
 		E21024D829B68401002DA2A2 /* TrigonometryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrigonometryHelper.swift; sourceTree = "<group>"; };
+		E24E8EBD29D4E16400505D98 /* Frozen Bubble SpriteKit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Frozen Bubble SpriteKit.entitlements"; sourceTree = "<group>"; };
 		E255837D29B87F2E00292729 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		E255837F29B8821A00292729 /* PhysicsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsHelper.swift; sourceTree = "<group>"; };
 		E255838129BC672100292729 /* LevelManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelManagerDelegate.swift; sourceTree = "<group>"; };
-		E255838329BCDD3E00292729 /* ScoresScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresScene.swift; sourceTree = "<group>"; };
+		E255838329BCDD3E00292729 /* PuzzleScoresScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleScoresScene.swift; sourceTree = "<group>"; };
 		E255838529BDC94000292729 /* Structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structs.swift; sourceTree = "<group>"; };
 		E255838929BE2F9300292729 /* CollisionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionHelper.swift; sourceTree = "<group>"; };
 		E261D21129B0D5BD00E6AC6E /* Frozen Bubble SpriteKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Frozen Bubble SpriteKit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +114,7 @@
 		E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
 		E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		E261D24029B25D0000E6AC6E /* Penguin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penguin.swift; sourceTree = "<group>"; };
+		E27900B929D6DF2200B2DF43 /* ArcadeScoresScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeScoresScene.swift; sourceTree = "<group>"; };
 		E285E17529C78E3D00898015 /* homesick.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = homesick.mod; sourceTree = "<group>"; };
 		E295132929C4DE5F006AADA4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E295132A29C4E29A006AADA4 /* fb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb1.png; sourceTree = "<group>"; };
@@ -209,6 +212,7 @@
 		E261D21329B0D5BD00E6AC6E /* Frozen Bubble SpriteKit */ = {
 			isa = PBXGroup;
 			children = (
+				E24E8EBD29D4E16400505D98 /* Frozen Bubble SpriteKit.entitlements */,
 				E261D22C29B0D5F200E6AC6E /* Controller */,
 				E261D23729B0D70A00E6AC6E /* Custom Classes */,
 				E261D23029B0D6A300E6AC6E /* Extensions */,
@@ -229,9 +233,10 @@
 			children = (
 				E261D21A29B0D5BD00E6AC6E /* GameScene.swift */,
 				E29CEC8729B5425B00AF7445 /* MenuScene.swift */,
-				E255838329BCDD3E00292729 /* ScoresScene.swift */,
+				E255838329BCDD3E00292729 /* PuzzleScoresScene.swift */,
 				E2AE57CB29BFB48100D0463A /* PrefsScene.swift */,
 				E2AE57D129C0720C00D0463A /* CreditsScene.swift */,
+				E27900B929D6DF2200B2DF43 /* ArcadeScoresScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -548,6 +553,7 @@
 				E29CEC8429B5404800AF7445 /* SpriteKitButton.swift in Sources */,
 				E261D23B29B0D9BE00E6AC6E /* GameConstants.swift in Sources */,
 				E2AE57CC29BFB48100D0463A /* PrefsScene.swift in Sources */,
+				E27900BA29D6DF2200B2DF43 /* ArcadeScoresScene.swift in Sources */,
 				E261D23F29B24EE100E6AC6E /* AnimationHelper.swift in Sources */,
 				E261D23D29B20EC300E6AC6E /* SKNode+Extensions.swift in Sources */,
 				E295137329C525A1006AADA4 /* ModPlayerDelegate.swift in Sources */,
@@ -560,7 +566,7 @@
 				E2AE57D229C0720C00D0463A /* CreditsScene.swift in Sources */,
 				E2AE57CE29C04FDC00D0463A /* ScoreHelper.swift in Sources */,
 				E29CEC8829B5425B00AF7445 /* MenuScene.swift in Sources */,
-				E255838429BCDD3E00292729 /* ScoresScene.swift in Sources */,
+				E255838429BCDD3E00292729 /* PuzzleScoresScene.swift in Sources */,
 				E255838229BC672200292729 /* LevelManagerDelegate.swift in Sources */,
 				E261D21529B0D5BD00E6AC6E /* AppDelegate.swift in Sources */,
 				E295136129C51216006AADA4 /* ModPlayerAudioUnit.swift in Sources */,
@@ -715,6 +721,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Frozen Bubble SpriteKit/Frozen Bubble SpriteKit.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6CZQD64CA;
@@ -734,6 +742,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uritter.Frozen-Bubble-SpriteKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -746,6 +758,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = "Frozen Bubble SpriteKit/Frozen Bubble SpriteKit.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Z6CZQD64CA;
@@ -765,6 +779,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uritter.Frozen-Bubble-SpriteKit";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

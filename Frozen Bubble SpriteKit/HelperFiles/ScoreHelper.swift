@@ -10,11 +10,11 @@ import SpriteKit
 
 class ScoreHelper {
     
-    static func updateScoreTable (for levelKey: Int, with numberOfShots: Int,  taking numberOfSeconds: CGFloat) {
+    static func updatePuzzleScoreTable (for levelKey: Int, with numberOfShots: Int,  taking numberOfSeconds: CGFloat) {
 
         var newScore = ScoreEntry()
         var scorePosition:Int = -1
-        var levelScores = PrefsHelper.getScores(for: levelKey)
+        var levelScores = PrefsHelper.getPuzzleScores(for: levelKey)
         let actNumberOfSeconds = numberOfSeconds.rounded(toPlaces: 1)
 
         newScore.numberOfShots = numberOfShots
@@ -33,8 +33,35 @@ class ScoreHelper {
         if scorePosition >= C.B.maxScoreEntries {
             scorePosition = -1
         }
-        PrefsHelper.setScores(for: levelKey, with: levelScores)
-        PrefsHelper.setLastLevelScoreInfo(to: "\(levelKey)-\(scorePosition)")
+        PrefsHelper.setPuzzleScores(for: levelKey, with: levelScores)
+        PrefsHelper.setLastPuzzleLevelScoreInfo(to: "\(levelKey)-\(scorePosition)")
+    }
+    
+    static func updateArcadeScoreTable (with numberOfShots: Int,  taking numberOfSeconds: CGFloat) {
+
+        var newScore = ScoreEntry()
+        var scorePosition:Int = -1
+        var arcadeScores = PrefsHelper.getArcadeScores()
+        let actNumberOfSeconds = numberOfSeconds.rounded(toPlaces: 1)
+
+        newScore.numberOfShots = numberOfShots
+        newScore.numberOfSeconds = actNumberOfSeconds
+        arcadeScores.append(newScore)
+         
+        arcadeScores.sort {
+            $0.numberOfShots == $1.numberOfShots ? $0.numberOfSeconds > $1.numberOfSeconds : $0.numberOfShots > $1.numberOfShots
+        }
+        scorePosition = arcadeScores.firstIndex(where: {$0.numberOfShots == numberOfShots && $0.numberOfSeconds == actNumberOfSeconds}) ?? -1
+        
+        if arcadeScores.count > C.B.maxScoreEntries {
+            arcadeScores.removeLast()
+        }
+        
+        if scorePosition >= C.B.maxScoreEntries {
+            scorePosition = -1
+        }
+        PrefsHelper.setArcadeScores(with: arcadeScores)
+        PrefsHelper.setLastArcadeScoreInfo(to: "\(scorePosition)")
     }
 }
 
