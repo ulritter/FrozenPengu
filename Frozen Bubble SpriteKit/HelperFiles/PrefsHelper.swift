@@ -159,9 +159,8 @@ class PrefsHelper: UserDefaults {
         UserDefaults.standard.synchronize()
     }
     
-    static func removeAllScores() {
+    static func removePuzzleScores() {
         var level = 0
-        UserDefaults.standard.removeObject(forKey: C.S.arcadeScoresKey)
         while true {
             let levelScoresKey = "\(C.S.actualLevelScoreKeyPrefix)\(level)"
             if UserDefaults.standard.valueExists(forKey: levelScoresKey) {
@@ -171,6 +170,11 @@ class PrefsHelper: UserDefaults {
                 break
             }
         }
+    }
+    
+    static func removeArcadeScores() {
+        var level = 0
+        UserDefaults.standard.removeObject(forKey: C.S.arcadeScoresKey)
     }
         
     private static func scoresFromString(string: String) -> [ScoreEntry] {

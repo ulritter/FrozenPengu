@@ -218,7 +218,7 @@ class PrefsScene: SKScene {
     }
     
     func checkIfScoresAreToBeDeleted() {
-        // hidden code to reset score tables
+        // hidden code to reset puzzle score tables
         if clearScoresKey1 == 3 &&
             clearScoresKey2 == 2 &&
             clearScoresKey3 == 5 {
@@ -230,7 +230,25 @@ class PrefsScene: SKScene {
             run(SKAction.wait(forDuration: 1.0)) {
                 deleteScoresIndicator.removeFromParent()
             }
-            PrefsHelper.removeAllScores()
+            PrefsHelper.removePuzzleScores()
+            clearScoresKey1 = 0
+            clearScoresKey2 = 0
+            clearScoresKey3 = 0
+        }
+        
+        // hidden code to reset arcade score table
+        if clearScoresKey1 == 4 &&
+            clearScoresKey2 == 2 &&
+            clearScoresKey3 == 6 {
+            let deleteScoresIndicator = SKSpriteNode(imageNamed: C.S.deleteScoresIndicator)
+            deleteScoresIndicator.zPosition = C.Z.panelZ
+            deleteScoresIndicator.scale(to: frame.size, width: true, multiplier: 1)
+            deleteScoresIndicator.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(deleteScoresIndicator)
+            run(SKAction.wait(forDuration: 1.0)) {
+                deleteScoresIndicator.removeFromParent()
+            }
+            PrefsHelper.removeArcadeScores()
             clearScoresKey1 = 0
             clearScoresKey2 = 0
             clearScoresKey3 = 0
@@ -258,7 +276,7 @@ class PrefsScene: SKScene {
     }
 
     func resetScores(_: Int) {
-        PrefsHelper.removeAllScores()
+        PrefsHelper.removePuzzleScores()
     }
 
 
