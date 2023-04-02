@@ -9,7 +9,7 @@
 import SpriteKit
 
 class Launcher: SKSpriteNode {
-    
+    // load the launcher image and create a rotate() method
     var launcher: SKSpriteNode!
     var launcherAlpha: SKSpriteNode!
     var soundPlayer: SoundPlayer!
@@ -26,14 +26,6 @@ class Launcher: SKSpriteNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func launch () {
-        
-    }
-    
-    func reload () {
-        
     }
     
     func rotate (dX: CGFloat, dY: CGFloat) {

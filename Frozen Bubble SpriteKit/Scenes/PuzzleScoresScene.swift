@@ -9,7 +9,7 @@
 import SpriteKit
 
 class PuzzleScoresScene: SKScene {
-    
+    // the score screen for the level scores
     var sceneManagerDelegate: SceneManagerDelegate?
     var levelManagerDelegate: LevelManagerDelegate?
     

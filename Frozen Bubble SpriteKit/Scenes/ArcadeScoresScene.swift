@@ -10,7 +10,7 @@
 import SpriteKit
 
 class ArcadeScoresScene: SKScene {
-    
+    // the score screen for the arcade scores
     var sceneManagerDelegate: SceneManagerDelegate?
     
     override func didMove(to view: SKView) {

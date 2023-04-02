@@ -9,7 +9,9 @@
 import SpriteKit
 
 class Compressor: SKSpriteNode {
-    
+    // create the compressor with its extending body
+    // and positioning methods
+    // TODO: get y movement as parameter in down()
     var compressorPlunger: SKSpriteNode!
     var numberBodyParts = 0
     var soundPlayer: SoundPlayer!

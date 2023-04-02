@@ -9,7 +9,7 @@
 import SpriteKit
 
 class Penguin: SKSpriteNode {
-    
+    // create the penguin figure with its animations
     var playFrames1 = [SKTexture]()
     var playFrames2 = [SKTexture]()
     var playFrames3 = [SKTexture]()

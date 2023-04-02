@@ -11,7 +11,7 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    
+    // main game scene
     var sceneAudio: SKAudioNode!
      
     enum GameState {
@@ -155,7 +155,7 @@ class GameScene: SKScene {
         addHurryPanel()
         loadActualLevel()
         lastReserveBubbleColorKey = getRandomBubbleColorKey()
-        addBubblePair()
+        addBubblePairToLauncher()
         addBackButton()
         startTime = Date.timeIntervalSinceReferenceDate
         numberOfShots = 0
@@ -190,6 +190,7 @@ class GameScene: SKScene {
     
     
     func addPlayfield() {
+        // add the main playfield
         playField = SKSpriteNode(imageNamed: C.S.playBackgroundName)
         playField.anchorPoint = CGPoint.zero
         
@@ -204,6 +205,8 @@ class GameScene: SKScene {
     }
     
     func addBorders() {
+        // add the left and right borders as physics bodies so thet the
+        // bubbles can bounce there
         let lO = CGPointMake(physicsBoundsLeft-bubbleCellWidth/2, 0.0)
         let lD = CGPointMake(physicsBoundsLeft-bubbleCellWidth/2, physicsBoundsTop)
         let bH = frame.size.height
@@ -225,6 +228,8 @@ class GameScene: SKScene {
     }
     
     func addPenguin() {
+        // add the penguin to the right side og the launcher
+        // with its animation methos
         penguin = Penguin(imageNamed: C.S.penguinImageName)
         penguin.anchorPoint = CGPoint.zero
         penguin.scale(to: playField.frame.size, width: true, multiplier: 0.156)
@@ -236,6 +241,7 @@ class GameScene: SKScene {
     }
     
     func addLevelLabel() {
+        // add the level label to the sign on the bottom left corner
         let levelLabel = SKLabelNode(fontNamed: C.S.gameFontName)
         if isPuzzle {
             levelLabel.text = String(levelKey+1) // array index starts from 0 as always
@@ -254,6 +260,7 @@ class GameScene: SKScene {
     }
     
     func addCompressor() {
+        // add the compressor to the playfield
         compressor = Compressor(with: playField.size, and: bubbleCellHeight*C.B.bubbleYModifier)
         let compressorY = physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(C.B.maxRows)
         compressor.position = CGPoint(x: frame.minX, y: compressorY)
@@ -262,6 +269,8 @@ class GameScene: SKScene {
     }
     
     func addLauncher () {
+        // add the launcher object
+        // (sprite with rotate() method)
         launcher = Launcher(with: playField.size)
         launcher.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         launcher.scale(to: frame.size, width: false, multiplier: 0.2)
@@ -270,7 +279,8 @@ class GameScene: SKScene {
         addChild(launcher)
     }
     
-    func addBubblePair() {
+    func addBubblePairToLauncher() {
+        // add a bubble pair to the launcher
         self.childNode(withName: C.S.shotBubbleName)?.removeFromParent()
         self.childNode(withName: C.S.reserveBubbleName)?.removeFromParent()
         let reserveBubbleColorKey = getRandomBubbleColorKey()
@@ -294,14 +304,20 @@ class GameScene: SKScene {
     }
     
     func getRandomBubbleColorKey () -> Int {
+        //retrieve a random bubble color out of the set of remeining bubble colors
         if isPuzzle {
             return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count)]
         } else {
+            // in arcade mode the set of remaining colors is not being altered and we only
+            // use the first five colors. More colors would render the the arcade mode
+            // unplayable
             return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count-3)]
         }
     }
     
     func culateRemainingBubbleColors() {
+        // if we are in puzzle mode narrow the available
+        // colors to what is being currently active on the grid
         if isPuzzle {
             remainingBubbleColors.removeAll()
             for cell in theGrid {
@@ -315,8 +331,8 @@ class GameScene: SKScene {
         }
     }
     
-    func switchLauncherBubbles(_: Int) {
-        
+    func swapLauncherBubbles(_: Int) {
+        // swap the bubbles in the launcher
         let b1 = self.childNode(withName: C.S.shotBubbleName) as! Bubble
         let b2 = self.childNode(withName: C.S.reserveBubbleName) as! Bubble
         let b1Color = b1.getColor()
@@ -344,6 +360,7 @@ class GameScene: SKScene {
     }
     
     func addBackButton() {
+        // adds the back button at the low right corner
         let backButton = SpriteKitButton(defaultButtonImage: C.S.backButton, action: gotoMenu, index: 0)
         backButton.scale(to: frame.size, width: false, multiplier: 0.07)
         backButton.anchorPoint = CGPoint(x: 1.0, y: 0.0)
@@ -354,6 +371,7 @@ class GameScene: SKScene {
     }
     
     func addGameEndPanel(win: Bool) {
+        // adds either the win or loss panel as a tap-able button
         var panel: SpriteKitButton!
         if win && isPuzzle {
             panel = SpriteKitButton(defaultButtonImage: C.S.winPanel, action: gotoPuzzleScore, index: 0)
@@ -450,6 +468,10 @@ class GameScene: SKScene {
     }
     
     func addArcadeRowOnTop() {
+        // create a new row on top of the active grid (theGrid)
+        // the position reference is theGrid and we need to make sure
+        // to tap the right "row" (== arry index, since it is one dimensional)
+        // to get the right position for the interlaced structure (8-7-8-7 ...)
         var gridCell = GridCell()
         let numberOfColumns = isLongLine ? C.B.maxColumns : C.B.maxColumns-1
         let nextRowIndex = isLongLine ? C.B.maxColumns-1 : C.B.maxColumns
@@ -558,6 +580,8 @@ class GameScene: SKScene {
         // push the compressor one grid row downwards and adjust
         // the coordinates in "theGrid" accordingly
         driftDivider += 1
+        // we are calling handlePlayField() several times to avoid timing issues
+        // since we are fiddling around with the entire grid
         handlePlayField()
         if driftDivider > 4 {
             driftDivider = 0
@@ -581,9 +605,12 @@ class GameScene: SKScene {
                 }
             }
             handlePlayField()
+            // check if the additional row drifted in top row position
+            // if true add the new top row to the grid
             if theAddonGrid[0].position!.y < yTop {
                 let offSet = theAddonGrid.count
                 
+                //shift theGrid content by the length of the new top row
                 for i in 0..<theGrid.count {
                     let index = theGrid.count-1-i
                     let targetIndex = index-offSet
@@ -591,9 +618,11 @@ class GameScene: SKScene {
                         theGrid[index] = theGrid[targetIndex]
                     }
                 }
-                for i in 0..<theAddonGrid.count {
+                // add the new top row to the main grid
+                for i in 0..<offSet {
                     theGrid[i] = theAddonGrid[i]
                 }
+                // prepare new top row
                 addArcadeRowOnTop()
                 handlePlayField()
             }
@@ -662,21 +691,29 @@ class GameScene: SKScene {
     }
     
     func handlePlayField() {
+        // main game action handler
+        // we check the flying bubble and determine wether
+        // to dock to a grid bubble or to the ceiling by checking the
+        // proximity to grid cells with bubbles to the ceiling / compressor
         if gameState != .won && gameState != .lost {
             gameState = .ready
             for child in self.children {
                 if child is Bubble {
                     let c = child as! Bubble
+                    // bubble could either be the shit bubble on its trip
+                    // or a falling bubble
                     if c.isFlying() {
                         gameState = .ongoing
                     }
+                    // falling bubbles are getting removed when falling below the
+                    // bottom
                     if c.position.y < playFieldBottom {
                         c.removeFromParent()
                     }
                     if c.name == C.S.flyingBubbleName {
                         // check if we can dock somewhere
-                        // we don't use physics body for docking due to timing issues (both balls would bounce)
-                        // but rather check the grid coordinates
+                        // we don't use physics body for docking due to timing and physics issues (both balls would bounce)
+                        // so we rather check the grid coordinates
                         for (_, gridCell) in theGrid.enumerated() {
                             if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
                                  && (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
@@ -729,6 +766,8 @@ class GameScene: SKScene {
     }
 
     func isSwitchTouch(at pos: CGPoint) -> Bool {
+        // check if touch was in a rectangle around the launcher
+        // (in order to trigger the launcher bubble swap)
         if ((pos.x > launcherX-bubbleCellWidth) && pos.x < (launcherX+bubbleCellWidth)) &&
             ((pos.y > playFieldBottom) && (pos.y < physicsBoundsBottom)) {
           return true
@@ -749,11 +788,11 @@ class GameScene: SKScene {
                     gameState = .ongoing
                     rotateLauncher(pos: touchPos)
                     shootBubble(to: touchPos)
-                    addBubblePair()
+                    addBubblePairToLauncher()
                     numberOfShots += 1
                 }
             } else if isSwitchTouch(at: touchPos) {
-                switchLauncherBubbles(0)
+                swapLauncherBubbles(0)
             }
         }
     }
@@ -809,6 +848,10 @@ class GameScene: SKScene {
 }
 
 extension GameScene: SKPhysicsContactDelegate {
+    // we are still using left and right borders as distinct categories
+    // this could be condensed to one category but maybe we would want
+    // to play different bounce sounds in the future and this is only a minimal
+    // overhead
     func didBegin(_ contact: SKPhysicsContact) {
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
                 switch contactMask {
@@ -820,8 +863,6 @@ extension GameScene: SKPhysicsContactDelegate {
                     if isSoundOn {
                         run(soundPlayer.reboundSound)
                     }
-                case C.P.shootBubbleCategory | C.P.topCategory:
-                    break
                 default:
                     break
                 }

@@ -9,8 +9,13 @@
 import SpriteKit
 
 class CollisionHelper {
-    
-     
+    // the flying bubble has just docked to a position in the grid. We now determine whether
+    // this created a triplet or bigger entity of the same colors which need to fall out of the grid.
+    // When this is done we check if this hast left "orphan" buubles on the grind which do not have
+    // a conenction to the ceiling anymore and which need to be dropped as well.
+    // The scheme we are using is that the newly arrived bubble can "infect" bubbles of the same color
+    // around itself by iterating recursively through the grid. If a bubble is no member of a triplet or not
+    // orphan, it gets "healed" again
     static func ckeckGrid(grid: inout [GridCell], at collisionIndex: Int) -> CollisionReturnValue {
         // first round: check whether we have a triplet or more of the same
         // color so that we can drop the bubbles
@@ -30,7 +35,7 @@ class CollisionHelper {
                 if numberOfInfectedBubbles >= 3 {
                     if !c.isHealthy() {
                         didDrop = true
-                        c.drop()
+                        c.drop() //turn gravity on for this bubble
                         grid[index].bubble = nil
                         numberOfBubblesInGrid -= 1
                     }
@@ -50,7 +55,7 @@ class CollisionHelper {
                 if cell.bubble != nil {
                     let c = cell.bubble!
                     if !c.isHealthy() {
-                        c.drop()
+                        c.drop() //turn gravity on for this bubble
                         grid[index].bubble = nil
                         numberOfBubblesInGrid -= 1
                     }
@@ -67,7 +72,7 @@ class CollisionHelper {
         // x x x x x x x x
         //  x x x x x x x
         // x x X x x x x x etc...
-        // i a one-dimensional array
+        // in a one-dimensional array
         // we need to determine neighbours based on coordinate values of grid cells
         // and recursively iterate through the grid to mark cells with matching color
  

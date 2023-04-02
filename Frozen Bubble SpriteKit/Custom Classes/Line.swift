@@ -9,7 +9,7 @@
 import SpriteKit
 
 class Line: SKSpriteNode {
-
+// used for left an right borders
     var line: SKSpriteNode!
     var linePath: CGMutablePath!
     

@@ -9,7 +9,7 @@
 import SpriteKit
 
 class ColorHelper {
-    
+    // calculate the UIColor based on a hex string like #aabbcc
     static func getRandomColor() -> UIColor {
         //Generate between 0 to 1
         let red:CGFloat = CGFloat(drand48())

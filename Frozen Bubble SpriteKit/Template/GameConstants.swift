@@ -10,6 +10,11 @@ import UIKit
 
 struct C {
     // game constants
+    // C.S. -> string constants
+    // C.B. -> binary constants
+    // C.Z. -> z position contants
+    // C.P. -> physics constants
+    
     struct S {
         // string constants
         static let gameName = "frozeN BuBBLe"
@@ -157,11 +162,8 @@ struct C {
         
         static let leftBorderCategory: UInt32 = 0x1
         static let rightBorderCategory: UInt32 = 0x1 << 1
-        static let topCategory: UInt32 = 0x1 << 2
-        static let bottomCategory: UInt32 = 0x1 << 3
-        static let bubbleCategory: UInt32 = 0x1 << 4
-        static let frameCategory: UInt32 = 0x1 << 5
-        static let shootBubbleCategory: UInt32 = 0x1 << 6
+        static let bubbleCategory: UInt32 = 0x1 << 2
+        static let shootBubbleCategory: UInt32 = 0x1 << 3
     }
 }
 

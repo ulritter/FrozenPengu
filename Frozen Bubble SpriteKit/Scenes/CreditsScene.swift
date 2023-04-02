@@ -10,7 +10,7 @@
 
 import SpriteKit
 class CreditsScene: SKScene {
-    
+    // show the credits
     var sceneManagerDelegate: SceneManagerDelegate?
     
     var backgroundImage: SKSpriteNode!

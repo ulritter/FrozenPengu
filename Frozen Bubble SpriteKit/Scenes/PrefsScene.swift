@@ -10,7 +10,12 @@
 import SpriteKit
 
 class PrefsScene: SKScene {
-    
+    // show the preferences toggle buttons
+    // and a volume adjustment swipe area (if music is on)
+    // and some "secret" codes which can be entered on the top 3
+    // buttons by number of taps:
+    // 3-2-5 => delete all puzzle scorce tables
+    // 4-2-6 => delete all arcade scorce table
     var sceneManagerDelegate: SceneManagerDelegate?
     var modPlayerDelegate: ModPlayerDelegate!
     
@@ -83,10 +88,6 @@ class PrefsScene: SKScene {
         
         let yTop = backgroundImageBottom + backgroundImage.frame.height*950/1024
 
-        
-//        let buttonWidth = backgroundImage.frame.width*0.6
-//        let buttonHeight = backgroundImage.frame.height*0.1
-        
         volumeLabel = SKLabelNode (fontNamed: C.S.gameFontName)
         volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
         volumeLabel.position = CGPoint(x: frame.midX, y: frame.height*0.1)

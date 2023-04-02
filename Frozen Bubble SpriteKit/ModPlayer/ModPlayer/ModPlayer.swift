@@ -16,7 +16,7 @@ import AudioToolbox
 import AVFoundation
 
 class ModPlayer {
-
+// main class to play Amiga *.mod files as background music
     let audioEngine = AVAudioEngine()
     var myAUNode: AVAudioUnit?        =  nil
     let mixer = AVAudioMixerNode()

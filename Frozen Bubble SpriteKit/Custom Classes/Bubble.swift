@@ -9,7 +9,12 @@
 import SpriteKit
 
 class Bubble: SKSpriteNode {
-    
+    // bubble sprite node
+    // in order to switch colors of textures for a bubble we do not
+    // use texrure based SKActions or set the texture directly since
+    // this has proven to create awkward effects due to timing issues
+    // caused by SpriteKit's async behaviour. What we do instead is
+    // to remove and add child nodes which works fine
     var mainBubble: SKSpriteNode!
     var frozenBubble: SKSpriteNode!
     var blinkBubble: SKSpriteNode!
@@ -150,7 +155,6 @@ class Bubble: SKSpriteNode {
     
     func stop(){
         physicsBody?.velocity = CGVectorMake(0, 0)
-//        physicsBody?.node?.speed = 0
     }
     
     private func setBubble (_ type: bubbleType) {

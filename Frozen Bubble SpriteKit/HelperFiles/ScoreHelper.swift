@@ -9,9 +9,10 @@
 import SpriteKit
 
 class ScoreHelper {
+    // update and sort puzzle and arcade score tables with the new entry
+    // A return value of -1 means the new score was not a highscore
     
     static func updatePuzzleScoreTable (for levelKey: Int, with numberOfShots: Int,  taking numberOfSeconds: CGFloat) {
-
         var newScore = ScoreEntry()
         var scorePosition:Int = -1
         var levelScores = PrefsHelper.getPuzzleScores(for: levelKey)
@@ -38,7 +39,6 @@ class ScoreHelper {
     }
     
     static func updateArcadeScoreTable (with numberOfShots: Int,  taking numberOfSeconds: CGFloat) {
-
         var newScore = ScoreEntry()
         var scorePosition:Int = -1
         var arcadeScores = PrefsHelper.getArcadeScores()

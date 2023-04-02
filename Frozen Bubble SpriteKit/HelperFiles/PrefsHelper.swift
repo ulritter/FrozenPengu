@@ -9,7 +9,12 @@
 import Foundation
 
 class PrefsHelper: UserDefaults {
-    
+    // Userdefaults handling for several game parameters and preferences
+    // and do some necessary conversions since Userdefaults would
+    // not accept complex data types and the easiest way for them is
+    // to turn them to a string
+    // The Userdefaults entries are also used to communicate between
+    // different scenes in order to determinate next actions
     static func isSoundOn ()  -> Bool {
         if let data = UserDefaults.standard.string(forKey: C.S.soundKey) {
             return data == C.S.onKey

@@ -9,6 +9,7 @@
 import SpriteKit
 
 class Levels {
+    // load the levels text file and put them in a numeric array
     var levels = [[Int]]()
     
     init() {

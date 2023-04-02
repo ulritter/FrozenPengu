@@ -9,6 +9,8 @@
 import SpriteKit
 
 class SoundPlayer {
+    // sound action for bounces, dock, etc
+    // TODO: do some cleanup here
     var changeVolumeAction: SKAction!
     var applauseSound: SKAction!
     var cancelSound: SKAction!
@@ -35,9 +37,6 @@ class SoundPlayer {
     var whipSound: SKAction!
     
     init() {
-        //TODO: need workaround, since changing volume on SKAction is still buggy
-        //self.changeVolumeAction = SKAction.changeVolume(to: 0.2, duration: 0.5)
-        
         self.applauseSound = self.playAction("applause")
         self.cancelSound = self.playAction("cancel")
         self.chattedSound = self.playAction("chatted")

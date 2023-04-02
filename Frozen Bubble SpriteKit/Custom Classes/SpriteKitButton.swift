@@ -9,7 +9,7 @@
 import SpriteKit
 
 class SpriteKitButton: SKSpriteNode {
-    
+    // generic button functionality based on a sprite
     let soundPlayer = SoundPlayer()
     var defaultButton: SKSpriteNode
     var action: (Int) -> ()

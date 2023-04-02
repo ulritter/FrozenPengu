@@ -9,7 +9,7 @@
 import SpriteKit
 
 class AnimationHelper {
-    
+    // load textures from a SKTextureAtlas and create a SKTexture array
     static func loadTextures (from atlas: SKTextureAtlas, withName name: String) -> [SKTexture]{
         var textures = [SKTexture]()
         for index in 0..<atlas.textureNames.count {
