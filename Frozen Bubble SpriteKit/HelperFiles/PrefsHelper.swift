@@ -178,7 +178,6 @@ class PrefsHelper: UserDefaults {
     }
     
     static func removeArcadeScores() {
-        var level = 0
         UserDefaults.standard.removeObject(forKey: C.S.arcadeScoresKey)
     }
         

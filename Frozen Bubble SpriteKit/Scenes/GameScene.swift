@@ -576,13 +576,12 @@ class GameScene: SKScene {
         }
     }
     
-    func driftDownAndHandlePlayfield () {
+    func driftDown () {
         // push the compressor one grid row downwards and adjust
         // the coordinates in "theGrid" accordingly
         driftDivider += 1
         // we are calling handlePlayField() several times to avoid timing issues
         // since we are fiddling around with the entire grid
-        handlePlayField()
         if driftDivider > 4 {
             driftDivider = 0
             let delta = 0.6
@@ -604,7 +603,6 @@ class GameScene: SKScene {
                     }
                 }
             }
-            handlePlayField()
             // check if the additional row drifted in top row position
             // if true add the new top row to the grid
             if theAddonGrid[0].position!.y < yTop {
@@ -624,7 +622,6 @@ class GameScene: SKScene {
                 }
                 // prepare new top row
                 addArcadeRowOnTop()
-                handlePlayField()
             }
            
         }
@@ -821,10 +818,9 @@ class GameScene: SKScene {
             autoshootHandler()
             dtCumulated=0
             if !isPuzzle && gameState != .lost {
-                driftDownAndHandlePlayfield()
-            } else {
-                handlePlayField()
+                driftDown()
             }
+            handlePlayField()
         }
     }
     
