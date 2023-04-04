@@ -94,6 +94,7 @@ class PuzzleScoresScene: SKScene {
             } else {
                 if lastPosition == -1 {
                     scoreLabel.text = C.S.wasntHighscoreText
+                    scoreLabel.startBlinking()
                     addChild(scoreLine)
                 }
             }
@@ -101,6 +102,7 @@ class PuzzleScoresScene: SKScene {
 
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.removeAllActions()
         gotoNextScene()
     }
     

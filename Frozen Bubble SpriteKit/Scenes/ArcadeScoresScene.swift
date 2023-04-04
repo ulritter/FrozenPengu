@@ -10,7 +10,7 @@
 import SpriteKit
 
 class ArcadeScoresScene: SKScene {
-    // the score screen for the arcade scores
+    
     var sceneManagerDelegate: SceneManagerDelegate?
     
     override func didMove(to view: SKView) {
@@ -84,13 +84,16 @@ class ArcadeScoresScene: SKScene {
             } else {
                 if lastPosition == -1 {
                     scoreLabel.text = C.S.wasntHighscoreText
+                    scoreLabel.startBlinking()
                     addChild(scoreLine)
                 }
             }
         }
 
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.removeAllActions()
         sceneManagerDelegate?.presentGameScene()
     }
 }

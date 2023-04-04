@@ -49,9 +49,17 @@ extension SKNode {
         }
         userData!.setValue(entry, forKey: key)
     }
-    
-    
-
 }
 
-
+extension SKLabelNode {
+    func startBlinking () {
+        let fadeOut = SKAction.fadeAlpha(to: 0.0, duration: 0.5)
+        let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.5)
+        let blink = SKAction.repeatForever(SKAction.sequence([fadeOut,fadeIn]))
+        self.run(blink)
+    }
+    
+    func stopBlinking () {
+        removeAllActions()
+    }
+}
