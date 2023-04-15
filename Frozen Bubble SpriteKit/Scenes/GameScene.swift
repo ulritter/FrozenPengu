@@ -103,7 +103,7 @@ class GameScene: SKScene {
     var stroredLevelIndex: Int!
     var lastTouchPosition = CGPoint.zero
     
-    var collisionReturnValue = CollisionReturnValue()
+    var collisionStatus = CollisionReturnValue()
     var shotBubble: Bubble!
     var reserveBubble: Bubble!
     var remainingBubbleColors = [1,2,3,4,5,6,7,8]
@@ -153,7 +153,7 @@ class GameScene: SKScene {
         addLevelLabel()
         buildGrid()
         addHurryPanel()
-        loadActualLevel()
+        loadActualLevelOrFillGrid()
         lastReserveBubbleColorKey = getRandomBubbleColorKey()
         addBubblePairToLauncher()
         addBackButton()
@@ -164,6 +164,8 @@ class GameScene: SKScene {
             addArcadeRowOnTop()
         }
     }
+    
+    // MARK: - Preparations functions
     
     func setPropotionsAndPositions() {
         // get all proportions and positions for given device dimensions
@@ -299,64 +301,8 @@ class GameScene: SKScene {
         reserveBubble.name = C.S.reserveBubbleName
         addChild(reserveBubble)
         lastReserveBubbleColorKey = reserveBubbleColorKey
-        culateRemainingBubbleColors()
+        calculateRemainingBubbleColors()
 
-    }
-    
-    func getRandomBubbleColorKey () -> Int {
-        //retrieve a random bubble color out of the set of remeining bubble colors
-        if isPuzzle {
-            return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count)]
-        } else {
-            // in arcade mode the set of remaining colors is not being altered and we only
-            // use the first five colors. More colors would render the the arcade mode
-            // unplayable
-            return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count-3)]
-        }
-    }
-    
-    func culateRemainingBubbleColors() {
-        // if we are in puzzle mode narrow the available
-        // colors to what is being currently active on the grid
-        if isPuzzle {
-            remainingBubbleColors.removeAll()
-            for cell in theGrid {
-                if cell.bubble != nil {
-                    let c = cell.bubble!
-                    if !(remainingBubbleColors.contains(c.bubbleColor)) {
-                        remainingBubbleColors.append(c.bubbleColor)
-                    }
-                }
-            }
-        }
-    }
-    
-    func swapLauncherBubbles(_: Int) {
-        // swap the bubbles in the launcher
-        let b1 = self.childNode(withName: C.S.shotBubbleName) as! Bubble
-        let b2 = self.childNode(withName: C.S.reserveBubbleName) as! Bubble
-        let b1Color = b1.getColor()
-        let b2Color = b2.getColor()
-        b1.removeFromParent()
-        b2.removeFromParent()
-
-        shotBubble = Bubble(with: frame.size, as: b2Color)
-        shotBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
-        shotBubble.position = CGPoint(x: launcherX, y: launcherY)
-        shotBubble.zPosition = C.Z.bubbleZ
-        shotBubble.name = C.S.shotBubbleName
-        addChild(shotBubble)
-        
-        reserveBubble = Bubble(with: frame.size, as: b1Color)
-        reserveBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
-        reserveBubble.position = CGPoint(x: launcherX, y: reserverBubbleY)
-        reserveBubble.zPosition = C.Z.bubbleZ
-        reserveBubble.name = C.S.reserveBubbleName
-        addChild(reserveBubble)
-        lastReserveBubbleColorKey = b1Color
-        if isSoundOn {
-            run(soundPlayer.whipSound)
-        }
     }
     
     func addBackButton() {
@@ -426,9 +372,8 @@ class GameScene: SKScene {
             }
         }
     }
-
     
-    func loadActualLevel() {
+    func loadActualLevelOrFillGrid() {
         // populate "theGrid" with actual level data if in puzzle mode
         // or load the first half of the grid with random bubbles when
         // in Arcade mode
@@ -457,40 +402,72 @@ class GameScene: SKScene {
                     bubble.zPosition = C.Z.bubbleZ
                     bubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
                     bubble.name = C.S.gridBubbleName
-                    bubble.position = theGrid[index].position!
+                    bubble.position = theGrid[index].position
                     theGrid[index].bubble = bubble
                     addChild(theGrid[index].bubble!)
                 }
                 index += 1
             }
         }
-        culateRemainingBubbleColors()
+        calculateRemainingBubbleColors()
     }
     
-    func addArcadeRowOnTop() {
-        // create a new row on top of the active grid (theGrid)
-        // the position reference is theGrid and we need to make sure
-        // to tap the right "row" (== arry index, since it is one dimensional)
-        // to get the right position for the interlaced structure (8-7-8-7 ...)
-        var gridCell = GridCell()
-        let numberOfColumns = isLongLine ? C.B.maxColumns : C.B.maxColumns-1
-        let nextRowIndex = isLongLine ? C.B.maxColumns-1 : C.B.maxColumns
-        theAddonGrid.removeAll()
-        for index in 0...numberOfColumns-1 {
-            gridCell.position = theGrid[nextRowIndex+index].position!
-            let newY = gridCell.position!.y+bubbleCellHeight*C.B.bubbleYModifier*2
-            gridCell.position!.y = newY
-            let bubble = Bubble(with: frame.size, as: getRandomBubbleColorKey())
-            bubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
-            bubble.position = gridCell.position!
-            bubble.name = C.S.gridBubbleName
-            PhysicsHelper.addPhysicsBody(to: bubble, with: C.S.bubbleName)
-            bubble.zPosition = C.Z.bubbleZ
-            gridCell.bubble = bubble
-            theAddonGrid.append(gridCell)
-            addChild(gridCell.bubble!)
+
+    // MARK: - General runtime functions
+    func getRandomBubbleColorKey () -> Int {
+        //retrieve a random bubble color out of the set of remeining bubble colors
+        if isPuzzle {
+            return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count)]
+        } else {
+            // in arcade mode the set of remaining colors is not being altered and we only
+            // use the first five colors. More colors would render the the arcade mode
+            // unplayable
+            return remainingBubbleColors[Int.random(in: 0..<remainingBubbleColors.count-3)]
         }
-        isLongLine = !isLongLine
+    }
+    
+    func calculateRemainingBubbleColors() {
+        // if we are in puzzle mode narrow the available
+        // colors to what is being currently active on the grid
+        if isPuzzle {
+            remainingBubbleColors.removeAll()
+            for cell in theGrid {
+                if cell.bubble != nil {
+                    let c = cell.bubble!
+                    if !(remainingBubbleColors.contains(c.bubbleColor)) {
+                        remainingBubbleColors.append(c.bubbleColor)
+                    }
+                }
+            }
+        }
+    }
+    
+    func swapLauncherBubbles(_: Int) {
+        // swap the bubbles in the launcher
+        let b1 = self.childNode(withName: C.S.shotBubbleName) as! Bubble
+        let b2 = self.childNode(withName: C.S.reserveBubbleName) as! Bubble
+        let b1Color = b1.getColor()
+        let b2Color = b2.getColor()
+        b1.removeFromParent()
+        b2.removeFromParent()
+
+        shotBubble = Bubble(with: frame.size, as: b2Color)
+        shotBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
+        shotBubble.position = CGPoint(x: launcherX, y: launcherY)
+        shotBubble.zPosition = C.Z.bubbleZ
+        shotBubble.name = C.S.shotBubbleName
+        addChild(shotBubble)
+        
+        reserveBubble = Bubble(with: frame.size, as: b1Color)
+        reserveBubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
+        reserveBubble.position = CGPoint(x: launcherX, y: reserverBubbleY)
+        reserveBubble.zPosition = C.Z.bubbleZ
+        reserveBubble.name = C.S.reserveBubbleName
+        addChild(reserveBubble)
+        lastReserveBubbleColorKey = b1Color
+        if isSoundOn {
+            run(soundPlayer.whipSound)
+        }
     }
     
     func closestEmptyCell(point: CGPoint) -> Int {
@@ -500,7 +477,7 @@ class GameScene: SKScene {
         var snapIndex = Int.max
 
         for (index, gridCell) in theGrid.enumerated() {
-            let testPoint = gridCell.position!
+            let testPoint = gridCell.position
             let distance = TrigonometryHelper.distance(testPoint, point)
             if (distance < oldDistance) && gridCell.bubble == nil && distance < bubbleCellWidth {
                 oldDistance = distance
@@ -549,91 +526,19 @@ class GameScene: SKScene {
         }
     }
     
-    func pushCompressor () {
-        // push the compressor one grid row downwards and adjust
-        // the coordinates in "theGrid" accordingly
-        shotCounter = 0
-        if initialCompressorPosition > 0 {
-            initialCompressorPosition -= 1
-            compressor.down()
-            compressor.position = CGPoint(x: frame.minX, y: physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(initialCompressorPosition))
-            
-            for index in 0..<theGrid.count {
-                theGrid[index].position!.y = theGrid[index].position!.y-bubbleCellHeight*C.B.bubbleYModifier
-                if theGrid[index].bubble != nil {
-                    let c = theGrid[index].bubble! as Bubble
-                    c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
-                    if c.position.y < physicsBoundsBottom+bubbleCellHeight/4 {
-                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                        gameState = .lost
-                        break
-                    }
-                }
-            }
-            if isSoundOn {
-                run(soundPlayer.newRootSoloSound)
-            }
-        }
-    }
-    
-    func driftDown () {
-        // push the compressor one grid row downwards and adjust
-        // the coordinates in "theGrid" accordingly
-        driftDivider += 1
-        // we are calling handlePlayField() several times to avoid timing issues
-        // since we are fiddling around with the entire grid
-        if driftDivider > 4 {
-            driftDivider = 0
-            let delta = 0.6
-            
-            for index in 0..<theAddonGrid.count {
-                theAddonGrid[index].position!.y = theAddonGrid[index].position!.y-delta
-                let c = theAddonGrid[index].bubble! as Bubble
-                c.position.y = c.position.y-delta
-            }
-            for index in 0..<theGrid.count {
-                theGrid[index].position!.y = theGrid[index].position!.y-delta
-                if theGrid[index].bubble != nil {
-                    let c = theGrid[index].bubble! as Bubble
-                    c.position.y = c.position.y-delta
-                    if c.position.y < physicsBoundsBottom+bubbleCellHeight/4 {
-                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                        gameState = .lost
-                        return
-                    }
-                }
-            }
-            // check if the additional row drifted in top row position
-            // if true add the new top row to the grid
-            if theAddonGrid[0].position!.y < yTop {
-                let offSet = theAddonGrid.count
-                
-                //shift theGrid content by the length of the new top row
-                for i in 0..<theGrid.count {
-                    let index = theGrid.count-1-i
-                    let targetIndex = index-offSet
-                    if targetIndex >= 0 {
-                        theGrid[index] = theGrid[targetIndex]
-                    }
-                }
-                // add the new top row to the main grid
-                for i in 0..<offSet {
-                    theGrid[i] = theAddonGrid[i]
-                }
-                // prepare new top row
-                addArcadeRowOnTop()
-            }
-           
-        }
-        
-    }
-    
     func fieldBlink() {
-        // let all bubbles blink by toggling the texture
-        for child in self.children {
-        if child is Bubble {
-            let c = child as! Bubble
-                c.blink()
+        // let all grid bubbles blink
+        
+        for cell in theGrid {
+            if cell.bubble != nil {
+                cell.bubble!.blink()
+            }
+        }
+        if !isPuzzle {
+            for cell in theAddonGrid {
+                if cell.bubble != nil {
+                    cell.bubble!.blink()
+                }
             }
         }
     }
@@ -712,10 +617,10 @@ class GameScene: SKScene {
                         // we don't use physics body for docking due to timing and physics issues (both balls would bounce)
                         // so we rather check the grid coordinates
                         for (_, gridCell) in theGrid.enumerated() {
-                            if  (((TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
-                                 && (c.position.y <= gridCell.position!.y)/* don't dock on top of another bubble*/)
-                                || ((gridCell.bubble == nil) && (c.position.y > theGrid[0].position!.y)
-                                    && (TrigonometryHelper.distance(gridCell.position!, c.position) < bubbleCellWidth)))
+                            if  (((TrigonometryHelper.distance(gridCell.position, c.position) < bubbleCellWidth*0.9) && (gridCell.bubble != nil)
+                                 && (c.position.y <= gridCell.position.y)/* don't dock on top of another bubble*/)
+                                || ((gridCell.bubble == nil) && (c.position.y > theGrid[0].position.y)
+                                    && (TrigonometryHelper.distance(gridCell.position, c.position) < bubbleCellWidth)))
                             {
                                 gameState = .ready
                                 let dockingBubble = Bubble(with: frame.size, as: c.getColor())
@@ -726,20 +631,22 @@ class GameScene: SKScene {
                                 let gridIndex = closestEmptyCell(point: c.position)
                                 c.removeFromParent()
                                 if gridIndex < theGrid.count {
-                                    if theGrid[gridIndex].position!.y < physicsBoundsBottom-bubbleCellWidth/4 {
+                                    
+                                    theGrid[gridIndex].bubble = dockingBubble
+                                    dockingBubble.position = theGrid[gridIndex].position
+                                    addChild(dockingBubble)
+                                    
+                                    if theGrid[gridIndex].position.y < physicsBoundsBottom-bubbleCellWidth/4 {
                                         self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                         gameState = .lost
                                         break
                                     }
-                                    theGrid[gridIndex].bubble = dockingBubble
-                                    dockingBubble.position = theGrid[gridIndex].position!
-                                    addChild(dockingBubble)
-                                   
-                                    collisionReturnValue = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
+
+                                    collisionStatus = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
                                     
-                                    let numberOfRemainingBubbles = collisionReturnValue.bubblesLeft
+                                    let numberOfRemainingBubbles = collisionStatus.bubblesLeft
                                     if isSoundOn {
-                                        if collisionReturnValue.didDrop {
+                                        if collisionStatus.didDrop {
                                             run(soundPlayer.destroyGroupdSound)
                                         } else {
                                             run(soundPlayer.stickSound)
@@ -762,6 +669,115 @@ class GameScene: SKScene {
         }
     }
 
+    
+    // MARK: - Puzzle specific runtime functions
+    func pushCompressor () {
+        // push the compressor one grid row downwards and adjust
+        // the coordinates in "theGrid" accordingly
+        shotCounter = 0
+        if initialCompressorPosition > 0 {
+            initialCompressorPosition -= 1
+            compressor.down()
+            compressor.position = CGPoint(x: frame.minX, y: physicsBoundsBottom+3+bubbleCellHeight*C.B.bubbleYModifier*CGFloat(initialCompressorPosition))
+            
+            for index in 0..<theGrid.count {
+                theGrid[index].position.y = theGrid[index].position.y-bubbleCellHeight*C.B.bubbleYModifier
+                if theGrid[index].bubble != nil {
+                    let c = theGrid[index].bubble! as Bubble
+                    c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
+                    if c.position.y < physicsBoundsBottom {
+                        self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                        gameState = .lost
+                        break
+                    }
+                }
+            }
+            if isSoundOn {
+                run(soundPlayer.newRootSoloSound)
+            }
+        }
+    }
+    
+    // MARK: - Arcade specific runtime functions
+    func addArcadeRowOnTop() {
+        // create a new row on top of the active grid (theGrid)
+        // the position reference is theGrid and we need to make sure
+        // to tap the right "row" (== arry index, since it is one dimensional)
+        // to get the right position for the interlaced structure (8-7-8-7 ...)
+        var gridCell = GridCell()
+        let numberOfColumns = isLongLine ? C.B.maxColumns : C.B.maxColumns-1
+        let nextRowIndex = isLongLine ? C.B.maxColumns-1 : C.B.maxColumns
+        theAddonGrid.removeAll()
+        for index in 0...numberOfColumns-1 {
+            gridCell.position = theGrid[nextRowIndex+index].position
+            let newY = gridCell.position.y+bubbleCellHeight*C.B.bubbleYModifier*2
+            gridCell.position.y = newY
+            let bubble = Bubble(with: frame.size, as: getRandomBubbleColorKey())
+            bubble.scale(to: frame.size, width: true, multiplier: refBubbleScaler)
+            bubble.position = gridCell.position
+            bubble.name = C.S.gridBubbleName
+            PhysicsHelper.addPhysicsBody(to: bubble, with: C.S.bubbleName)
+            bubble.zPosition = C.Z.bubbleZ
+            gridCell.bubble = bubble
+            theAddonGrid.append(gridCell)
+            addChild(gridCell.bubble!)
+        }
+        isLongLine = !isLongLine
+    }
+    
+    func driftDown () {
+        // push the compressor one grid row downwards and adjust
+        // the coordinates in "theGrid" accordingly
+        // driftDivider regulates the time interval for drifting down ticks
+        // delta handles the vertical movement per tick
+        driftDivider += 1
+        if driftDivider > 4 {
+            driftDivider = 0
+            let delta = 0.6
+            
+            for index in 0..<theAddonGrid.count {
+                theAddonGrid[index].position.y = theAddonGrid[index].position.y-delta
+                let c = theAddonGrid[index].bubble! as Bubble
+                c.position.y = c.position.y-delta
+            }
+            for index in 0..<theGrid.count {
+                theGrid[index].position.y = theGrid[index].position.y-delta
+                if theGrid[index].bubble != nil {
+                    let c = theGrid[index].bubble! as Bubble
+                    c.position.y = c.position.y-delta
+                    if c.position.y < physicsBoundsBottom {
+                        gameState = .lost
+                        return
+                    }
+                }
+            }
+            // check if the additional row drifted in top row position
+            // if true add the new top row to the grid
+            if theAddonGrid[0].position.y < yTop {
+                let offSet = theAddonGrid.count
+                
+                //shift theGrid content by the length of the new top row
+                for i in 0..<theGrid.count {
+                    let index = theGrid.count-1-i
+                    let targetIndex = index-offSet
+                    if targetIndex >= 0 {
+                        theGrid[index] = theGrid[targetIndex]
+                    }
+                }
+                // add the new top row to the main grid
+                for i in 0..<offSet {
+                    theGrid[i] = theAddonGrid[i]
+                }
+                // prepare new top row
+                addArcadeRowOnTop()
+            }
+           
+        }
+        
+    }
+
+    // MARK: - Touch handling functions
+    
     func isSwitchTouch(at pos: CGPoint) -> Bool {
         // check if touch was in a rectangle around the launcher
         // (in order to trigger the launcher bubble swap)
@@ -805,7 +821,7 @@ class GameScene: SKScene {
         return
     }
     
-    
+    // MARK: - Timer handling functions
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         if lastTime > 0 {
@@ -824,6 +840,7 @@ class GameScene: SKScene {
         }
     }
     
+    // MARK: - Scene branching functions
     func gotoMenu(_: Int) {
         sceneManagerDelegate?.presentMenuScene()
     }
@@ -842,6 +859,8 @@ class GameScene: SKScene {
         sceneManagerDelegate?.presentArcadeScoresScene()
     }
 }
+
+// MARK: - Physics handling functions
 
 extension GameScene: SKPhysicsContactDelegate {
     // we are still using left and right borders as distinct categories
@@ -866,6 +885,5 @@ extension GameScene: SKPhysicsContactDelegate {
     
     func didEnd(_ contact: SKPhysicsContact) {
     }
-    
 }
 

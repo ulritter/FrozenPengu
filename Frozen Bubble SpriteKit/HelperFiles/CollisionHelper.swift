@@ -82,11 +82,11 @@ class CollisionHelper {
         grid[startIndex].bubble?.infect()
         grid[startIndex].bubble?.bubbleWasChecked = true
         
-        let neighbourDistance = TrigonometryHelper.distance(grid[0].position!, grid[1].position!)*1.1
+        let neighbourDistance = TrigonometryHelper.distance(grid[0].position, grid[1].position)*1.1
         
         for (index,cell) in grid.enumerated() {
             if index != startIndex {
-                if (TrigonometryHelper.distance(cell.position!, grid[startIndex].position!) <= neighbourDistance) && cell.bubble != nil {
+                if (TrigonometryHelper.distance(cell.position, grid[startIndex].position) <= neighbourDistance) && cell.bubble != nil {
                     // we found a neighbour
                     if !(cell.bubble?.bubbleWasChecked)! {
                         if cell.bubble?.getColor() == collisionColor {
@@ -128,10 +128,10 @@ class CollisionHelper {
     
     private static func healNeighbours(grid: [GridCell], at startIndex: Int) {
         // recursively heal neigbours
-        let neighbourDistance = TrigonometryHelper.distance(grid[0].position!, grid[1].position!)*1.1
+        let neighbourDistance = TrigonometryHelper.distance(grid[0].position, grid[1].position)*1.1
         for (index,cell) in grid.enumerated() {
             if index != startIndex {
-                if (TrigonometryHelper.distance(cell.position!, grid[startIndex].position!) <= neighbourDistance) && cell.bubble != nil {
+                if (TrigonometryHelper.distance(cell.position, grid[startIndex].position) <= neighbourDistance) && cell.bubble != nil {
                     // we found a neighbour
                     if !(cell.bubble?.isHealthy())! {
                         cell.bubble?.heal()

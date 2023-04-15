@@ -9,10 +9,10 @@
 import SpriteKit
 
 struct GridCell {
-    var position: CGPoint?
+    var position: CGPoint
     var bubble: Bubble?
     init() {
-        self.position = nil
+        self.position = CGPoint.zero
         self.bubble = nil
     }
 }
@@ -40,5 +40,5 @@ struct Autoshoot {
 // normally, a global variable is not a good idea
 // in this case, however, we need to access this from
 // AppDelegate and by this global we are saving clumsy
-// (maybe cleaner) observer constructs
+// (yeo maybe cleaner ;-)) observer or delegate constructs
 var autoShoot = Autoshoot()

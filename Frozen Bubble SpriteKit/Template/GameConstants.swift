@@ -103,7 +103,7 @@ struct C {
         static let showCreditsText = "Credits"
         static let backToMenuText = "Back to Menu"
         static let backToGameText = "Back to Game"
-        static let wasntHighscoreText = "*** Wasn't Highscore ***"
+        static let wasntHighscoreText = "*** No Highscore ***"
         static let shotSingularText = "shot"
         static let shotPluralText = "shots"
         static let secondsText = "secs"
@@ -118,7 +118,7 @@ struct C {
             "If you want to buy me a coffee:",
             ">>>>>uritter@web.de<<<<<",
             "-----Thanks to:-----",
-            "Nicolas Ramz-mod Player",
+            "Nicolas Ramz - mod Player",
             "Original game developers:",
             "Guillaume Cottenceau-design",
             "Alexis Younes-graphics",
@@ -135,8 +135,6 @@ struct C {
         static let hudZ:CGFloat = 3
         static let bubbleZ:CGFloat = 4
         static let panelZ:CGFloat = 5
-
-
     }
     
     struct B {
