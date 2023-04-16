@@ -77,6 +77,7 @@ class GameScene: SKScene {
     var yTop: CGFloat!
     var reserverBubbleY: CGFloat!
     var lastReserveBubbleColorKey: Int!
+    var deadPositionY: CGFloat!
     
     var bubbleCellWidth: CGFloat!
     var bubbleCellHeight: CGFloat!
@@ -188,6 +189,7 @@ class GameScene: SKScene {
         yTop = physicsBoundsBottom + bubbleCellHeight*C.B.bubbleYModifier*CGFloat(C.B.maxRows)
         levelLabelY = playFieldBottom+(playField.frame.height-playField.frame.height*970/1024)
         levelLabelX = self.frame.width*60/711
+        deadPositionY = physicsBoundsBottom+bubbleCellWidth/4
     }
     
     
@@ -529,15 +531,24 @@ class GameScene: SKScene {
     func fieldBlink() {
         // let all grid bubbles blink
         
-        for cell in theGrid {
+        let numberOfGridCells = theGrid.count
+        for index in 0...numberOfGridCells-1 {
+            let cell = theGrid[numberOfGridCells-index-1]
             if cell.bubble != nil {
-                cell.bubble!.blink()
+                DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index) * 0.005 ) {
+                    cell.bubble!.blink()
+                }
             }
         }
+        
         if !isPuzzle {
-            for cell in theAddonGrid {
+            let numberOfAddonCells = theAddonGrid.count
+            for index in 0...numberOfAddonCells-1 {
+                let cell = theAddonGrid[numberOfAddonCells-index-1]
                 if cell.bubble != nil {
-                    cell.bubble!.blink()
+                    DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index+numberOfGridCells) * 0.005 ) {
+                        cell.bubble!.blink()
+                    }
                 }
             }
         }
@@ -636,7 +647,7 @@ class GameScene: SKScene {
                                     dockingBubble.position = theGrid[gridIndex].position
                                     addChild(dockingBubble)
                                     
-                                    if theGrid[gridIndex].position.y < physicsBoundsBottom-bubbleCellWidth/4 {
+                                    if theGrid[gridIndex].position.y < deadPositionY {
                                         self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                         gameState = .lost
                                         break
@@ -685,7 +696,7 @@ class GameScene: SKScene {
                 if theGrid[index].bubble != nil {
                     let c = theGrid[index].bubble! as Bubble
                     c.position.y = c.position.y-bubbleCellHeight*C.B.bubbleYModifier
-                    if c.position.y < physicsBoundsBottom {
+                    if c.position.y < deadPositionY {
                         self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                         gameState = .lost
                         break
@@ -745,7 +756,8 @@ class GameScene: SKScene {
                 if theGrid[index].bubble != nil {
                     let c = theGrid[index].bubble! as Bubble
                     c.position.y = c.position.y-delta
-                    if c.position.y < physicsBoundsBottom {
+                    if c.position.y < deadPositionY
+                    {
                         gameState = .lost
                         return
                     }
@@ -860,7 +872,7 @@ class GameScene: SKScene {
     }
 }
 
-// MARK: - Physics handling functions
+// MARK: - Physics handling estensions
 
 extension GameScene: SKPhysicsContactDelegate {
     // we are still using left and right borders as distinct categories
