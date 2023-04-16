@@ -29,6 +29,7 @@ class Bubble: SKSpriteNode {
     var bubbleColor: Int!
     var bubbleState: BubbleState!
     var bubbleWasChecked: Bool!
+    var isBlinking: Bool!
     
     enum bubbleType {
         case main, frozen, blink
@@ -52,6 +53,7 @@ class Bubble: SKSpriteNode {
         self.parentSize = size
         self.bubbleState = .healthy
         self.bubbleWasChecked = false
+        self.isBlinking = false
         addChild(mainBubble)
     }
     
@@ -92,6 +94,7 @@ class Bubble: SKSpriteNode {
         bubbleColor = color
         mainBubble.texture = SKTexture.init(imageNamed: "\(textureKey ?? C.S.bubblePrefix)\(bubbleColor!)")
         frozenBubble.texture = SKTexture.init(imageNamed: "\(C.S.bubbleFrozenPrefix)\(bubbleColor!)")
+        frozenBubble.alpha = 0.7
         self.addChild(mainBubble)
     }
     
@@ -105,10 +108,12 @@ class Bubble: SKSpriteNode {
             //frozen
             self.removeAllChildren()
             self.addChild(frozenBubble)
-        case 2:
-            //blink
-            self.removeAllChildren()
-            self.addChild(blinkBubble)
+//        blinking is now handled by altering alpha (see below)
+//        since completely altering texture seems too agressive
+//        case 2:
+//            // blink with white
+//            self.removeAllChildren()
+//            self.addChild(blinkBubble)
         default:
             self.removeAllChildren()
             self.addChild(mainBubble)
@@ -116,20 +121,35 @@ class Bubble: SKSpriteNode {
     }
     
     func blink () {
-        let wait = SKAction.wait(forDuration: 0.2)
-        self.run(wait) {
-            self.setTexture(textureKey: 2)
-            self.run(wait) {
-                self.resetTexture()
-            }
-        }
+        // blinking is now only handled by altering alpha
+        self.isBlinking = true
+        let wait1 = SKAction.wait(forDuration: 0.2)
+        let wait2 = SKAction.wait(forDuration: 0.8)
+        let blinkOn = SKAction.run({
+            self.alpha = 0.7
+        })
+        let blinkOff = SKAction.run({
+            self.alpha = 1.0
+        })
+        let sequence = SKAction.sequence([blinkOn, wait1, blinkOff, wait2])
+        let loop = SKAction.repeatForever(sequence)
+        self.run(loop)
+    }
+    
+    func unblink() {
+        self.isBlinking = false
+        self.removeAllActions()
+        self.alpha = 1.0
+        self.setTexture(textureKey: 0)
     }
     
     func freeze() {
+        self.removeAllActions()
         self.setTexture(textureKey: 1)
     }
     
     func resetTexture() {
+        self.removeAllActions()
         self.setTexture(textureKey: 0)
     }
     

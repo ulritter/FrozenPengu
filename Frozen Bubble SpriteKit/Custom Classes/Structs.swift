@@ -37,6 +37,7 @@ struct Autoshoot {
     var stage: Int = 0
 }
 
+
 // normally, a global variable is not a good idea
 // in this case, however, we need to access this from
 // AppDelegate and by this global we are saving clumsy

@@ -12,43 +12,8 @@ import SpriteKit
 
 class GameScene: SKScene {
     // main game scene
-    var sceneAudio: SKAudioNode!
-     
-    enum GameState {
-        case ready, ongoing, won, lost
-    }
+
     
-    var gameState: GameState = GameState.ready {
-        // game state observer
-        willSet {
-            switch newValue {
-            case .ready:
-                break
-            case .ongoing:
-                penguin.animate(for: C.S.playAction)
-            case .won:
-                self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                ScoreHelper.updatePuzzleScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
-                if isSoundOn {
-                
-                    run(soundPlayer.applauseSound)
-                }
-                penguin.animate(for: C.S.cheerAction)
-                addGameEndPanel(win: true)
-            case .lost:
-                self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
-                fieldFreeze()
-                if isSoundOn {
-                    run(soundPlayer.nohSound)
-                }
-                if !isPuzzle {
-                    ScoreHelper.updateArcadeScoreTable(with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
-                }
-                penguin.animate(for: C.S.cryAction)
-                addGameEndPanel(win: false)
-            }
-        }
-    }
     var soundPlayer = SoundPlayer()
     var lastTime: TimeInterval = 0
     var dt: TimeInterval = 0
@@ -113,7 +78,46 @@ class GameScene: SKScene {
     var isPuzzle = true
     var isLongLine = false
     var driftDivider = 0
+    var needToBlink = false
     
+    var sceneAudio: SKAudioNode!
+     
+    enum GameState {
+        case ready, ongoing, won, lost
+    }
+    
+    var gameState: GameState = GameState.ready {
+        // game state observer
+        willSet {
+            switch newValue {
+            case .ready:
+                break
+            case .ongoing:
+                penguin.animate(for: C.S.playAction)
+            case .won:
+                self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                ScoreHelper.updatePuzzleScoreTable(for: levelKey, with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
+                if isSoundOn {
+                
+                    run(soundPlayer.applauseSound)
+                }
+                penguin.animate(for: C.S.cheerAction)
+                addGameEndPanel(win: true)
+            case .lost:
+                self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
+                if isSoundOn {
+                    run(soundPlayer.loseSound)
+                    run(soundPlayer.nohSound)
+                }
+                if !isPuzzle {
+                    ScoreHelper.updateArcadeScoreTable(with: numberOfShots, taking: Date.timeIntervalSinceReferenceDate-startTime)
+                }
+                penguin.animate(for: C.S.cryAction)
+                fieldFreeze()
+                addGameEndPanel(win: false)
+            }
+        }
+    }
     
     init(size: CGSize,levelManagerDelegate: LevelManagerDelegate, modPlayerDelegate: ModPlayerDelegate) {
         super.init(size: size)
@@ -496,10 +500,14 @@ class GameScene: SKScene {
         // reset the autoshoot timer
         shotCounter += 1
         childNode(withName: C.S.hurryPanel)?.alpha = 0.0
-        if (shotCounter > C.B.maxColumns-1) && isPuzzle {
+        
+        if (shotCounter > C.B.maxColumns-1) && isPuzzle{
+            needToBlink = false
+            fieldBlink(setTo: false)
             pushCompressor()
         }
         autoShoot.timer = 0
+        autoShoot.stage = 0
         if gameState != .lost {
             let polePositionBubble = self.childNode(withName: C.S.shotBubbleName) as! Bubble
             let shotBubble = Bubble(with: frame.size, as: polePositionBubble.getColor())
@@ -513,6 +521,14 @@ class GameScene: SKScene {
             shotBubble.shoot(from: CGPointMake(launcherX, launcherY), to: touchPos)
             if isSoundOn {
                 run(soundPlayer.launchSound)
+            }
+            
+            // if in puzzle mode blink one shot before compressor pushes
+            if (shotCounter == C.B.maxColumns-1) && isPuzzle{
+                // warning before pushing compressor
+                // blinkuíng is then started in handlePlayField()
+                // after new bubble was docked
+                needToBlink = true
             }
         }
     }
@@ -528,27 +544,16 @@ class GameScene: SKScene {
         }
     }
     
-    func fieldBlink() {
-        // let all grid bubbles blink
-        
-        let numberOfGridCells = theGrid.count
-        for index in 0...numberOfGridCells-1 {
-            let cell = theGrid[numberOfGridCells-index-1]
-            if cell.bubble != nil {
-                DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index) * 0.005 ) {
-                    cell.bubble!.blink()
-                }
-            }
-        }
-        
-        if !isPuzzle {
-            let numberOfAddonCells = theAddonGrid.count
-            for index in 0...numberOfAddonCells-1 {
-                let cell = theAddonGrid[numberOfAddonCells-index-1]
-                if cell.bubble != nil {
-                    DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index+numberOfGridCells) * 0.005 ) {
-                        cell.bubble!.blink()
-                    }
+    func fieldBlink(setTo blink: Bool) {
+        // let all grid bubbles blink once either bottom to top or top to bottom
+
+        for child in self.children {
+            if child is Bubble && child.name != C.S.shotBubbleName && child.name != C.S.reserveBubbleName {
+                let c = child as! Bubble
+                if blink {
+                    c.blink()
+                } else {
+                    c.unblink()
                 }
             }
         }
@@ -556,11 +561,31 @@ class GameScene: SKScene {
     
     func fieldFreeze() {
         // let all bubbles freeze by switching the texture
-        for child in self.children {
-        if child is Bubble {
-            let c = child as! Bubble
-                c.setTexture(textureKey: 1)
+        let numberOfGridCells = theGrid.count
+        for index in 0...numberOfGridCells-1 {
+            let cell =  theGrid[numberOfGridCells-index-1]
+            if cell.bubble != nil {
+                DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index) * 0.009) {
+                    cell.bubble!.freeze()
+                }
             }
+        }
+        if !isPuzzle {
+            let numberOfAddonCells = self.theAddonGrid.count
+            for index in 0...numberOfAddonCells-1 {
+                let cell = theAddonGrid[numberOfAddonCells-index-1]
+                if cell.bubble != nil {
+                    DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index+numberOfGridCells) * 0.009) {
+                        cell.bubble!.freeze()
+                    }
+                }
+            }
+        }
+        DispatchQueue.main.asyncAfter (deadline: .now() +  0.1) {
+            var c = self.childNode(withName: C.S.shotBubbleName) as! Bubble
+            c.setTexture(textureKey: 1)
+            c = self.childNode(withName: C.S.reserveBubbleName) as! Bubble
+            c.setTexture(textureKey: 1)
         }
     }
     
@@ -584,24 +609,35 @@ class GameScene: SKScene {
                     autoShoot.stage += 1
                 }
                 if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*2.0 && autoShoot.stage == 3 {
-                    fieldBlink()
+                    childNode(withName: C.S.hurryPanel)?.alpha = 1.0
+                    if isSoundOn {
+                        run(soundPlayer.hurrySound)
+                    }
+//                    fieldBlink(bottomToTop: true)
                     autoShoot.stage += 1
                 }
                 if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*3.0 && autoShoot.stage == 4 {
-                    fieldBlink()
+                    childNode(withName: C.S.hurryPanel)?.alpha = 0.0
+//                    fieldBlink(bottomToTop: true)
                     autoShoot.stage += 1
                 }
                 if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*4.0 && autoShoot.stage == 5 {
-                    fieldBlink()
+                    childNode(withName: C.S.hurryPanel)?.alpha = 1.0
+                    if isSoundOn {
+                        run(soundPlayer.hurrySound)
+                    }
+//                    fieldBlink(bottomToTop: true)
                     autoShoot.stage += 1
                 }
                 if  autoShoot.timer > C.B.autoshootTriggerTime+C.B.autoshootDeltaTime*5.0  && autoShoot.stage == 6 {
+                    childNode(withName: C.S.hurryPanel)?.alpha = 0.0
                     autoShoot.stage = 0
                     shootBubble(to: lastTouchPosition)
                 }
             }
         }
     }
+
     
     func handlePlayField() {
         // main game action handler
@@ -639,6 +675,7 @@ class GameScene: SKScene {
                                 dockingBubble.zPosition = C.Z.bubbleZ
                                 PhysicsHelper.addPhysicsBody(to: dockingBubble, with: C.S.bubbleName)
                                 dockingBubble.name = C.S.gridBubbleName
+
                                 let gridIndex = closestEmptyCell(point: c.position)
                                 c.removeFromParent()
                                 if gridIndex < theGrid.count {
@@ -646,13 +683,16 @@ class GameScene: SKScene {
                                     theGrid[gridIndex].bubble = dockingBubble
                                     dockingBubble.position = theGrid[gridIndex].position
                                     addChild(dockingBubble)
+                                    if needToBlink {
+                                        fieldBlink(setTo: true)
+                                    }
                                     
                                     if theGrid[gridIndex].position.y < deadPositionY {
                                         self.childNode(withName: C.S.flyingBubbleName)?.removeFromParent()
                                         gameState = .lost
                                         break
                                     }
-
+                                    
                                     collisionStatus = CollisionHelper.ckeckGrid(grid: &theGrid, at: gridIndex)
                                     
                                     let numberOfRemainingBubbles = collisionStatus.bubblesLeft
