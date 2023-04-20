@@ -109,7 +109,7 @@ class Bubble: SKSpriteNode {
             self.removeAllChildren()
             self.addChild(frozenBubble)
 //        blinking is now handled by altering alpha (see below)
-//        since completely altering texture seems too agressive
+//        since altering texture completely seems too agressive
 //        case 2:
 //            // blink with white
 //            self.removeAllChildren()
@@ -123,15 +123,9 @@ class Bubble: SKSpriteNode {
     func blink () {
         // blinking is now only handled by altering alpha
         self.isBlinking = true
-        let wait1 = SKAction.wait(forDuration: 0.2)
-        let wait2 = SKAction.wait(forDuration: 0.8)
-        let blinkOn = SKAction.run({
-            self.alpha = 0.7
-        })
-        let blinkOff = SKAction.run({
-            self.alpha = 1.0
-        })
-        let sequence = SKAction.sequence([blinkOn, wait1, blinkOff, wait2])
+        let fadeOut = SKAction.fadeAlpha(to: 0.7, duration: 0.1)
+        let fadeIn = SKAction.fadeAlpha(to: 1.0, duration: 0.8)
+        let sequence = SKAction.sequence([fadeOut, fadeIn])
         let loop = SKAction.repeatForever(sequence)
         self.run(loop)
     }

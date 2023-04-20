@@ -1,4 +1,4 @@
-#  Frozen Bubble for iOS Re-Implementation
+# Vintage Frozen Bubble for iOS Re-Implementation
 
 I have always liked to play "Frozen Bubble" both on Linux Systems way back in the 90s and later on Android due to its simplicity and its lovely penguin artwork.
 
@@ -10,7 +10,25 @@ The current implementation is fairly straightforward without too many bells and 
 
 Additionally, the game provides to playmodes: a puzzle mode where you can solve levels of varying diificulty, and an arcade mode where the game provides a continuous flow of bubbles moving down.
 
-If you encounter any odd behaviour I'd be greatful if you dropped me a line about it.
+
+#### Reset Highscores:
+
+Then, there is there is a hidden code to seperately reset the high score tables for either puzzle or arcade mode without re-installing the game. This code can be entered by tapping the top 3 buttons in the settings screen using following sequences:
+
+##### Reset Puzzle Highscores:
+
+1st button - 3 taps</br>
+2nd button - 2 taps</br>
+2nd button - 5 taps</br>
+
+##### Reset Arcade Highscores:
+
+1st button - 4 taps</br>
+2nd button - 2 taps</br>
+2nd button - 6 taps</br>
+
+
+If you encounter any odd behaviour I'd be greatful if you dropped me a line.
 
 Enjoy!
 
@@ -19,7 +37,7 @@ Enjoy!
 <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb4.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb5.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb6.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb7.png" width = "200" height = "286"> <img src="https://github.com/ulritter/FrozenBubbleSwift/blob/main/fb8.png" width = "200" height = "286">
 
 
-## Thanks and Credits to:
+### Thanks and Credits to:
 
 Guillaume Cottenceau: design & original programming
 Alexis Younes (Ayo73): graphics & original website design

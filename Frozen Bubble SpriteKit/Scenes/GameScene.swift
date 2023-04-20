@@ -565,7 +565,7 @@ class GameScene: SKScene {
         for index in 0...numberOfGridCells-1 {
             let cell =  theGrid[numberOfGridCells-index-1]
             if cell.bubble != nil {
-                DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index) * 0.009) {
+                DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index) * 0.005) {
                     cell.bubble!.freeze()
                 }
             }
@@ -575,7 +575,7 @@ class GameScene: SKScene {
             for index in 0...numberOfAddonCells-1 {
                 let cell = theAddonGrid[numberOfAddonCells-index-1]
                 if cell.bubble != nil {
-                    DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index+numberOfGridCells) * 0.009) {
+                    DispatchQueue.main.asyncAfter (deadline: .now() +  Double(index+numberOfGridCells) * 0.005) {
                         cell.bubble!.freeze()
                     }
                 }

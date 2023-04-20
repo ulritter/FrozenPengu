@@ -74,7 +74,7 @@ class PrefsScene: SKScene {
     func layoutView () {
         
         let backgroundImage = SKSpriteNode(imageNamed: C.S.prefsBackgroundName)
-
+        
         backgroundImage.anchorPoint = CGPoint.zero
         
         let xSize = frame.size.width
@@ -87,7 +87,7 @@ class PrefsScene: SKScene {
         addChild(backgroundImage)
         
         let yTop = backgroundImageBottom + backgroundImage.frame.height*950/1024
-
+        
         volumeLabel = SKLabelNode (fontNamed: C.S.gameFontName)
         volumeLabel.text = "\(C.S.audioVolumeText)"+String(format: "%.0f",backgroundVolume*50)
         volumeLabel.position = CGPoint(x: frame.midX, y: frame.height*0.1)
@@ -223,37 +223,37 @@ class PrefsScene: SKScene {
         if clearScoresKey1 == 3 &&
             clearScoresKey2 == 2 &&
             clearScoresKey3 == 5 {
-            let deleteScoresIndicator = SKSpriteNode(imageNamed: C.S.deleteScoresIndicator)
-            deleteScoresIndicator.zPosition = C.Z.panelZ
-            deleteScoresIndicator.scale(to: frame.size, width: true, multiplier: 1)
-            deleteScoresIndicator.position = CGPoint(x: frame.midX, y: frame.midY)
-            addChild(deleteScoresIndicator)
-            run(SKAction.wait(forDuration: 1.0)) {
-                deleteScoresIndicator.removeFromParent()
-            }
+            showScoreResetPanel(with: C.S.puzzleScoresDeletedText)
             PrefsHelper.removePuzzleScores()
-            clearScoresKey1 = 0
-            clearScoresKey2 = 0
-            clearScoresKey3 = 0
         }
         
         // hidden code to reset arcade score table
         if clearScoresKey1 == 4 &&
             clearScoresKey2 == 2 &&
             clearScoresKey3 == 6 {
-            let deleteScoresIndicator = SKSpriteNode(imageNamed: C.S.deleteScoresIndicator)
-            deleteScoresIndicator.zPosition = C.Z.panelZ
-            deleteScoresIndicator.scale(to: frame.size, width: true, multiplier: 1)
-            deleteScoresIndicator.position = CGPoint(x: frame.midX, y: frame.midY)
-            addChild(deleteScoresIndicator)
-            run(SKAction.wait(forDuration: 1.0)) {
-                deleteScoresIndicator.removeFromParent()
-            }
+            showScoreResetPanel(with: C.S.arcadeScoresDeletedText)
             PrefsHelper.removeArcadeScores()
-            clearScoresKey1 = 0
-            clearScoresKey2 = 0
-            clearScoresKey3 = 0
+
         }
+    }
+    
+    func showScoreResetPanel (with text: String) {
+        let deleteScoresPanel = SKSpriteNode(imageNamed: C.S.deleteScoresPanel)
+        deleteScoresPanel.scale(to: frame.size, width: true, multiplier: 1)
+        let deleteScoresLabel = SKLabelNode(fontNamed: C.S.gameFontName)
+        deleteScoresLabel.fontColor = C.S.levelLabelFontColor
+        deleteScoresLabel.text = text
+        deleteScoresLabel.scale(to: frame.size, width: true, multiplier: 0.7)
+        deleteScoresPanel.addChild(deleteScoresLabel)
+        deleteScoresPanel.position = CGPoint(x: frame.midX, y: frame.midY)
+        deleteScoresPanel.zPosition = C.Z.popUPZ
+        addChild(deleteScoresPanel)
+        run(SKAction.wait(forDuration: 2.0)) {
+            deleteScoresPanel.removeFromParent()
+        }
+        clearScoresKey1 = 0
+        clearScoresKey2 = 0
+        clearScoresKey3 = 0
     }
     
     func gotoGameScene(_: Int) {

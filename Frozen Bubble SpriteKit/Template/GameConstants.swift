@@ -68,7 +68,9 @@ struct C {
         static let emptyButton = "EmptyButton"
         static let cancelButton = "CancelButton"
         static let backButton = "IngameBackButton"
-        static let deleteScoresIndicator = "CancelButton"
+        static let deleteScoresPanel = "void_panel"
+        static let puzzleScoresDeletedText = "Puzzle Scores Deleted"
+        static let arcadeScoresDeletedText = "Arcade Scores Deleted"
         
         static let winPanel = "win_panel"
         static let losePanel = "lose_panel"
@@ -135,6 +137,7 @@ struct C {
         static let hudZ:CGFloat = 3
         static let bubbleZ:CGFloat = 4
         static let panelZ:CGFloat = 5
+        static let popUPZ:CGFloat = 6
     }
     
     struct B {
