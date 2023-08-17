@@ -118,7 +118,7 @@ struct C {
             "Entirely re-coded for IOS by ",
             "** Uwe Ritter **",
             "If you want to buy me a coffee:",
-            ">>>>>uritter@web.de<<<<<",
+            ">>> paypal.me/ulritter <<<",
             "-----Thanks to:-----",
             "Nicolas Ramz - mod Player",
             "Original game developers:",

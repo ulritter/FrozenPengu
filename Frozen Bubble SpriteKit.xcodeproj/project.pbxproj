@@ -120,6 +120,7 @@
 		E261D23C29B20EC300E6AC6E /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
 		E261D23E29B24EE100E6AC6E /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		E261D24029B25D0000E6AC6E /* Penguin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Penguin.swift; sourceTree = "<group>"; };
+		E26F350C2A8DFAE500EBAA28 /* Privacy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Privacy.md; sourceTree = "<group>"; };
 		E27900B929D6DF2200B2DF43 /* ArcadeScoresScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeScoresScene.swift; sourceTree = "<group>"; };
 		E285E17529C78E3D00898015 /* homesick.mod */ = {isa = PBXFileReference; lastKnownFileType = file; path = homesick.mod; sourceTree = "<group>"; };
 		E295132929C4DE5F006AADA4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -193,6 +194,7 @@
 		E261D20829B0D5BD00E6AC6E = {
 			isa = PBXGroup;
 			children = (
+				E26F350C2A8DFAE500EBAA28 /* Privacy.md */,
 				E236F5C529D8483D00138EF8 /* fb1.png */,
 				E295132D29C4E29A006AADA4 /* fb2.png */,
 				E295132B29C4E29A006AADA4 /* fb3.png */,

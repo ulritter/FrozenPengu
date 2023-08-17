@@ -639,7 +639,7 @@ class GameScene: SKScene {
     }
 
     
-    func handlePlayField() {
+    func refreshPlayField() {
         // main game action handler
         // we check the flying bubble and determine wether
         // to dock to a grid bubble or to the ceiling by checking the
@@ -888,7 +888,7 @@ class GameScene: SKScene {
             if !isPuzzle && gameState != .lost {
                 driftDown()
             }
-            handlePlayField()
+            refreshPlayField()
         }
     }
     
