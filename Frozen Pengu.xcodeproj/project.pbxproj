@@ -472,7 +472,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E261D20C29B0D5BD00E6AC6E /* Build configuration list for PBXProject "Frozen Bubble SpriteKit" */;
+			buildConfigurationList = E261D20C29B0D5BD00E6AC6E /* Build configuration list for PBXProject "Frozen Pengu" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -802,7 +802,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E261D20C29B0D5BD00E6AC6E /* Build configuration list for PBXProject "Frozen Bubble SpriteKit" */ = {
+		E261D20C29B0D5BD00E6AC6E /* Build configuration list for PBXProject "Frozen Pengu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E261D22629B0D5BE00E6AC6E /* Debug */,
